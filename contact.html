@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Contact — PrimeStrategy Limited</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,600;1,9..144,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/shared.css">
+  <link rel="stylesheet" href="css/page.css">
+  <link rel="stylesheet" href="css/contact.css">
+</head>
+
+<body class="ps-page-body ct-body">
+
+  <div class="ps-cursor-dot"></div>
+  <div class="ps-cursor-ring"></div>
+
+  <!-- Door transition -->
+  <div class="psa-doors" id="psaDoors" aria-hidden="true">
+    <div class="psa-doors__panel psa-doors__panel--l">
+      <div class="psa-doors__img"></div>
+      <div class="psa-doors__shade"></div>
+    </div>
+    <div class="psa-doors__panel psa-doors__panel--r">
+      <div class="psa-doors__img"></div>
+      <div class="psa-doors__shade"></div>
+    </div>
+    <div class="psa-doors__seam"></div>
+    <div class="psa-doors__ring"></div>
+  </div>
+
+  <!-- ═══ TOP NAV ═══ -->
+  <header class="ps-nav ps-nav--dark" id="siteNav">
+    <a class="ps-nav__brand" href="index.html" aria-label="PrimeStrategy Home">
+      <img src="images/ps-logo.png" alt="PrimeStrategy — Accra | Washington D.C.">
+    </a>
+    <nav class="ps-nav__links" aria-label="Site navigation">
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="case-study.html">Case Study</a>
+      <a href="careers.html">Careers</a>
+      <a href="contact.html" class="is-active">Contact</a>
+      <a href="login.html">Client Login</a>
+    </nav>
+    <button class="ps-nav__toggle" aria-label="Open navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <!-- ═══ FLOATING RETURN ═══ -->
+  <a class="psa-floating-return" href="index.html">
+    <span>←</span> Back to Homepage
+  </a>
+
+  <!-- ═══ CONTENT ═══ -->
+  <main class="ct-main">
+
+    <!-- ═══ HERO ═══ -->
+    <section class="ct-section ct-hero" data-theme="navy">
+      <div class="ct-section__inner">
+        <span class="ct-eyebrow" data-stair>Contact</span>
+        <h1 class="ct-title ct-title--xl" data-stair>
+          Let's start a <em>conversation</em>.
+        </h1>
+        <p class="ct-lead" data-stair>
+          Send us a note. Whether it's a consulting brief, a research program
+          you're scoping, a tender response, or something else entirely — this
+          is the right desk.
+        </p>
+      </div>
+    </section>
+
+    <!-- ═══ FORM + DETAILS ═══ -->
+    <section class="ct-section ct-connect" data-theme="white">
+      <div class="ct-section__inner">
+        <div class="ct-grid">
+
+          <!-- Left: form -->
+          <div class="ct-form-col">
+            <h2 class="ct-subhead" data-stair>Get in touch with us</h2>
+
+            <form class="ct-form" id="contactForm" novalidate>
+
+              <div class="ct-form__row ct-form__row--2">
+                <label class="ct-field">
+                  <span class="ct-field__label">First Name *</span>
+                  <input class="ct-field__input" type="text" name="firstName" autocomplete="given-name" required>
+                </label>
+                <label class="ct-field">
+                  <span class="ct-field__label">Last Name *</span>
+                  <input class="ct-field__input" type="text" name="lastName" autocomplete="family-name" required>
+                </label>
+              </div>
+
+              <div class="ct-form__row ct-form__row--2">
+                <label class="ct-field">
+                  <span class="ct-field__label">Phone Number</span>
+                  <input class="ct-field__input" type="tel" name="phone" autocomplete="tel">
+                </label>
+                <label class="ct-field">
+                  <span class="ct-field__label">Email Address *</span>
+                  <input class="ct-field__input" type="email" name="email" autocomplete="email" required>
+                </label>
+              </div>
+
+              <div class="ct-form__row">
+                <label class="ct-field">
+                  <span class="ct-field__label">Message *</span>
+                  <textarea class="ct-field__input ct-field__input--area" name="message" rows="8" required></textarea>
+                </label>
+              </div>
+
+              <div class="ct-form__row">
+                <button type="submit" class="ct-submit">
+                  Send Message
+                  <span class="ct-submit__arrow" aria-hidden="true">→</span>
+                </button>
+              </div>
+
+              <p class="ct-form__msg" id="contactMsg" role="status" aria-live="polite"></p>
+
+            </form>
+          </div>
+
+          <!-- Right: details -->
+          <aside class="ct-info-col">
+            <h2 class="ct-subhead ct-subhead--light" data-stair>Where we are</h2>
+
+            <div class="ct-info-list">
+
+              <div class="ct-info" data-stair>
+                <div class="ct-info__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                  </svg>
+                </div>
+                <div class="ct-info__body">
+                  <span class="ct-info__label">Office</span>
+                  <p class="ct-info__value">
+                    Aseda Plaza, D537<br>
+                    Ashalley Botwe, School Junction<br>
+                    Accra, Ghana
+                  </p>
+                </div>
+              </div>
+
+              <div class="ct-info" data-stair>
+                <div class="ct-info__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                  </svg>
+                </div>
+                <div class="ct-info__body">
+                  <span class="ct-info__label">Phone</span>
+                  <p class="ct-info__value">
+                    Helpline: <a href="tel:+233303973874">(030) 3973 874</a><br>
+                    Enquiries: <a href="tel:+233203618487">(020) 3618 487</a>
+                  </p>
+                </div>
+              </div>
+
+              <div class="ct-info" data-stair>
+                <div class="ct-info__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="4" width="20" height="16" rx="2"/>
+                    <path d="m2 7 10 6 10-6"/>
+                  </svg>
+                </div>
+                <div class="ct-info__body">
+                  <span class="ct-info__label">Email</span>
+                  <p class="ct-info__value">
+                    <a href="mailto:info@primestrategygh.com">info@primestrategygh.com</a><br>
+                    <a href="mailto:clients@primestrategygh.com">clients@primestrategygh.com</a><br>
+                    <a href="mailto:support@primestrategygh.com">support@primestrategygh.com</a>
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </aside>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ HOW WE CAN HELP ═══ -->
+    <section class="ct-section ct-help" data-theme="orange">
+      <div class="ct-section__inner">
+        <span class="ct-eyebrow" data-stair>Routing</span>
+        <h2 class="ct-title" data-stair>
+          How we can <em>help</em>.
+        </h2>
+        <p class="ct-lead" data-stair>
+          Every message reaches a partner. To get the fastest response, tell us
+          which of these fits your enquiry — a consulting brief, a research
+          program, a tender, a partnership, or a press question. The right
+          desk picks it up from there.
+        </p>
+
+        <div class="ct-routes">
+          <article class="ct-route" data-stair>
+            <h3 class="ct-route__title">Consulting &amp; Tenders</h3>
+            <p class="ct-route__body">
+              Strategy, operating model, and enterprise transformation
+              engagements. Tender responses handled within two working days.
+            </p>
+          </article>
+
+          <article class="ct-route" data-stair>
+            <h3 class="ct-route__title">Research Programs</h3>
+            <p class="ct-route__body">
+              Consumer research, focus groups, mystery shopping, market sizing,
+              and custom field studies across Ghana and West Africa.
+            </p>
+          </article>
+
+          <article class="ct-route" data-stair>
+            <h3 class="ct-route__title">Partnership &amp; Press</h3>
+            <p class="ct-route__body">
+              Collaborative engagements with research firms, tech partners,
+              public institutions, and journalists working on enterprise,
+              finance, or market topics.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ FAQ ═══ -->
+    <section class="ct-section ct-faq" data-theme="white">
+      <div class="ct-section__inner">
+        <span class="ct-eyebrow" data-stair>FAQ</span>
+        <h2 class="ct-title" data-stair>
+          Common <em>questions</em>.
+        </h2>
+
+        <div class="ct-accordion">
+
+          <details class="ct-faq-item" data-stair>
+            <summary class="ct-faq-item__q">
+              <span>What kinds of clients does PrimeStrategy work with?</span>
+              <span class="ct-faq-item__icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="ct-faq-item__a">
+              <p>We work with enterprises, financial institutions, government
+              commissions, and non-profit organizations across Ghana and West
+              Africa. Our clients tend to be organizations with a decision that
+              requires defensible, primary-sourced data behind it — market
+              entry, growth strategy, product launch, or regulatory response.</p>
+            </div>
+          </details>
+
+          <details class="ct-faq-item" data-stair>
+            <summary class="ct-faq-item__q">
+              <span>How long does a typical engagement take?</span>
+              <span class="ct-faq-item__icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="ct-faq-item__a">
+              <p>Most consulting engagements run four to sixteen weeks depending
+              on scope. Research programs — consumer studies, mystery shopping,
+              market sizing — typically run three to eight weeks from kickoff to
+              delivered report, factoring in field time.</p>
+            </div>
+          </details>
+
+          <details class="ct-faq-item" data-stair>
+            <summary class="ct-faq-item__q">
+              <span>Do you work outside Ghana?</span>
+              <span class="ct-faq-item__icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="ct-faq-item__a">
+              <p>Yes. We have a liaison presence in Washington D.C. and run field
+              programs across West Africa. For international clients entering
+              the Ghanaian market, we frequently serve as the local research
+              and advisory partner.</p>
+            </div>
+          </details>
+
+          <details class="ct-faq-item" data-stair>
+            <summary class="ct-faq-item__q">
+              <span>Can you build a custom research program for our company?</span>
+              <span class="ct-faq-item__icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="ct-faq-item__a">
+              <p>That is most of what we do. Every program is scoped to the
+              specific question our client is trying to answer — mix of
+              quantitative surveys, qualitative interviews, focus groups, field
+              audits, or analytics work. Custom scoping usually happens in the
+              first two weeks.</p>
+            </div>
+          </details>
+
+          <details class="ct-faq-item" data-stair>
+            <summary class="ct-faq-item__q">
+              <span>How quickly will I hear back after submitting the form?</span>
+              <span class="ct-faq-item__icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="ct-faq-item__a">
+              <p>Within two working days. Tender submissions and time-sensitive
+              briefs are typically acknowledged the same day. If you have a
+              deadline driving your enquiry, mention it in the message and we
+              will prioritise accordingly.</p>
+            </div>
+          </details>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="ps-footer">
+    <div class="ps-footer__inner">
+
+      <div class="ps-footer__grid">
+
+        <div class="ps-footer__brand">
+          <img src="images/ps-logo.png" alt="PrimeStrategy — Accra | Washington D.C.">
+          <p>
+            A research and IT consulting firm built on conviction. Partnering
+            with forward-looking organizations from Accra to Washington D.C.
+          </p>
+        </div>
+
+        <div class="ps-footer__col">
+          <h4 class="ps-footer__heading">Navigate</h4>
+          <ul class="ps-footer__list">
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="case-study.html">Case Study</a></li>
+            <li><a href="careers.html">Careers</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="login.html">Client Login</a></li>
+          </ul>
+        </div>
+
+        <div class="ps-footer__col">
+          <h4 class="ps-footer__heading">Contact</h4>
+          <ul class="ps-footer__list">
+            <li>Aseda Plaza, D537</li>
+            <li>Ashalley Botwe, Accra</li>
+            <li><a href="tel:+233303973874">(030) 3973 874</a></li>
+            <li><a href="mailto:info@primestrategygh.com">info@primestrategygh.com</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="ps-footer__bar">
+        <span>© <span id="year"></span> PrimeStrategy Ghana Limited. All rights reserved.</span>
+        <span>Accra · Washington D.C.</span>
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="js/cursor.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/transitions.js"></script>
+  <script src="js/contact.js"></script>
+
+</body>
+</html>

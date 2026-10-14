@@ -1,0 +1,588 @@
+/* ═══════════════════════════════════════════════════════════════
+   PRIMESTRATEGY // INDUSTRY BRIEF (case-study.css)
+   Horizontal filmstrip driven by vertical scroll.
+   Each panel: gradient + card-casestudy.jpg blended underneath.
+   Parallel split-motion transitions & scramble colour shifts.
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  --ps-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ps-nav-h: 72px;
+  --ps-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --ps-font-mono: 'JetBrains Mono', monospace;
+  --cs-track-x: 0vw;
+  --cs-glow-x: 50vw;
+  --cs-glow-y: 50vh;
+}
+
+html {
+  margin: 0;
+  background: #B23F12;
+}
+
+html, body.cs-body {
+  margin: 0;
+  background: #B23F12;
+  overflow-x: clip !important;
+}
+
+body.cs-body {
+  color: #FFFFFF;
+  font-family: var(--ps-font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.011em;
+  transition: background-color 0.4s ease;
+}
+
+.psa-doors[aria-hidden="true"] {
+  pointer-events: none;
+}
+
+/* ═══ MOUSE GLOW ═══ */
+.cs-glow {
+  position: fixed;
+  inset: 0;
+  z-index: 25;
+  pointer-events: none;
+  background: radial-gradient(
+    680px circle at var(--cs-glow-x, 50%) var(--cs-glow-y, 50%),
+    rgba(255, 235, 210, 0.18) 0%,
+    rgba(255, 220, 180, 0.08) 35%,
+    rgba(255, 200, 150, 0.03) 60%,
+    transparent 78%
+  );
+  mix-blend-mode: screen;
+}
+@media (pointer: coarse) {
+  .cs-glow { display: none; }
+}
+
+/* ═══ PROGRESS SPINE ═══ */
+.cs-progress {
+  position: fixed;
+  top: var(--ps-nav-h, 72px);
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 8000;
+  background: rgba(255, 255, 255, 0.18);
+  pointer-events: none;
+}
+body[data-active-theme="white"] .cs-progress,
+body[data-active-theme="orange"] .cs-progress,
+body[data-active-theme="deeporange"] .cs-progress {
+  background: rgba(10, 30, 69, 0.15);
+}
+.cs-progress__fill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #FFFFFF 0%, #FFEBD2 100%);
+  box-shadow: 0 0 12px rgba(255, 235, 210, 0.65);
+  transition: width 0.12s linear;
+}
+body[data-active-theme="white"] .cs-progress__fill,
+body[data-active-theme="orange"] .cs-progress__fill,
+body[data-active-theme="deeporange"] .cs-progress__fill {
+  background: linear-gradient(90deg, #B23F12 0%, #D4521E 100%);
+  box-shadow: 0 0 12px rgba(178, 63, 18, 0.45);
+}
+
+/* ═══ FILMSTRIP ═══ */
+.cs-film {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  height: calc(6 * 100vh);
+}
+.cs-track {
+  position: sticky;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: max-content;
+  transform: translate3d(var(--cs-track-x, 0vw), 0, 0);
+  will-change: transform;
+}
+
+/* ═══ PANEL BASE ═══ */
+.cs-panel {
+  position: relative;
+  flex: 0 0 100vw;
+  width: 100vw;
+  height: 100vh;
+  padding-top: var(--ps-nav-h, 72px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: hidden;
+  --cs-head-y: 0px;
+  --cs-body-y: 0px;
+  --cs-panel-opacity: 1;
+  --cs-scramble-progress: 1;
+
+  background-image: url("../images/card-casestudy.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.cs-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background:
+    radial-gradient(ellipse 55% 50% at 12% 18%, rgba(255, 255, 255, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 55% at 88% 82%, rgba(0, 0, 0, 0.22) 0%, transparent 65%);
+}
+
+/* Scramble overlay — defaults to INVISIBLE. Only becomes visible
+   when the panel is active AND not yet colour-settled. */
+.cs-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.15s linear;
+}
+.cs-panel.is-active:not(.is-color-settled)::after {
+  opacity: calc(1 - var(--cs-scramble-progress, 1));
+}
+.cs-panel.is-color-settled::after {
+  opacity: 0 !important;
+}
+
+/* ═══ PANEL THEMES ═══ */
+
+/* 1. Cover — Warm Cream */
+.cs-panel[data-theme="orange"] {
+  background-color: #F4EFE7;
+  background-blend-mode: luminosity;
+  background-image:
+    linear-gradient(135deg, rgba(250, 246, 240, 0.94) 0%, rgba(240, 234, 224, 0.90) 100%),
+    url("../images/card-casestudy.jpg");
+  background-size: cover, cover;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
+  color: #0A1E45;
+}
+.cs-panel[data-theme="orange"]::after {
+  background: linear-gradient(135deg, #1C2331 0%, #293245 100%);
+}
+.cs-panel[data-theme="orange"] .cs-title { color: #0A1E45; }
+.cs-panel[data-theme="orange"] .cs-title em { color: #B23F12; }
+.cs-panel[data-theme="orange"] .cs-eyebrow { color: #B23F12; }
+.cs-panel[data-theme="orange"] .cs-meta { color: #64748B; }
+.cs-panel[data-theme="orange"] .cs-panel__head::before { background: #B23F12; }
+
+/* 2. Navy */
+.cs-panel[data-theme="navy"] {
+  background-color: #061735;
+  background-image:
+    linear-gradient(135deg, rgba(6, 18, 42, 0.94) 0%, rgba(10, 30, 69, 0.92) 100%),
+    url("../images/card-casestudy.jpg");
+  background-size: cover, cover;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
+  color: #FFFFFF;
+}
+.cs-panel[data-theme="navy"]::after {
+  background: linear-gradient(135deg, #B23F12 0%, #D4521E 100%);
+}
+
+/* 3. White */
+.cs-panel[data-theme="white"] {
+  background-color: #FFFFFF;
+  background-blend-mode: luminosity;
+  background-image:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.94) 0%, rgba(243, 245, 248, 0.90) 100%),
+    url("../images/card-casestudy.jpg");
+  background-size: cover, cover;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
+  color: #0A1E45;
+}
+.cs-panel[data-theme="white"]::after {
+  background: linear-gradient(135deg, #0A1E45 0%, #0E2F6B 100%);
+}
+.cs-panel[data-theme="white"] .cs-title { color: #0A1E45; }
+.cs-panel[data-theme="white"] .cs-title em { color: #B23F12; }
+.cs-panel[data-theme="white"] .cs-eyebrow { color: #B23F12; }
+.cs-panel[data-theme="white"] .cs-meta { color: #64748B; }
+.cs-panel[data-theme="white"] .cs-panel__body { border-left-color: rgba(10, 30, 69, 0.18); }
+.cs-panel[data-theme="white"] .cs-panel__body p { color: #2D3748; }
+.cs-panel[data-theme="white"] .cs-panel__body p:first-child::first-letter { color: #B23F12; }
+.cs-panel[data-theme="white"] .cs-figures { border-top-color: rgba(10, 30, 69, 0.18); }
+.cs-panel[data-theme="white"] .cs-figure__num { color: #0A1E45; }
+.cs-panel[data-theme="white"] .cs-figure__label { color: #B23F12; }
+.cs-panel[data-theme="white"] .cs-panel__head::before { background: #B23F12; }
+
+/* 4. Slate Grey */
+.cs-panel[data-theme="grey"] {
+  background-color: #0F1218;
+  background-image:
+    linear-gradient(135deg, rgba(15, 18, 24, 0.94) 0%, rgba(28, 35, 49, 0.92) 100%),
+    url("../images/card-casestudy.jpg");
+  background-size: cover, cover;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
+  color: #FFFFFF;
+}
+.cs-panel[data-theme="grey"]::after {
+  background: linear-gradient(135deg, #FFFFFF 0%, #F1F3F6 100%);
+}
+.cs-panel[data-theme="grey"] .cs-eyebrow { color: #E86A34; }
+.cs-panel[data-theme="grey"] .cs-title { color: #FFFFFF; }
+.cs-panel[data-theme="grey"] .cs-title em { color: #FFEBD2; }
+.cs-panel[data-theme="grey"] .cs-panel__head::before { background: #E86A34; }
+.cs-panel[data-theme="grey"] .cs-panel__body { border-left-color: rgba(255, 255, 255, 0.28); }
+.cs-panel[data-theme="grey"] .cs-panel__body p { color: rgba(255, 255, 255, 0.94); }
+.cs-panel[data-theme="grey"] .cs-panel__body p:first-child::first-letter { color: #FFEBD2; }
+
+/* 5. Cobalt Blue */
+.cs-panel[data-theme="blue"] {
+  background-color: #0B1E3E;
+  background-image:
+    linear-gradient(135deg, rgba(11, 30, 62, 0.94) 0%, rgba(22, 66, 141, 0.90) 100%),
+    url("../images/card-casestudy.jpg");
+  background-size: cover, cover;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
+  color: #FFFFFF;
+}
+.cs-panel[data-theme="blue"]::after {
+  background: linear-gradient(135deg, #1C2331 0%, #2A3345 100%);
+}
+.cs-panel[data-theme="blue"] .cs-title { color: #FFFFFF; }
+.cs-panel[data-theme="blue"] .cs-title em { color: #FFEBD2; }
+.cs-panel[data-theme="blue"] .cs-eyebrow { color: #FFEBD2; }
+.cs-panel[data-theme="blue"] .cs-panel__head::before { background: #FFFFFF; }
+.cs-panel[data-theme="blue"] .cs-panel__body { border-left-color: rgba(255, 255, 255, 0.28); }
+.cs-panel[data-theme="blue"] .cs-panel__body p { color: rgba(255, 255, 255, 0.94); }
+.cs-panel[data-theme="blue"] .cs-panel__body p:first-child::first-letter { color: #FFEBD2; }
+
+/* 6. Close — Warm Cream */
+.cs-panel[data-theme="deeporange"] {
+  background-color: #F4EFE7;
+  background-blend-mode: luminosity;
+  background-image:
+    linear-gradient(135deg, rgba(250, 246, 240, 0.94) 0%, rgba(240, 234, 224, 0.90) 100%),
+    url("../images/card-casestudy.jpg");
+  background-size: cover, cover;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
+  color: #0A1E45;
+}
+.cs-panel[data-theme="deeporange"]::after {
+  background: linear-gradient(135deg, #16428D 0%, #0A1E45 100%);
+}
+.cs-panel[data-theme="deeporange"] .cs-title { color: #0A1E45; }
+.cs-panel[data-theme="deeporange"] .cs-title em { color: #B23F12; }
+.cs-panel[data-theme="deeporange"] .cs-eyebrow { color: #B23F12; }
+.cs-panel[data-theme="deeporange"] .cs-panel__head::before { background: #B23F12; }
+
+/* ═══ PANEL INNER ═══ */
+.cs-panel__inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1240px;
+  padding: 0 80px;
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 80px;
+  align-items: center;
+}
+.cs-panel--cover .cs-panel__inner,
+.cs-panel--close .cs-panel__inner {
+  grid-template-columns: 1fr;
+  max-width: 1100px;
+  text-align: left;
+}
+
+/* ═══ HEAD COLUMN ═══ */
+.cs-panel__head {
+  position: relative;
+  padding-left: 32px;
+  transform: perspective(900px)
+             rotateX(var(--cs-tilt-x, 0deg))
+             rotateY(var(--cs-tilt-y, 0deg))
+             translate3d(0, var(--cs-head-y, 0px), 0);
+  transform-style: preserve-3d;
+  opacity: var(--cs-panel-opacity, 1);
+  transition: transform 0.12s linear, opacity 0.2s ease-out;
+  will-change: transform, opacity;
+}
+.cs-panel__head::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 8px; bottom: 8px;
+  width: 3px;
+  background: #FFFFFF;
+  border-radius: 2px;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
+}
+.cs-panel.is-active .cs-panel__head::before {
+  transform: scaleY(1);
+}
+
+/* ═══ EYEBROW ═══ */
+.cs-eyebrow {
+  display: block;
+  font-family: var(--ps-font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #FFEBD2;
+  margin: 0 0 24px;
+  line-height: 1.2;
+}
+
+/* ═══ TITLE ═══ */
+.cs-title {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: clamp(2rem, 3.6vw, 3.6rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  color: #FFFFFF;
+  margin: 0;
+}
+.cs-title--xl {
+  font-size: clamp(2.6rem, 6vw, 6rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+.cs-title em {
+  font-style: italic;
+  color: #FFEBD2;
+  font-weight: 700;
+}
+
+/* ═══ META ═══ */
+.cs-meta {
+  font-family: var(--ps-font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+  margin: 32px 0 0;
+}
+
+/* ═══ BODY / FIGURES / ACTIONS ═══ */
+.cs-panel__body,
+.cs-figures,
+.cs-actions {
+  transform: translate3d(0, var(--cs-body-y, 0px), 0);
+  opacity: var(--cs-panel-opacity, 1);
+  transition: transform 0.12s linear, opacity 0.2s ease-out;
+  will-change: transform, opacity;
+}
+
+.cs-panel__body {
+  max-width: 620px;
+  padding-left: 24px;
+  border-left: 1px solid rgba(255, 255, 255, 0.22);
+}
+.cs-panel__body p {
+  font-family: var(--ps-font-sans);
+  font-size: clamp(1rem, 1.15vw, 1.15rem);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.92);
+  margin: 0 0 22px;
+  letter-spacing: -0.005em;
+}
+.cs-panel__body p:last-child { margin-bottom: 0; }
+.cs-panel__body p:first-child::first-letter {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 3.2em;
+  font-weight: 700;
+  float: left;
+  line-height: 0.9;
+  padding: 6px 14px 0 0;
+  color: #FFEBD2;
+}
+
+/* ═══ FIGURES ═══ */
+.cs-figures {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+  grid-column: 1 / -1;
+  padding-left: 32px;
+  padding-right: 32px;
+}
+.cs-figure {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.cs-figure__num {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: clamp(1.8rem, 2.6vw, 2.6rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #FFFFFF;
+  line-height: 1;
+}
+.cs-figure__label {
+  font-family: var(--ps-font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #FFEBD2;
+}
+
+/* ═══ CLOSE BUTTON ═══ */
+.cs-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 56px;
+}
+.cs-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 34px;
+  font-family: var(--ps-font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  border-radius: 980px;
+  text-decoration: none;
+  transition: all 0.4s var(--ps-ease, cubic-bezier(0.16, 1, 0.3, 1));
+}
+.cs-btn--primary {
+  color: #FFFFFF;
+  background: #B23F12;
+  border: 1px solid #B23F12;
+  box-shadow: 0 14px 32px -12px rgba(178, 63, 18, 0.55);
+}
+.cs-btn--primary:hover {
+  background: #0A1E45;
+  border-color: #0A1E45;
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px -14px rgba(10, 30, 69, 0.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-glow { display: none !important; }
+  .cs-panel__head::before { transform: scaleY(1) !important; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE (<= 900px)
+   Panels stack vertically. All overlays that cause contrast issues
+   on mobile are disabled. Backgrounds are forced to paint.
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .cs-film { height: auto; }
+  .cs-track {
+    position: relative;
+    top: auto;
+    height: auto;
+    width: 100%;
+    display: block;
+    transform: none !important;
+  }
+  .cs-panel {
+    flex: none;
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    padding: calc(var(--ps-nav-h, 72px) + 60px) 0 80px;
+    align-items: flex-start;
+
+    /* Force backgrounds to paint across the full panel on mobile */
+    background-size: cover, cover !important;
+    background-position: center, center !important;
+    background-repeat: no-repeat, no-repeat !important;
+  }
+
+  /* Hide the desktop-only parallax and scramble overlays on mobile.
+     They add nothing to the stacked layout, and the scramble overlay
+     was causing white-on-white text on light panels. */
+  .cs-panel::before,
+  .cs-panel::after {
+    display: none !important;
+  }
+
+  .cs-panel__head,
+  .cs-panel__body,
+  .cs-figures,
+  .cs-actions {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+  .cs-panel__inner {
+    grid-template-columns: 1fr;
+    padding: 0 32px;
+    gap: 48px;
+  }
+  .cs-panel--cover .cs-panel__inner,
+  .cs-panel--close .cs-panel__inner {
+    padding: 0 32px;
+  }
+  .cs-panel__body {
+    border-left: none;
+    padding-left: 0;
+    max-width: 100%;
+  }
+  .cs-figures {
+    grid-template-columns: repeat(2, 1fr);
+    padding-left: 0;
+    padding-right: 0;
+    gap: 20px;
+  }
+  .cs-progress { display: none; }
+
+  /* Explicit high-contrast text colours on dark mobile panels,
+     in case any inherited rule is overriding them. */
+  .cs-panel[data-theme="grey"] .cs-title,
+  .cs-panel[data-theme="grey"] .cs-title em,
+  .cs-panel[data-theme="navy"] .cs-title,
+  .cs-panel[data-theme="navy"] .cs-title em,
+  .cs-panel[data-theme="blue"] .cs-title,
+  .cs-panel[data-theme="blue"] .cs-title em {
+    color: #FFFFFF;
+  }
+  .cs-panel[data-theme="grey"] .cs-panel__body p,
+  .cs-panel[data-theme="navy"] .cs-panel__body p,
+  .cs-panel[data-theme="blue"] .cs-panel__body p {
+    color: rgba(255, 255, 255, 0.92);
+  }
+}
+
+@media (max-width: 600px) {
+  .cs-panel__inner,
+  .cs-panel--cover .cs-panel__inner,
+  .cs-panel--close .cs-panel__inner {
+    padding: 0 24px;
+  }
+  .cs-panel__head { padding-left: 24px; }
+  .cs-title { font-size: clamp(1.8rem, 6.5vw, 2.6rem); }
+  .cs-title--xl { font-size: clamp(2.2rem, 8vw, 3.2rem); }
+  .cs-panel__body p:first-child::first-letter {
+    font-size: 2.6em;
+    padding: 4px 10px 0 0;
+  }
+  .cs-figures { grid-template-columns: 1fr; }
+}

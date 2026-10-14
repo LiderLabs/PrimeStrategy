@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>PrimeStrategy Limited — The Business Transformation Experts</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&family=Playfair+Display:wght@600;700;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/shared.css">
+  <link rel="stylesheet" href="css/hub.css">
+</head>
+
+<body class="ps-hub">
+
+  <!-- Cursor (used across site) -->
+  <div class="ps-cursor-dot"></div>
+  <div class="ps-cursor-ring"></div>
+
+  <!-- The hub -->
+  <div class="hub" id="hub">
+
+    <!-- Background layers -->
+    <div class="hub__backdrop" aria-hidden="true"></div>
+    <div class="hub__bg-image" aria-hidden="true"></div>
+    <div class="hub__bg-wash" aria-hidden="true"></div>
+    <div class="hub__vignette" aria-hidden="true"></div>
+
+    <!-- 3D canvas -->
+    <canvas id="hub-canvas"></canvas>
+
+    <!-- Top bar — logo only -->
+    <header class="hub__topbar">
+      <a class="hub__brand" href="index.html" aria-label="PrimeStrategy Home">
+        <img src="images/ps-logo.png" alt="PrimeStrategy - Accra | Washington D.C.">
+      </a>
+    </header>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="js/cursor.js"></script>
+  <script src="js/hub.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,136 @@
+/* ═══════════════════════════════════════════════════════════════
+   PRIMESTRATEGY // SUB-PAGE
+   Shared styles for every sub-page (about, services, etc.).
+   ═══════════════════════════════════════════════════════════════ */
+
+.ps-page {
+  position: relative;
+  min-height: 100vh;
+  padding-top: var(--ps-nav-h);
+  background: var(--ps-canvas);
+}
+
+/* ═══ PAGE HERO — used at top of each sub-page ═══ */
+.ps-hero {
+  position: relative;
+  padding: 100px 0 80px;
+  background: var(--ps-canvas);
+}
+.ps-hero--warm { background: var(--ps-canvas-warm); }
+.ps-hero--dark { background: var(--ps-blue); color: #FFFFFF; }
+.ps-hero__title {
+  font-size: clamp(2.4rem, 5vw, 4.4rem);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.045em;
+  color: var(--ps-ink);
+  margin: 0 0 24px;
+  max-width: 900px;
+}
+.ps-hero--dark .ps-hero__title { color: #FFFFFF; }
+.ps-hero__lead {
+  font-size: clamp(1.05rem, 1.3vw, 1.2rem);
+  line-height: 1.7;
+  color: var(--ps-ink-soft);
+  max-width: 680px;
+}
+.ps-hero--dark .ps-hero__lead { color: rgba(255, 255, 255, 0.78); }
+
+/* ═══ NAV SPACER — sits below the fixed nav ═══ */
+.ps-nav-spacer { height: var(--ps-nav-h); }
+
+/* ═══ PAGE SECTION — uses shared padding ═══ */
+.ps-page-section {
+  padding: 100px 0;
+  position: relative;
+}
+.ps-page-section--tight { padding: 60px 0; }
+.ps-page-section--dark {
+  background: var(--ps-blue);
+  color: #FFFFFF;
+}
+.ps-page-section--warm {
+  background: var(--ps-canvas-warm);
+}
+@media (max-width: 900px) {
+  .ps-page-section { padding: 70px 0; }
+}
+
+/* ═══ FULL-BLEED PHOTO-READY BLOCK ═══
+   Used for the About Us navy block and the orange Closing band.
+   The .__bg layer is the swappable background. */
+.ps-block {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 120px 0;
+}
+.ps-block__bg {
+  position: absolute; inset: 0;
+  z-index: 0;
+  /* ↓↓↓ SWAP THIS LINE FOR A COMPANY PHOTO WHEN YOU HAVE ONE ↓↓↓ */
+  background: var(--ps-blue);
+  /* ↑↑↑ SWAP THIS LINE FOR A COMPANY PHOTO WHEN YOU HAVE ONE ↑↑↑ */
+}
+.ps-block--orange .ps-block__bg { background: var(--ps-orange); }
+.ps-block__scrim {
+  position: absolute; inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 20, 45, 0.50) 0%,
+    rgba(10, 20, 45, 0.28) 45%,
+    rgba(10, 20, 45, 0.50) 100%
+  );
+  pointer-events: none;
+}
+.ps-block--orange .ps-block__scrim {
+  background: linear-gradient(
+    180deg,
+    rgba(120, 40, 10, 0.18) 0%,
+    rgba(120, 40, 10, 0.05) 45%,
+    rgba(120, 40, 10, 0.22) 100%
+  );
+}
+.ps-block__inner {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+/* ═══ CONTENT CARDS — light, subtle ═══ */
+.ps-card {
+  background: #FFFFFF;
+  border: 1px solid var(--ps-hairline);
+  border-radius: 20px;
+  padding: 34px 32px;
+  transition: transform 0.6s var(--ps-ease), border-color 0.6s var(--ps-ease), box-shadow 0.6s var(--ps-ease);
+}
+.ps-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(212, 82, 30, 0.35);
+  box-shadow: 0 30px 60px -28px rgba(212, 82, 30, 0.22);
+}
+.ps-card__title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ps-ink);
+  margin: 0 0 12px;
+}
+.ps-card__text {
+  font-size: 0.97rem;
+  line-height: 1.75;
+  color: var(--ps-ink-soft);
+  margin: 0;
+}
+
+/* ═══ AUTO-REVEAL — every .ps-fade in the page uses the shared
+   .ps-fade base (defined in shared.css). The reveal is added by
+   js/page.js on each sub-page. ═══ */
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 720px) {
+  .ps-block { padding: 80px 0; }
+  .ps-hero { padding: 70px 0 50px; }
+}

@@ -1,0 +1,138 @@
+/* ═══════════════════════════════════════════════════════════════
+   PRIMESTRATEGY // HUB
+   Styles for index.html only — the 3D card landing page.
+   Photographic background + brand-colour gradient wash.
+   ═══════════════════════════════════════════════════════════════ */
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.hub {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: #F4F1EC;
+}
+
+/* ═══ BACKGROUND ═══ */
+
+/* Base gradient — the fallback / structural layer beneath the image */
+.hub__backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: linear-gradient(
+    135deg,
+    #FBF8F4 0%,
+    #F5EEE6 30%,
+    #E8DCCF 65%,
+    #D9D3CC 100%
+  );
+}
+
+/* Photographic background — sits above the base gradient */
+.hub__bg-image {
+  position: absolute;
+  inset: -4%;
+  pointer-events: none;
+  z-index: 2;
+  background-image: url("../images/hub-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(3px) saturate(120%);
+  opacity: 0.92;
+}
+
+/* Brand-colour gradient wash over the image — orange + blue + white */
+.hub__bg-wash {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  background:
+    radial-gradient(
+      ellipse 70% 60% at 25% 30%,
+      rgba(212, 82, 30, 0.20) 0%,
+      rgba(212, 82, 30, 0.05) 45%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 65% 60% at 80% 75%,
+      rgba(14, 47, 107, 0.22) 0%,
+      rgba(14, 47, 107, 0.06) 45%,
+      transparent 70%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.18) 0%,
+      rgba(255, 250, 244, 0.10) 50%,
+      rgba(240, 235, 228, 0.24) 100%
+    );
+  mix-blend-mode: normal;
+}
+
+/* Vignette — soft edges to frame the cards */
+.hub__vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+  background: radial-gradient(
+    ellipse 95% 85% at 50% 45%,
+    transparent 50%,
+    rgba(10, 30, 69, 0.14) 100%
+  );
+}
+
+#hub-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  cursor: grab;
+  z-index: 5;
+}
+#hub-canvas:active { cursor: grabbing; }
+
+/* ═══ TOP BAR — logo only ═══ */
+.hub__topbar {
+  position: absolute;
+  top: 32px;
+  left: 44px;
+  z-index: 30;
+  pointer-events: none;
+}
+
+.hub__brand {
+  pointer-events: auto;
+  display: inline-block;
+  text-decoration: none;
+  transition: transform 0.4s var(--ps-ease), filter 0.4s var(--ps-ease);
+  filter: drop-shadow(0 4px 12px rgba(10, 30, 69, 0.18));
+}
+.hub__brand:hover {
+  transform: translateY(-2px);
+  filter: drop-shadow(0 8px 20px rgba(10, 30, 69, 0.24));
+}
+.hub__brand img {
+  display: block;
+  height: 44px;
+  width: auto;
+}
+
+@media (max-width: 900px) {
+  .hub__topbar { top: 20px; left: 20px; }
+  .hub__brand img { height: 34px; }
+  .hub__bg-image {
+    filter: blur(3px) saturate(115%);
+    opacity: 0.85;
+  }
+}

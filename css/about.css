@@ -1,0 +1,781 @@
+/* ═══════════════════════════════════════════════════════════════
+   PRIMESTRATEGY // ABOUT PAGE
+   Full-height stacked panels + fixed top nav.
+   Each panel: solid colour + about-bg.jpg at low opacity + tint.
+   Display headings: Fraunces. Body: Inter. Eyebrow: Cormorant Garamond.
+   ═══════════════════════════════════════════════════════════════ */
+
+html, body {
+  background: var(--ps-canvas);
+}
+.ps-page-body {
+  color: var(--ps-ink);
+}
+
+/* ═══ NAV SPACER ═══ */
+.psa-nav-spacer {
+  height: var(--ps-nav-h);
+  width: 100%;
+  display: block;
+}
+
+/* ═══ FIXED BACKGROUND ═══ */
+.psa-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.psa-bg__image {
+  position: absolute;
+  inset: -8%;
+  background-image: url("../images/card-about.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(6px) saturate(115%);
+  opacity: 0.6;
+  transform: scale(1.05);
+  will-change: transform;
+}
+.psa-bg__wash {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 85% 70% at 50% 45%, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0.72) 100%),
+    linear-gradient(180deg, rgba(251, 252, 254, 0.18) 0%, rgba(240, 244, 250, 0.38) 100%);
+}
+.psa-bg__vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 90% 80% at 50% 45%,
+    transparent 55%,
+    rgba(10, 30, 69, 0.08) 100%
+  );
+}
+
+/* ═══ MAIN — STACKED PANELS ═══ */
+.psa-main--stacked {
+  position: relative;
+  z-index: 5;
+  padding: 0;
+}
+.psa-panel {
+  position: sticky;
+  top: var(--ps-nav-h);
+  width: 100%;
+  height: calc(100vh - var(--ps-nav-h));
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 -50px 100px -30px rgba(10, 20, 45, 0.35);
+}
+.psa-panel__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.psa-panel__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 20, 45, 0.10) 0%,
+    rgba(10, 20, 45, 0) 50%,
+    rgba(10, 20, 45, 0.20) 100%
+  );
+  pointer-events: none;
+}
+.psa-panel__scrim--light {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.10) 0%,
+    rgba(255, 255, 255, 0) 50%,
+    rgba(255, 255, 255, 0.18) 100%
+  );
+}
+
+/* ═══ PANEL VARIANTS ═══ */
+.psa-panel--opening .psa-panel__bg {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.94) 0%,
+      rgba(255, 255, 255, 0.82) 100%
+    ),
+    url("../images/about-bg.jpg") center / cover no-repeat;
+  background-blend-mode: normal;
+}
+.psa-panel--opening .psa-panel__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.72) 0%,
+    rgba(255, 255, 255, 0.55) 100%
+  );
+  pointer-events: none;
+}
+
+.psa-panel--anchors .psa-panel__bg {
+  background-color: #1E4FA8;
+  background-image: url("../images/about-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: multiply;
+}
+.psa-panel--anchors .psa-panel__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(30, 79, 168, 0.72) 0%,
+    rgba(14, 47, 107, 0.78) 100%
+  );
+  pointer-events: none;
+}
+
+.psa-panel--ceo .psa-panel__bg {
+  background-color: #FFFFFF;
+  background-image: url("../images/about-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: luminosity;
+}
+.psa-panel--ceo .psa-panel__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.88) 0%,
+    rgba(255, 255, 255, 0.78) 100%
+  );
+  pointer-events: none;
+}
+
+.psa-panel--navy .psa-panel__bg {
+  background-color: #0E2F6B;
+  background-image: url("../images/about-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: multiply;
+}
+.psa-panel--navy .psa-panel__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(14, 47, 107, 0.78) 0%,
+    rgba(10, 30, 69, 0.84) 100%
+  );
+  pointer-events: none;
+}
+
+.psa-panel--blue .psa-panel__bg {
+  background-color: #1E4FA8;
+  background-image: url("../images/about-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: multiply;
+}
+.psa-panel--blue .psa-panel__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(30, 79, 168, 0.72) 0%,
+    rgba(14, 47, 107, 0.80) 100%
+  );
+  pointer-events: none;
+}
+
+.psa-panel--orange .psa-panel__bg {
+  background-color: #D4521E;
+  background-image: url("../images/about-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: multiply;
+}
+.psa-panel--orange .psa-panel__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(212, 82, 30, 0.76) 0%,
+    rgba(178, 63, 18, 0.82) 100%
+  );
+  pointer-events: none;
+}
+
+.psa-panel--offer .psa-panel__bg {
+  background-color: #FBFBFC;
+  background-image: url("../images/about-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: luminosity;
+}
+.psa-panel--offer .psa-panel__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(251, 251, 252, 0.88) 0%,
+    rgba(251, 251, 252, 0.78) 100%
+  );
+  pointer-events: none;
+}
+
+.psa-panel--closing .psa-panel__bg {
+  background-color: #D4521E;
+  background-image: url("../images/about-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: multiply;
+}
+.psa-panel--closing .psa-panel__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(212, 82, 30, 0.72) 0%,
+    rgba(178, 63, 18, 0.82) 100%
+  );
+  pointer-events: none;
+}
+
+/* ═══ PANEL CONTENT WRAPPER ═══ */
+.psa-panel__content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 60px;
+  max-height: 100%;
+  overflow: hidden;
+}
+@media (max-width: 900px) { .psa-panel__content { padding: 0 30px; } }
+@media (max-width: 600px) { .psa-panel__content { padding: 0 22px; } }
+
+/* ═══ DISPLAY TYPOGRAPHY — Fraunces ═══ */
+.psa-display {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: clamp(2.6rem, 6.2vw, 6.5rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  color: var(--ps-ink);
+  margin: 0 0 40px;
+  max-width: 1050px;
+}
+.psa-heading {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: clamp(2.2rem, 4.6vw, 4.2rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  color: var(--ps-ink);
+  margin: 0 0 40px;
+}
+.psa-panel__title {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: clamp(2.1rem, 4.4vw, 4rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: #FFFFFF;
+  margin: 0 0 40px;
+  max-width: 1050px;
+}
+.psa-panel__text {
+  font-family: var(--ps-font-sans);
+  font-size: clamp(1.05rem, 1.5vw, 1.4rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.88);
+  max-width: 780px;
+  margin: 0;
+}
+
+/* ═══ REVEAL ═══ */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 1.0s var(--ps-ease), transform 1.1s var(--ps-ease);
+  will-change: opacity, transform;
+}
+[data-reveal].is-revealed { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
+
+/* ═══ OPENING ═══ */
+.psa-panel--opening .psa-panel__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100%;
+  padding-top: 6vh;
+  padding-bottom: 14vh;
+}
+.psa-panel--opening .psa-display {
+  font-size: clamp(2.8rem, 6.8vw, 7rem);
+  margin: 0 0 48px;
+}
+.psa-em {
+  font-style: italic;
+  position: relative;
+  color: var(--ps-orange);
+  background-image: linear-gradient(to right, var(--ps-orange), var(--ps-orange));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 3px;
+  transition: background-size 1.6s var(--ps-ease) 0.4s;
+  padding-bottom: 4px;
+}
+[data-reveal].is-revealed .psa-em { background-size: 100% 3px; }
+.psa-lead {
+  font-family: var(--ps-font-sans);
+  font-size: clamp(1.1rem, 1.6vw, 1.5rem);
+  line-height: 1.6;
+  color: var(--ps-ink-soft);
+  max-width: 780px;
+  margin: 0;
+}
+
+/* ═══ ANCHORS + MAP ═══ */
+.psa-anchors__split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 72px;
+  align-items: center;
+  margin-bottom: 56px;
+}
+.psa-anchors__head { max-width: 560px; }
+.psa-anchors__lead {
+  font-family: var(--ps-font-sans);
+  font-size: clamp(1rem, 1.25vw, 1.15rem);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.88);
+  margin: 0;
+  max-width: 520px;
+}
+
+/* ─── Ghana map ─── */
+.psa-map {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.psa-map__svg {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+
+/* Regions — subtle fill, cream stroke. Drawn in on panel activation. */
+.psa-map__region {
+  fill: rgba(255, 255, 255, 0.08);
+  stroke: rgba(255, 255, 255, 0.65);
+  stroke-width: 1.2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  transition:
+    fill 0.35s var(--ps-ease),
+    stroke 0.35s var(--ps-ease);
+  cursor: pointer;
+}
+.psa-map__region:hover {
+  fill: rgba(255, 235, 210, 0.22);
+  stroke: #FFEBD2;
+}
+
+/* Outline draw-in — applied to each region path */
+.psa-map__svg .psa-map__region {
+  stroke-dasharray: 2000;
+  stroke-dashoffset: 2000;
+  transition:
+    stroke-dashoffset 1.8s cubic-bezier(0.16, 1, 0.3, 1),
+    fill 0.35s var(--ps-ease),
+    stroke 0.35s var(--ps-ease);
+}
+.psa-panel.is-active .psa-map__region,
+.psa-map.is-revealed .psa-map__region {
+  stroke-dashoffset: 0;
+}
+
+/* Region stagger (optional, spreads the draw across the map) */
+.psa-map__region:nth-of-type(1)  { transition-delay: 0.00s, 0s, 0s; }
+.psa-map__region:nth-of-type(2)  { transition-delay: 0.06s, 0s, 0s; }
+.psa-map__region:nth-of-type(3)  { transition-delay: 0.12s, 0s, 0s; }
+.psa-map__region:nth-of-type(4)  { transition-delay: 0.18s, 0s, 0s; }
+.psa-map__region:nth-of-type(5)  { transition-delay: 0.24s, 0s, 0s; }
+.psa-map__region:nth-of-type(6)  { transition-delay: 0.30s, 0s, 0s; }
+.psa-map__region:nth-of-type(7)  { transition-delay: 0.36s, 0s, 0s; }
+.psa-map__region:nth-of-type(8)  { transition-delay: 0.42s, 0s, 0s; }
+.psa-map__region:nth-of-type(9)  { transition-delay: 0.48s, 0s, 0s; }
+.psa-map__region:nth-of-type(10) { transition-delay: 0.54s, 0s, 0s; }
+.psa-map__region:nth-of-type(11) { transition-delay: 0.60s, 0s, 0s; }
+.psa-map__region:nth-of-type(12) { transition-delay: 0.66s, 0s, 0s; }
+.psa-map__region:nth-of-type(13) { transition-delay: 0.72s, 0s, 0s; }
+.psa-map__region:nth-of-type(14) { transition-delay: 0.78s, 0s, 0s; }
+.psa-map__region:nth-of-type(15) { transition-delay: 0.84s, 0s, 0s; }
+.psa-map__region:nth-of-type(16) { transition-delay: 0.90s, 0s, 0s; }
+
+/* HQ pulse — Accra (Greater Accra region center) */
+.psa-map__pulse {
+  fill: none;
+  stroke: #E86A34;
+  stroke-width: 2;
+  opacity: 0;
+  transform-origin: 640px 817px;
+  animation: psa-map-pulse 2.6s ease-out infinite;
+}
+.psa-map__pulse--delay { animation-delay: 1.3s; }
+@keyframes psa-map-pulse {
+  0%   { opacity: 0.9; r: 6; }
+  70%  { opacity: 0;   r: 22; }
+  100% { opacity: 0;   r: 22; }
+}
+
+.psa-map__hq {
+  fill: #E86A34;
+  filter: drop-shadow(0 0 6px rgba(232, 106, 52, 0.9));
+}
+
+/* Compass — slow rotation */
+.psa-map__compass line,
+.psa-map__compass polygon {
+  stroke: rgba(255, 255, 255, 0.55);
+  stroke-width: 1.4;
+}
+.psa-map__compass polygon { fill: rgba(255, 255, 255, 0.7); }
+.psa-map__compass text {
+  fill: rgba(255, 255, 255, 0.65);
+  font-family: var(--ps-font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  stroke: none;
+}
+.psa-map__svg .psa-map__compass {
+  transform-origin: 780px 60px;
+  animation: psa-compass-spin 90s linear infinite;
+}
+@keyframes psa-compass-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Region tooltip */
+.psa-map__tooltip {
+  position: absolute;
+  pointer-events: none;
+  padding: 6px 12px;
+  background: rgba(10, 30, 69, 0.92);
+  color: #FFFFFF;
+  font-family: var(--ps-font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: 6px;
+  opacity: 0;
+  transform: translate(-50%, calc(-100% - 12px)) scale(0.9);
+  transition: opacity 0.25s var(--ps-ease), transform 0.25s var(--ps-ease);
+  white-space: nowrap;
+  z-index: 5;
+}
+.psa-map__tooltip.is-visible {
+  opacity: 1;
+  transform: translate(-50%, calc(-100% - 12px)) scale(1);
+}
+
+/* Caption */
+.psa-map__caption {
+  font-family: var(--ps-font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+  margin: 0;
+  text-align: center;
+  max-width: 340px;
+  line-height: 1.6;
+}
+
+/* Bottom anchor row */
+.psa-anchors__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--ps-hairline);
+  border-bottom: 1px solid var(--ps-hairline);
+}
+.psa-anchor {
+  padding: 4vh 30px;
+  border-right: 1px solid var(--ps-hairline);
+  display: flex;
+  flex-direction: column;
+  gap: 1.4vh;
+}
+.psa-anchor:first-child { padding-left: 0; }
+.psa-anchor:last-child { border-right: 0; }
+.psa-anchor__label {
+  font-family: var(--ps-font-mono);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ps-orange);
+}
+.psa-anchor__value {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: clamp(1.35rem, 2.1vw, 1.9rem);
+  font-weight: 700;
+  color: var(--ps-ink);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+/* Anchors panel — white on blue, orange labels */
+.psa-panel--anchors .psa-heading { color: #FFFFFF; }
+.psa-panel--anchors .psa-anchor__value { color: #FFFFFF; }
+.psa-panel--anchors .psa-anchor__label { color: #FFB584; }
+.psa-panel--anchors .psa-anchors__grid {
+  border-top-color: rgba(255, 255, 255, 0.22);
+  border-bottom-color: rgba(255, 255, 255, 0.22);
+}
+.psa-panel--anchors .psa-anchor {
+  border-right-color: rgba(255, 255, 255, 0.22);
+}
+
+@media (max-width: 900px) {
+  .psa-anchors__split {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+  }
+  .psa-anchors__head { max-width: 100%; }
+  .psa-map__svg { max-width: 340px; }
+}
+
+@media (max-width: 720px) {
+  .psa-anchors__grid { grid-template-columns: 1fr; }
+  .psa-anchor { border-right: 0; border-bottom: 1px solid var(--ps-hairline); padding: 2.5vh 0; }
+  .psa-anchor:last-child { border-bottom: 0; }
+
+  .psa-panel--anchors .psa-anchor {
+    border-right-color: transparent;
+    border-bottom-color: rgba(255, 255, 255, 0.22);
+  }
+  .psa-panel--anchors .psa-anchor:last-child {
+    border-bottom-color: transparent;
+  }
+}
+
+@media (max-width: 600px) {
+  .psa-map__svg { max-width: 300px; }
+  .psa-map__caption { font-size: 10px; max-width: 280px; }
+  .psa-map__compass text { font-size: 11px; }
+}
+
+/* Reduced motion: show final state of all map animations */
+@media (prefers-reduced-motion: reduce) {
+  .psa-map__region {
+    stroke-dashoffset: 0 !important;
+    transition: fill 0.2s, stroke 0.2s !important;
+  }
+  .psa-map__pulse { animation: none !important; opacity: 0.4 !important; }
+  .psa-map__svg .psa-map__compass { animation: none !important; }
+}
+
+/* ═══ CEO ═══ */
+.psa-ceo__grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 60px;
+  align-items: center;
+}
+.psa-ceo__name {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: clamp(1.9rem, 3.4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--ps-ink);
+  margin: 1vh 0 1.4vh;
+  line-height: 1.05;
+}
+.psa-ceo__role {
+  font-family: var(--ps-font-mono);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ps-ash);
+  margin: 0;
+  padding-bottom: 2.2vh;
+  position: relative;
+}
+.psa-ceo__role::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 60px; height: 1px;
+  background: linear-gradient(90deg, var(--ps-orange), transparent);
+}
+.psa-ceo__body {
+  position: relative;
+  padding-left: 32px;
+  max-width: 100%;
+}
+.psa-ceo__rule {
+  position: absolute;
+  left: 0; top: 6px; bottom: 6px;
+  width: 2px;
+  border-radius: 1px;
+  background: linear-gradient(
+    to bottom,
+    var(--ps-orange) 0%,
+    var(--ps-orange) var(--psa-rule-progress, 0%),
+    var(--ps-hairline) var(--psa-rule-progress, 0%),
+    var(--ps-hairline) 100%
+  );
+  pointer-events: none;
+}
+
+/* CEO TEXT — two columns */
+.psa-ceo__text {
+  column-count: 2;
+  column-gap: 56px;
+  column-rule: 1px solid var(--ps-hairline);
+}
+.psa-ceo__text p {
+  font-family: var(--ps-font-sans);
+  font-size: clamp(0.95rem, 1.15vw, 1.15rem);
+  line-height: 1.6;
+  color: var(--ps-ink-soft);
+  margin: 0 0 1.2vh;
+  letter-spacing: -0.005em;
+  break-inside: avoid;
+  page-break-inside: avoid;
+  opacity: 0.15;
+  transform: translateY(16px);
+  transition: opacity 0.9s var(--ps-ease), transform 1.0s var(--ps-ease);
+  will-change: opacity, transform;
+}
+.psa-ceo__text p.is-revealed { opacity: 1; transform: none; }
+.psa-ceo__text p:last-child { margin-bottom: 0; }
+@media (max-width: 900px) {
+  .psa-ceo__grid { grid-template-columns: 1fr; gap: 24px; }
+  .psa-ceo__body { padding-left: 20px; }
+  .psa-ceo__text { column-count: 1; column-rule: none; }
+}
+@media (max-height: 620px) {
+  .psa-ceo__text p { margin: 0 0 0.9vh; line-height: 1.5; }
+}
+
+/* ═══ OFFER ═══ */
+.psa-pullquote {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: clamp(1.4rem, 2.6vw, 2.2rem);
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  color: var(--ps-ink);
+  max-width: 900px;
+  margin: 0 0 40px;
+  position: relative;
+  padding-left: 32px;
+}
+.psa-pullquote::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 10px; bottom: 10px;
+  width: 3px;
+  background: var(--ps-orange);
+  border-radius: 2px;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 1.2s var(--ps-ease);
+}
+.psa-pullquote.is-revealed::before { transform: scaleY(1); }
+.psa-tags { display: flex; flex-wrap: wrap; gap: 10px; list-style: none; padding: 0; margin: 0; }
+.psa-tag {
+  font-family: var(--ps-font-sans);
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 980px;
+  border: 1px solid var(--ps-hairline-dark);
+  background: #FFFFFF;
+  color: var(--ps-ink);
+  font-size: clamp(0.9rem, 1.1vw, 1.05rem);
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.4s var(--ps-ease);
+}
+.psa-tag:hover {
+  background: var(--ps-orange);
+  color: #FFFFFF;
+  border-color: var(--ps-orange);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px -10px rgba(212, 82, 30, 0.4);
+}
+
+/* ═══ CLOSING ═══ */
+.psa-closing__content { text-align: center; }
+.psa-closing__line {
+  font-family: "Fraunces", Georgia, serif;
+  display: inline-block;
+  position: relative;
+  font-size: clamp(2.2rem, 4.4vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #FFFFFF;
+  margin: 0;
+  padding-bottom: 22px;
+}
+.psa-closing__underline {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 2px;
+  background: #FFFFFF;
+  transform-origin: center;
+  transform: scaleX(0);
+  transition: transform 1.4s var(--ps-ease) 0.3s;
+}
+.psa-closing__line.is-revealed .psa-closing__underline { transform: scaleX(1); }
+
+/* ═══ EYEBROW — Cormorant Garamond ═══ */
+.ps-eyebrow {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  margin: 0 0 36px;
+}
+.ps-eyebrow--light {
+  color: #FFEBD2;
+}
+@media (max-width: 900px) {
+  .ps-eyebrow {
+    font-size: 1.3rem;
+    letter-spacing: 0.18em;
+    margin: 0 0 28px;
+  }
+}
