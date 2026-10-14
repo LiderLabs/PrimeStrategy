@@ -24,7 +24,6 @@
     "case-study.html",
     "careers.html",
     "contact.html",
-    "login.html",
     ""
   ];
 

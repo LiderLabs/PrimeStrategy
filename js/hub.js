@@ -67,17 +67,6 @@
       accent: "#FFEBD2",
       image: "images/card-contact.jpg",
       washColors: ["rgba(156, 51, 11, 0.88)", "rgba(178, 63, 18, 0.80)", "rgba(115, 36, 7, 0.94)"]
-    },
-    {
-      id: "clientlogin",
-      eyebrow: "INSTITUTIONAL ACCESS",
-      title: "Client Intelligence Portal",
-      subtitle: "Encrypted executive repository for corporate leadership.",
-      summary: "Secure access to deliverables, raw survey data matrices, research telemetry, and custom intelligence dashboards built for institutional decision making.",
-      href: "login.html",
-      accent: "#D4521E",
-      image: "images/card-clientlogin.jpg",
-      washColors: ["rgba(28, 35, 49, 0.88)", "rgba(40, 50, 69, 0.82)", "rgba(18, 22, 32, 0.94)"]
     }
   ];
 

@@ -47,7 +47,6 @@
       <a href="case-study.html">Case Study</a>
       <a href="careers.html">Careers</a>
       <a href="contact.html">Contact</a>
-      <a href="login.html">Client Login</a>
     </nav>
     <button class="ps-nav__toggle" aria-label="Open navigation" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -82,15 +81,30 @@
     <section class="psa-panel psa-panel--anchors">
       <div class="psa-panel__bg" aria-hidden="true"></div>
       <div class="psa-panel__scrim psa-panel__scrim--light" aria-hidden="true"></div>
-      <div class="psa-container psa-panel__content">
+      <div class="psa-container psa-panel__content psa-panel__content--anchors">
 
         <div class="psa-anchors__split">
 
           <div class="psa-anchors__head">
             <span class="ps-eyebrow ps-eyebrow--light" data-reveal>At a Glance</span>
             <h2 class="psa-heading" data-reveal>The Firm in Three Lines</h2>
+
+            <ul class="psa-lines" data-reveal>
+              <li class="psa-lines__item">
+                <span class="psa-lines__label">Headquarters</span>
+                <span class="psa-lines__value">Accra, Ghana</span>
+              </li>
+              <li class="psa-lines__item">
+                <span class="psa-lines__label">Liaison Desk</span>
+                <span class="psa-lines__value">Washington D.C., USA</span>
+              </li>
+              <li class="psa-lines__item">
+                <span class="psa-lines__label">Coverage</span>
+                <span class="psa-lines__value">All 16 Regions of Ghana &amp; West Africa</span>
+              </li>
+            </ul>
+
             <p class="psa-anchors__lead" data-reveal>
-              Headquartered in Accra with a liaison desk in Washington D.C.,
               PrimeStrategy operates across every region of Ghana and extends
               its research and advisory practice to clients throughout West Africa.
             </p>
@@ -102,6 +116,21 @@
                  xmlns="http://www.w3.org/2000/svg"
                  aria-hidden="true">
 
+              <!-- CONNECTING LINES (drawn under regions) -->
+              <g class="psa-map__lines" aria-hidden="true">
+                <line class="psa-map__line" x1="640" y1="817" x2="470" y2="700"/>
+                <line class="psa-map__line" x1="640" y1="817" x2="470" y2="215"/>
+                <line class="psa-map__line" x1="640" y1="817" x2="270" y2="815"/>
+                <line class="psa-map__line" x1="640" y1="817" x2="480" y2="880"/>
+                <line class="psa-map__line" x1="640" y1="817" x2="640" y2="690"/>
+                <line class="psa-map__line" x1="640" y1="817" x2="450" y2="600"/>
+                <line class="psa-map__line" x1="640" y1="817" x2="215" y2="620"/>
+                <line class="psa-map__line" x1="640" y1="817" x2="530" y2="60"/>
+                <line class="psa-map__line" x1="640" y1="817" x2="250" y2="110"/>
+                <line class="psa-map__line" x1="640" y1="817" x2="610" y2="710"/>
+              </g>
+
+              <!-- REGIONS -->
               <g class="psa-map__regions">
                 <path class="psa-map__region" data-region="Upper West"        d="M420.48,24.82L418.29,30.53L416.61,49L410.58,54.13L410.3,59.4L401.49,63.97L399.24,75.79L400.65,86.61L415.49,95.72L417.57,107.45L417.52,107.48L400.71,121L386.37,148.2L395.12,157.09L396.32,163.32L382.17,169.82L378.84,175.67L381.3,195.22L379.9,202.5L337.54,202.15L329.32,209.43L321.45,203.92L281.38,208.31L263.01,213.46L261.26,221.8L237.64,230.86L229.77,228.28L221.67,217.95L230.27,201.15L226.78,195.49L226.72,178.42L222.67,170.36L221.19,147.84L227.09,136.4L216.09,130.43L214.9,124.86L218.83,117.32L207.52,98.18L201.49,81.33L205.52,72.59L202.99,68.32L208.81,56.96L211.53,46.9L218.65,37.18L216.89,25.67L227.59,23.67L275.39,22.89L282.39,25.67L296.53,23.61L329.22,23.61L335.38,25.73L374.43,25.81L374.5,20.53L403.07,20.53L403.12,24.82Z"/>
                 <path class="psa-map__region" data-region="Upper East"        d="M417.57,107.45L415.49,95.72L400.65,86.61L399.24,75.79L401.49,63.97L410.3,59.4L410.58,54.13L416.61,49L418.29,30.53L420.48,24.82L424.76,28.24L461.01,27.88L467.31,26.17L493.21,26.3L503.71,27.52L529.39,27.44L536.81,38.14L540.95,38.57L545.08,29.25L554.52,26.39L562.23,20.34L565.02,10.36L572.73,7.85L586.73,8.57L586.55,0L603.7,4.11L608.07,10.7L616.47,14.27L626.44,10L630.82,17.48L632.04,28.36L625.57,32.1L623.82,51.89L616.29,62.92L614.43,71.21L598.66,75.27L590.26,79.97L564.32,85.74L555.61,83.29L553.61,91.5L543.11,93.85L533.18,93.24L529.5,96.62L522.68,79.53L512.89,78.82L504.49,88.78L496.43,89.68L493.81,96.62L479.99,96.44L463.37,107.64L457.06,114.42L449.54,118.14L451.29,130.96L448.48,133.8L438.51,127.58L426.97,117.62L426.61,106.4L419.96,106.22Z"/>
@@ -121,11 +150,59 @@
                 <path class="psa-map__region" data-region="Greater Accra"     d="M734.69,807.55L717.3,804.3L697.01,802.54L671.8,805.35L657.97,810.63L649.4,816.08L641.88,817.31L636.28,824.52L618.26,835.41L597.97,843.51L574.74,850.39L575.47,837.95L570.44,829.72L559.1,821.92L557.14,811.84L567.7,801.88L571.48,805.68L584.08,805.45L590.17,800.4L599.84,809.25L613.48,792.8L625.03,780.76L631.75,776.12L635.31,763.88L645.81,761.55L652.96,756.48L671,758.6L681.51,767.25L679.83,771.26L685.29,778.24L700.61,772.11L707.76,774.01L717.83,783.09L723.51,795.33Z"/>
               </g>
 
-              <!-- Greater Accra HQ pulse -->
-              <g class="psa-map__pulse-wrap" aria-hidden="true">
-                <circle class="psa-map__pulse" cx="640" cy="817" r="12"/>
-                <circle class="psa-map__pulse psa-map__pulse--delay" cx="640" cy="817" r="12"/>
-                <circle class="psa-map__hq" cx="640" cy="817" r="7"/>
+              <!-- DOTS — engagement / coverage markers -->
+              <g class="psa-map__dots" aria-hidden="true">
+                <!-- Accra HQ (keeps the pulse) -->
+                <g class="psa-map__dot-group" data-label="Accra — Headquarters">
+                  <circle class="psa-map__pulse" cx="640" cy="817" r="12"/>
+                  <circle class="psa-map__pulse psa-map__pulse--delay" cx="640" cy="817" r="12"/>
+                  <circle class="psa-map__dot psa-map__dot--hq" cx="640" cy="817" r="6"/>
+                </g>
+
+                <!-- Kumasi -->
+                <g class="psa-map__dot-group" data-label="Kumasi — Field Research Hub">
+                  <circle class="psa-map__dot" cx="470" cy="700" r="4.5"/>
+                </g>
+
+                <!-- Tamale -->
+                <g class="psa-map__dot-group" data-label="Tamale — Northern Field Coverage">
+                  <circle class="psa-map__dot" cx="470" cy="215" r="4.5"/>
+                </g>
+
+                <!-- Takoradi -->
+                <g class="psa-map__dot-group" data-label="Takoradi — Oil &amp; Gas Engagements">
+                  <circle class="psa-map__dot" cx="270" cy="815" r="4.5"/>
+                </g>
+
+                <!-- Cape Coast -->
+                <g class="psa-map__dot-group" data-label="Cape Coast — Central Region Operations">
+                  <circle class="psa-map__dot" cx="480" cy="880" r="4.5"/>
+                </g>
+
+                <!-- Koforidua -->
+                <g class="psa-map__dot-group" data-label="Koforidua — Eastern Field Site">
+                  <circle class="psa-map__dot" cx="610" cy="710" r="4.5"/>
+                </g>
+
+                <!-- Ho -->
+                <g class="psa-map__dot-group" data-label="Ho — Volta Partner Site">
+                  <circle class="psa-map__dot" cx="640" cy="690" r="4.5"/>
+                </g>
+
+                <!-- Sunyani -->
+                <g class="psa-map__dot-group" data-label="Sunyani — Bono Research Coverage">
+                  <circle class="psa-map__dot" cx="450" cy="600" r="4.5"/>
+                </g>
+
+                <!-- Bolgatanga -->
+                <g class="psa-map__dot-group" data-label="Bolgatanga — Upper East Coverage">
+                  <circle class="psa-map__dot" cx="530" cy="60" r="4.5"/>
+                </g>
+
+                <!-- Wa -->
+                <g class="psa-map__dot-group" data-label="Wa — Upper West Coverage">
+                  <circle class="psa-map__dot" cx="250" cy="110" r="4.5"/>
+                </g>
               </g>
 
               <!-- Compass -->
@@ -138,27 +215,8 @@
             </svg>
 
             <div class="psa-map__tooltip" id="mapTooltip" aria-hidden="true"></div>
-
-            <p class="psa-map__caption" data-reveal>
-              Accra HQ · Washington D.C. liaison · Serving all 16 regions
-            </p>
           </div>
 
-        </div>
-
-        <div class="psa-anchors__grid">
-          <div class="psa-anchor" data-reveal>
-            <span class="psa-anchor__label">Offices</span>
-            <span class="psa-anchor__value">Accra · Washington D.C.</span>
-          </div>
-          <div class="psa-anchor" data-reveal>
-            <span class="psa-anchor__label">Established</span>
-            <span class="psa-anchor__value">Ghana · West Africa</span>
-          </div>
-          <div class="psa-anchor" data-reveal>
-            <span class="psa-anchor__label">Practice</span>
-            <span class="psa-anchor__value">10 Practice Areas</span>
-          </div>
         </div>
 
       </div>

@@ -1,7 +1,7 @@
 /* ═══════════════════════════════════════════════════════════════
    PRIMESTRATEGY // ABOUT PAGE
    Background motion, reveals, CEO rule, closing underline,
-   Ghana map — panel-triggered draw-in and region tooltips.
+   Ghana map — panel-triggered draw-in, region + dot tooltips.
    Menu toggle is handled by js/nav.js — no menu code here.
    ═══════════════════════════════════════════════════════════════ */
 
@@ -49,7 +49,7 @@
     );
   }
 
-  /* ═══ REVEALS — fires per panel as it becomes the active stacked panel ═══ */
+  /* ═══ REVEALS ═══ */
   function initReveals() {
     var panels = document.querySelectorAll(".psa-panel");
     if (!panels.length) return;
@@ -94,7 +94,7 @@
     update();
   }
 
-  /* ═══ CEO TEXT — paragraph-by-paragraph reveal ═══ */
+  /* ═══ CEO TEXT ═══ */
   function initCeoReveals() {
     var paras = document.querySelectorAll(".psa-ceo__text p");
     if (!paras.length) return;
@@ -153,20 +153,13 @@
     io.observe(line);
   }
 
-  /* ═══ GHANA MAP — panel-triggered draw-in + region tooltips ═══ */
+  /* ═══ GHANA MAP — draw-in + region/dot tooltips ═══ */
   function initGhanaMap() {
     var mapWrap = document.querySelector(".psa-map");
     var tooltip = document.getElementById("mapTooltip");
     if (!mapWrap) return;
 
-    /* ─── 1. Reveal animation trigger ───
-       The map lives inside the anchors panel. Its draw-in (outline
-       strokes, staggered pin drops) is driven by CSS transitions
-       which fire once the panel gets `.is-active` OR once the map
-       itself gets `.is-revealed`. If either class lands, the
-       animations play. We add a third fallback here: an explicit
-       IntersectionObserver on the map, so it plays even if the
-       panel-level trigger misses (e.g. very short viewport). */
+    /* ─── 1. Reveal animation trigger ─── */
     if (typeof IntersectionObserver !== "undefined") {
       var mapObserver = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
@@ -182,39 +175,32 @@
       mapWrap.classList.add("is-revealed");
     }
 
-    /* ─── 2. Region hover tooltips ───
-       Each .psa-map__pin has a data-region attribute. On hover,
-       position the tooltip above the pin and set its text. */
+    /* ─── 2. Tooltips ───
+       Two groups now:
+       - .psa-map__region  → reads data-region
+       - .psa-map__dot-group → reads data-label
+       Dots sit on top in the SVG so they win pointer events naturally. */
     if (!tooltip) return;
 
-    var pins = mapWrap.querySelectorAll(".psa-map__pin");
-    if (!pins.length) return;
+    var regionEls = mapWrap.querySelectorAll(".psa-map__region");
+    var dotEls = mapWrap.querySelectorAll(".psa-map__dot-group");
 
-    /* Skip on touch devices — tooltips don't add value on mobile. */
+    if (!regionEls.length && !dotEls.length) return;
+
     var isCoarse = window.matchMedia("(pointer: coarse)").matches;
     if (isCoarse) return;
 
-    function showTooltip(evt, pin) {
-      var region = pin.getAttribute("data-region") || "";
-      if (!region) return;
+    function showTooltip(text, target) {
+      if (!text) return;
 
-      var svg = pin.closest(".psa-map__svg");
-      if (!svg) return;
-
-      /* Position the tooltip over the pin, in the wrapper's
-         coordinate space (offsetParent = .psa-map). */
-      var svgRect = svg.getBoundingClientRect();
+      /* Position the tooltip above the hovered element's bounding-box center. */
       var wrapRect = mapWrap.getBoundingClientRect();
-      var circle = pin.querySelector(".psa-map__dot");
-      if (!circle) return;
+      var targetRect = target.getBoundingClientRect();
 
-      var circleRect = circle.getBoundingClientRect();
+      var cx = targetRect.left + targetRect.width / 2 - wrapRect.left;
+      var cy = targetRect.top + targetRect.height / 2 - wrapRect.top;
 
-      /* SVG circle center, in mapWrap space */
-      var cx = circleRect.left + circleRect.width / 2 - wrapRect.left;
-      var cy = circleRect.top + circleRect.height / 2 - wrapRect.top;
-
-      tooltip.textContent = region;
+      tooltip.textContent = text;
       tooltip.style.left = cx + "px";
       tooltip.style.top  = cy + "px";
       tooltip.classList.add("is-visible");
@@ -226,23 +212,30 @@
       tooltip.setAttribute("aria-hidden", "true");
     }
 
-    pins.forEach(function (pin) {
-      pin.addEventListener("mouseenter", function (e) {
-        showTooltip(e, pin);
+    /* Region hover — show region name */
+    regionEls.forEach(function (el) {
+      el.addEventListener("mouseenter", function () {
+        showTooltip(el.getAttribute("data-region"), el);
       });
-      pin.addEventListener("mousemove", function (e) {
-        /* Reposition on move for accuracy if the map shifts */
-        showTooltip(e, pin);
+      el.addEventListener("mousemove", function () {
+        showTooltip(el.getAttribute("data-region"), el);
       });
-      pin.addEventListener("mouseleave", hideTooltip);
-      /* Focus and blur make the tooltip keyboard accessible
-         if the pins ever become focusable; they are decorative
-         for now, so this is a safe no-op. */
-      pin.addEventListener("focus", function () { showTooltip(null, pin); });
-      pin.addEventListener("blur", hideTooltip);
+      el.addEventListener("mouseleave", hideTooltip);
     });
 
-    /* Hide tooltip on scroll — the map shifts with the panel */
+    /* Dot hover — show dot label (region tooltip is superseded) */
+    dotEls.forEach(function (el) {
+      el.addEventListener("mouseenter", function (e) {
+        e.stopPropagation();
+        showTooltip(el.getAttribute("data-label"), el);
+      });
+      el.addEventListener("mousemove", function (e) {
+        e.stopPropagation();
+        showTooltip(el.getAttribute("data-label"), el);
+      });
+      el.addEventListener("mouseleave", hideTooltip);
+    });
+
     window.addEventListener("scroll", hideTooltip, { passive: true });
   }
 
