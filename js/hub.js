@@ -72,7 +72,8 @@
       ctaLabel: "Start a Conversation",
       accent: "#FFEBD2",
       image: "images/card-contact.jpg",
-      washColors: ["rgba(120, 38, 8, 0.82)", "rgba(156, 51, 11, 0.72)", "rgba(90, 26, 4, 0.94)"]
+      mobilePosition: "75% center",
+      washColors: ["rgba(120, 38, 8, 0.72)", "rgba(156, 51, 11, 0.58)", "rgba(90, 26, 4, 0.88)"]
     }
   ];
 
@@ -105,14 +106,16 @@
         " --wash-1: " + s.washColors[1] + ";" +
         " --wash-2: " + s.washColors[2] + ";";
 
+      var imagePosition = s.mobilePosition || "center";
+
       return (
         '<div class="hub-mobile__slide" data-slide-index="' + i + '">' +
           '<a class="hub-mobile__card" href="' + s.href + '" ' +
              'data-index="' + i + '" ' +
-             'data-enter="pending" ' +
              'style="' + inlineStyle + '">' +
             '<div class="hub-mobile__image" ' +
-                 'style="background-image: url(\'' + s.image + '\');"></div>' +
+                 'style="background-image: url(\'' + s.image + '\'); ' +
+                        'background-position: ' + imagePosition + ';"></div>' +
             '<span class="hub-mobile__eyebrow">' + escapeHTML(s.eyebrow) + '</span>' +
             '<h2 class="hub-mobile__title">' + renderTitleHTML(s.title) + '</h2>' +
             '<p class="hub-mobile__subtitle">' + escapeHTML(s.subtitle) + '</p>' +
@@ -141,66 +144,42 @@
     var cards = mobileContainer.querySelectorAll(".hub-mobile__card");
     var hint = document.getElementById("hubMobileHint");
     var ticking = false;
+    var lastIdx = -1;
 
-    /* ─── Entrance animation via IntersectionObserver ─── */
-    if (typeof IntersectionObserver !== "undefined") {
-      var enterIO = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting && entry.intersectionRatio > 0.35) {
-            var card = entry.target;
-            if (card.dataset.enter === "pending") {
-              card.dataset.enter = "active";
-            }
-          }
-        });
-      }, {
-        root: mobileContainer,
-        threshold: [0.35]
-      });
-
-      cards.forEach(function (c) { enterIO.observe(c); });
-    } else {
-      cards.forEach(function (c) { c.dataset.enter = "active"; });
-    }
-
-    /* ─── Scroll: dots + hint + parallax ─── */
     function updateOnScroll() {
       var vh = window.innerHeight;
       var scrollTop = mobileContainer.scrollTop;
 
-      /* Active dot */
+      /* Active card index — nearest to viewport center */
       var idx = Math.round(scrollTop / vh);
       if (idx < 0) idx = 0;
       if (idx >= dots.length) idx = dots.length - 1;
 
+      /* Update dots */
       dots.forEach(function (d, i) {
         d.classList.toggle("is-active", i === idx);
       });
 
-      /* Hint hide */
+      /* Hide hint after first scroll */
       if (hint) {
         if (scrollTop > 40) hint.classList.add("is-hidden");
         else hint.classList.remove("is-hidden");
       }
 
-      /* Parallax — each card translates slightly based on distance from center */
-      cards.forEach(function (card) {
-        var slide = card.parentNode;
-        var slideTop = slide.offsetTop;
-        var distance = (slideTop - scrollTop) / vh; // -1 … 1 range when near
-
-        /* Clamp distance so offscreen cards don't do weird things */
-        if (distance < -1.2 || distance > 1.2) {
-          card.style.setProperty("--parallax-y", "0px");
-          card.style.setProperty("--parallax", "0");
-          return;
-        }
-
-        /* Image moves slower than card (parallax depth) */
-        var parallaxY = distance * 26;
-        card.style.setProperty("--parallax-y", parallaxY.toFixed(2) + "px");
-        card.style.setProperty("--parallax", Math.abs(distance).toFixed(3));
-      });
+      /* Focus effect: mark the centered card in view, others out.
+         Rebuild only when idx changes — avoids per-frame churn. */
+      if (idx !== lastIdx) {
+        lastIdx = idx;
+        cards.forEach(function (card, i) {
+          if (i === idx) {
+            card.classList.add("is-focused");
+            card.classList.remove("is-neighbor");
+          } else {
+            card.classList.remove("is-focused");
+            card.classList.add("is-neighbor");
+          }
+        });
+      }
 
       ticking = false;
     }
