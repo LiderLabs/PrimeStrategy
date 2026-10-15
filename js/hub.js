@@ -21,9 +21,10 @@
       subtitle: "Executive leadership and corporate principles guiding enterprise transformation.",
       summary: "A premier research and IT advisory consultancy. We partner with forward looking organizations using deep industry expertise in strategy, operations, IT, and research to drive measurable results.",
       href: "about.html",
+      ctaLabel: "Open About",
       accent: "#FFEBD2",
       image: "images/about-bg.jpg",
-      washColors: ["rgba(10, 30, 69, 0.84)", "rgba(14, 47, 107, 0.78)", "rgba(6, 18, 42, 0.92)"]
+      washColors: ["rgba(10, 30, 69, 0.82)", "rgba(14, 47, 107, 0.72)", "rgba(6, 18, 42, 0.92)"]
     },
     {
       id: "services",
@@ -32,9 +33,10 @@
       subtitle: "Ten targeted practice areas turning research into market advantage.",
       summary: "Full spectrum enterprise solutions including Consumer Research, Focus Group Discussions, Mystery Shopping, Management Consulting, Market Sizing, and Custom Software Engineering.",
       href: "services.html",
+      ctaLabel: "View Services",
       accent: "#FFEBD2",
       image: "images/card-services.jpg",
-      washColors: ["rgba(178, 63, 18, 0.86)", "rgba(212, 82, 30, 0.80)", "rgba(140, 48, 12, 0.92)"]
+      washColors: ["rgba(140, 42, 10, 0.82)", "rgba(178, 63, 18, 0.70)", "rgba(100, 30, 6, 0.92)"]
     },
     {
       id: "casestudy",
@@ -43,9 +45,10 @@
       subtitle: "Empirical market intelligence across Ghana's key sectors.",
       summary: "We specialize in serving clients across all major Ghanaian industries with deep focus in oil and gas, finance, insurance, retail banking, and public sector regulatory landscapes.",
       href: "case-study.html",
+      ctaLabel: "Read the Brief",
       accent: "#E86A34",
       image: "images/card-casestudy.jpg",
-      washColors: ["rgba(6, 23, 53, 0.88)", "rgba(10, 30, 69, 0.82)", "rgba(4, 14, 34, 0.94)"]
+      washColors: ["rgba(6, 23, 53, 0.86)", "rgba(10, 30, 69, 0.72)", "rgba(4, 14, 34, 0.94)"]
     },
     {
       id: "careers",
@@ -54,9 +57,10 @@
       subtitle: "Recruiting analysts, engineers, and strategic consultants.",
       summary: "Join our consulting practice. We seek analysts, field supervisors, software engineers, and consultants passionate about empirical rigor and large scale business transformation.",
       href: "careers.html",
+      ctaLabel: "View Open Roles",
       accent: "#FFEBD2",
       image: "images/card-careers.jpg",
-      washColors: ["rgba(14, 47, 107, 0.86)", "rgba(30, 79, 168, 0.78)", "rgba(10, 30, 69, 0.92)"]
+      washColors: ["rgba(14, 47, 107, 0.82)", "rgba(30, 79, 168, 0.70)", "rgba(10, 30, 69, 0.92)"]
     },
     {
       id: "contact",
@@ -65,16 +69,17 @@
       subtitle: "Direct desk engagement for executive inquiries and tenders.",
       summary: "Headquartered at Aseda Plaza, Ashalley Botwe, Accra, Ghana, with liaison presence in Washington D.C. Engaging corporate boards, public commissions, and enterprise teams.",
       href: "contact.html",
+      ctaLabel: "Start a Conversation",
       accent: "#FFEBD2",
       image: "images/card-contact.jpg",
-      washColors: ["rgba(156, 51, 11, 0.88)", "rgba(178, 63, 18, 0.80)", "rgba(115, 36, 7, 0.94)"]
+      washColors: ["rgba(120, 38, 8, 0.82)", "rgba(156, 51, 11, 0.72)", "rgba(90, 26, 4, 0.94)"]
     }
   ];
 
   var TOTAL = SECTIONS.length;
 
   /* ═══════════════════════════════════════════════════════════════
-     MOBILE PATH — vertical full-bleed card stack
+     MOBILE PATH
      ═══════════════════════════════════════════════════════════════ */
 
   function isMobile() {
@@ -88,53 +93,56 @@
   }
 
   function renderTitleHTML(raw) {
-    // Wrap the text after the first period-ish or after an italic hint.
-    // Our titles have no explicit <em> in data, so we italicize the last word
-    // when it's short and punchy. Simpler: preserve \n line breaks.
     return escapeHTML(raw).replace(/\n/g, "<br>");
   }
 
   function buildMobile() {
     if (!mobileContainer) return;
 
-    // Build the cards
-    var cardsHTML = SECTIONS.map(function (s, i) {
+    var slidesHTML = SECTIONS.map(function (s, i) {
       var wash0 = s.washColors[0];
       var wash1 = s.washColors[1];
       var wash2 = s.washColors[2];
+
+      // Background image set inline (avoids CSS custom-property quoting issues)
+      var bgImage = "background-image: url('" + s.image + "');";
+
+      var inlineStyle =
+        bgImage +
+        " --wash-0: " + wash0 + ";" +
+        " --wash-1: " + wash1 + ";" +
+        " --wash-2: " + wash2 + ";";
+
       return (
-        '<a class="hub-mobile__card" href="' + s.href + '" ' +
-          'data-index="' + i + '" ' +
-          'style="' +
-            '--card-image: url(' + s.image + ');' +
-            '--wash-0: ' + wash0 + ';' +
-            '--wash-1: ' + wash1 + ';' +
-            '--wash-2: ' + wash2 + ';' +
-          '">' +
-          '<span class="hub-mobile__eyebrow">' + escapeHTML(s.eyebrow) + '</span>' +
-          '<h2 class="hub-mobile__title">' + renderTitleHTML(s.title) + '</h2>' +
-          '<p class="hub-mobile__subtitle">' + escapeHTML(s.subtitle) + '</p>' +
-          '<p class="hub-mobile__summary">' + escapeHTML(s.summary) + '</p>' +
-          '<span class="hub-mobile__cta">Explore →</span>' +
-        '</a>'
+        '<div class="hub-mobile__slide">' +
+          '<a class="hub-mobile__card" href="' + s.href + '" ' +
+             'data-index="' + i + '" ' +
+             'style="' + inlineStyle + '">' +
+            '<span class="hub-mobile__eyebrow">' + escapeHTML(s.eyebrow) + '</span>' +
+            '<h2 class="hub-mobile__title">' + renderTitleHTML(s.title) + '</h2>' +
+            '<p class="hub-mobile__subtitle">' + escapeHTML(s.subtitle) + '</p>' +
+            '<p class="hub-mobile__summary">' + escapeHTML(s.summary) + '</p>' +
+            '<span class="hub-mobile__cta">' +
+              escapeHTML(s.ctaLabel) +
+              '<span class="hub-mobile__cta-arrow" aria-hidden="true">→</span>' +
+            '</span>' +
+          '</a>' +
+        '</div>'
       );
     }).join("");
 
-    // Progress dots
     var dotsHTML = SECTIONS.map(function (s, i) {
       return '<span class="hub-mobile__dot' + (i === 0 ? " is-active" : "") + '"></span>';
     }).join("");
 
     mobileContainer.innerHTML =
-      cardsHTML +
+      slidesHTML +
       '<div class="hub-mobile__dots" aria-hidden="true">' + dotsHTML + '</div>' +
       '<div class="hub-mobile__hint" id="hubMobileHint" aria-hidden="true">' +
         '<span>Scroll</span><span class="hub-mobile__hint-arrow">↓</span>' +
       '</div>';
 
-    // Update dots on scroll
     var dots = mobileContainer.querySelectorAll(".hub-mobile__dot");
-    var cards = mobileContainer.querySelectorAll(".hub-mobile__card");
     var hint = document.getElementById("hubMobileHint");
     var ticking = false;
 
@@ -167,23 +175,20 @@
   }
 
   /* ═══════════════════════════════════════════════════════════════
-     DESKTOP PATH — existing 3D carousel (unchanged)
+     DESKTOP PATH — unchanged
      ═══════════════════════════════════════════════════════════════ */
 
   function buildDesktop() {
     if (!canvas || typeof THREE === "undefined") return;
 
-    /* ─── DIMENSIONS ─── */
     var CARD_W = 7.6, CARD_H = 4.28, CARD_D = 0.10, FLOOR_Y = -2.9;
 
-    /* ─── CAMERA ─── */
     var BASE_CAM_POS = new THREE.Vector3(0, 0.15, 12.4);
     var BASE_CAM_LOOK = new THREE.Vector3(0, 0.0, 0);
 
     var width = hub.clientWidth || window.innerWidth;
     var height = hub.clientHeight || window.innerHeight;
 
-    /* ─── RENDERER ─── */
     var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(width, height);
@@ -198,7 +203,6 @@
     camera.position.copy(BASE_CAM_POS);
     camera.lookAt(BASE_CAM_LOOK);
 
-    /* ─── LIGHTS ─── */
     scene.add(new THREE.AmbientLight(0xffffff, 1.35));
     var keyLight = new THREE.DirectionalLight(0xffffff, 0.5);
     keyLight.position.set(-4, 8, 7);
@@ -213,7 +217,6 @@
       roughness: 0.65
     });
 
-    /* ═══ HELPERS ═══ */
     function wrapLines(ctx, text, maxWidth) {
       if (!text) return [];
       var paragraphs = text.split("\n");
@@ -231,7 +234,6 @@
       return allLines;
     }
 
-    /* ═══ CARD TEXTURE ═══ */
     function renderCardCanvas(c, section, index, image) {
       var W = 2200, H = 1237;
       c.width = W; c.height = H;
@@ -326,7 +328,6 @@
       }
     }
 
-    /* ═══ TEXTURES ═══ */
     var textures = [];
     var canvases = [];
 
@@ -351,7 +352,6 @@
       }
     });
 
-    /* ─── 3D CARD ARENA ─── */
     var arenaGroup = new THREE.Group();
     scene.add(arenaGroup);
 
@@ -432,7 +432,6 @@
 
     for (var i = 0; i < TOTAL; i++) buildCard(i, i);
 
-    /* ─── STATE ─── */
     var activeIndex = 0;
     var currentProgress = 0;
     var targetProgress = 0;
@@ -473,7 +472,6 @@
 
     startAutoPlay();
 
-    /* ─── CAROUSEL LAYOUT ─── */
     function layoutCards(prog) {
       for (var i = 0; i < TOTAL; i++) {
         var card = cards[i];
@@ -501,7 +499,6 @@
       }
     }
 
-    /* ─── INPUT ─── */
     var swipeLock = false;
     var swipeLockTimer = null;
 
@@ -626,7 +623,7 @@
   }
 
   /* ═══════════════════════════════════════════════════════════════
-     BOOT — pick the right path
+     BOOT
      ═══════════════════════════════════════════════════════════════ */
 
   if (isMobile()) {
