@@ -184,12 +184,6 @@
                 </g>
               </g>
 
-              <g class="psa-map__compass" aria-hidden="true">
-                <line x1="780" y1="40" x2="780" y2="72"/>
-                <polygon points="780,36 775,48 785,48"/>
-                <text x="780" y="90" text-anchor="middle">N</text>
-              </g>
-
             </svg>
 
             <div class="psa-map__tooltip" id="mapTooltipDesktop" aria-hidden="true"></div>
@@ -207,6 +201,22 @@
       <div class="psa-container psa-panel__content psa-panel__content--map">
 
         <div class="psa-map" data-reveal aria-label="Map of Ghana with regional presence">
+
+          <!-- Panel copy -->
+          <div class="psa-map__copy">
+            <span class="ps-eyebrow ps-eyebrow--light" data-reveal>Where We Operate</span>
+            <h3 class="psa-map__title" data-reveal>Across all 16 regions.</h3>
+            <p class="psa-map__lead" data-reveal>
+              Tap any region or marker to explore our coverage.
+            </p>
+          </div>
+
+          <!-- Info card — sits above the map, below the copy -->
+          <div class="psa-map__info" id="mapInfo" aria-hidden="true">
+            <span class="psa-map__info-label" id="mapInfoLabel"></span>
+            <button type="button" class="psa-map__info-close" id="mapInfoClose" aria-label="Close">×</button>
+          </div>
+
           <div class="psa-map__stage">
 
             <svg class="psa-map__svg"
@@ -281,20 +291,8 @@
                 </g>
               </g>
 
-              <g class="psa-map__compass" aria-hidden="true">
-                <line x1="780" y1="40" x2="780" y2="72"/>
-                <polygon points="780,36 775,48 785,48"/>
-                <text x="780" y="90" text-anchor="middle">N</text>
-              </g>
-
             </svg>
 
-          </div>
-
-          <!-- Info card for tap interaction (mobile only) -->
-          <div class="psa-map__info" id="mapInfo" aria-hidden="true">
-            <span class="psa-map__info-label" id="mapInfoLabel"></span>
-            <button type="button" class="psa-map__info-close" id="mapInfoClose" aria-label="Close">×</button>
           </div>
 
         </div>
