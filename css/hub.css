@@ -196,7 +196,7 @@ html, body {
   }
   .hub__brand img { height: 32px; }
 
-  /* ─── Scroller — NO perspective (was the dots bug) ─── */
+  /* ─── Scroller ─── */
   .hub-mobile {
     display: block;
     position: absolute;
@@ -246,7 +246,6 @@ html, body {
       0 0 0 1px rgba(255, 255, 255, 0.04) inset;
     isolation: isolate;
     -webkit-tap-highlight-color: transparent;
-    /* Focus effect: scale + opacity transition between states */
     transition:
       transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
       opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
@@ -295,9 +294,12 @@ html, body {
     background-repeat: no-repeat;
   }
 
-  /* ─── Focus states ───
-     Active card: full size, full opacity.
-     Neighbors: slightly smaller, dimmer. Transitions smoothly. */
+  /* ─── Contact card (index 4): sharpen image through the navy wash ─── */
+  .hub-mobile__card[data-index="4"] .hub-mobile__image {
+    filter: contrast(1.06) saturate(1.04) brightness(1.02);
+  }
+
+  /* ─── Focus states ─── */
   .hub-mobile__card.is-neighbor {
     transform: scale(0.94);
     opacity: 0.55;
@@ -405,7 +407,7 @@ html, body {
     transform: translateX(3px);
   }
 
-  /* ─── Dots — now truly fixed to viewport ─── */
+  /* ─── Dots ─── */
   .hub-mobile__dots {
     position: fixed;
     left: 50%;

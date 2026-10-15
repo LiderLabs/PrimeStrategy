@@ -73,7 +73,7 @@
       accent: "#FFEBD2",
       image: "images/card-contact.jpg",
       mobilePosition: "75% center",
-      washColors: ["rgba(120, 38, 8, 0.72)", "rgba(156, 51, 11, 0.58)", "rgba(90, 26, 4, 0.88)"]
+      washColors: ["rgba(20, 32, 58, 0.55)", "rgba(34, 46, 78, 0.42)", "rgba(12, 20, 40, 0.78)"]
     }
   ];
 
