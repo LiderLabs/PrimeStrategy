@@ -1,7 +1,7 @@
 /* ═══════════════════════════════════════════════════════════════
    PRIMESTRATEGY // ABOUT PAGE
    Background motion, reveals, CEO rule, closing underline,
-   Ghana map — panel-triggered draw-in, region + dot tooltips.
+   Ghana map — panel-triggered draw-in, region + dot interactions.
    Menu toggle is handled by js/nav.js — no menu code here.
    ═══════════════════════════════════════════════════════════════ */
 
@@ -153,90 +153,172 @@
     io.observe(line);
   }
 
-  /* ═══ GHANA MAP — draw-in + region/dot tooltips ═══ */
+  /* ═══ GHANA MAP ═══ */
   function initGhanaMap() {
     var mapWrap = document.querySelector(".psa-map");
-    var tooltip = document.getElementById("mapTooltip");
     if (!mapWrap) return;
 
-    /* ─── 1. Reveal animation trigger ─── */
-    if (typeof IntersectionObserver !== "undefined") {
-      var mapObserver = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            mapWrap.classList.add("is-revealed");
-            mapObserver.unobserve(mapWrap);
-          }
-        });
-      }, { threshold: 0.2, rootMargin: "0px 0px -10% 0px" });
-
-      mapObserver.observe(mapWrap);
-    } else {
-      mapWrap.classList.add("is-revealed");
-    }
-
-    /* ─── 2. Tooltips ───
-       Two groups now:
-       - .psa-map__region  → reads data-region
-       - .psa-map__dot-group → reads data-label
-       Dots sit on top in the SVG so they win pointer events naturally. */
-    if (!tooltip) return;
-
-    var regionEls = mapWrap.querySelectorAll(".psa-map__region");
-    var dotEls = mapWrap.querySelectorAll(".psa-map__dot-group");
-
-    if (!regionEls.length && !dotEls.length) return;
-
     var isCoarse = window.matchMedia("(pointer: coarse)").matches;
-    if (isCoarse) return;
 
-    function showTooltip(text, target) {
-      if (!text) return;
-
-      /* Position the tooltip above the hovered element's bounding-box center. */
-      var wrapRect = mapWrap.getBoundingClientRect();
-      var targetRect = target.getBoundingClientRect();
-
-      var cx = targetRect.left + targetRect.width / 2 - wrapRect.left;
-      var cy = targetRect.top + targetRect.height / 2 - wrapRect.top;
-
-      tooltip.textContent = text;
-      tooltip.style.left = cx + "px";
-      tooltip.style.top  = cy + "px";
-      tooltip.classList.add("is-visible");
-      tooltip.setAttribute("aria-hidden", "false");
-    }
-
-    function hideTooltip() {
-      tooltip.classList.remove("is-visible");
-      tooltip.setAttribute("aria-hidden", "true");
-    }
-
-    /* Region hover — show region name */
-    regionEls.forEach(function (el) {
-      el.addEventListener("mouseenter", function () {
-        showTooltip(el.getAttribute("data-region"), el);
-      });
-      el.addEventListener("mousemove", function () {
-        showTooltip(el.getAttribute("data-region"), el);
-      });
-      el.addEventListener("mouseleave", hideTooltip);
+    /* ─── 1. Reveal trigger ─── */
+    var maps = document.querySelectorAll(".psa-map");
+    maps.forEach(function (m) {
+      if (typeof IntersectionObserver !== "undefined") {
+        var mapObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-revealed");
+              mapObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.2, rootMargin: "0px 0px -10% 0px" });
+        mapObserver.observe(m);
+      } else {
+        m.classList.add("is-revealed");
+      }
     });
 
-    /* Dot hover — show dot label (region tooltip is superseded) */
-    dotEls.forEach(function (el) {
-      el.addEventListener("mouseenter", function (e) {
-        e.stopPropagation();
-        showTooltip(el.getAttribute("data-label"), el);
-      });
-      el.addEventListener("mousemove", function (e) {
-        e.stopPropagation();
-        showTooltip(el.getAttribute("data-label"), el);
-      });
-      el.addEventListener("mouseleave", hideTooltip);
-    });
+    /* ─── 2. Interactions ─── */
+    var desktopTooltip = document.getElementById("mapTooltipDesktop");
+    var mobileTooltip = document.getElementById("mapTooltip");
+    var mobileInfo = document.getElementById("mapInfo");
+    var mobileInfoLabel = document.getElementById("mapInfoLabel");
+    var mobileInfoClose = document.getElementById("mapInfoClose");
 
-    window.addEventListener("scroll", hideTooltip, { passive: true });
+    /* DESKTOP: hover tooltip */
+    if (!isCoarse && desktopTooltip) {
+      var desktopMap = document.querySelector(".psa-map--inline");
+      if (desktopMap) {
+        var regionEls = desktopMap.querySelectorAll(".psa-map__region");
+        var dotEls = desktopMap.querySelectorAll(".psa-map__dot-group");
+
+        function showDesktopTooltip(text, target) {
+          if (!text) return;
+          var wrapRect = desktopMap.getBoundingClientRect();
+          var targetRect = target.getBoundingClientRect();
+          var cx = targetRect.left + targetRect.width / 2 - wrapRect.left;
+          var cy = targetRect.top + targetRect.height / 2 - wrapRect.top;
+
+          desktopTooltip.textContent = text;
+          desktopTooltip.style.left = cx + "px";
+          desktopTooltip.style.top  = cy + "px";
+          desktopTooltip.classList.add("is-visible");
+          desktopTooltip.setAttribute("aria-hidden", "false");
+        }
+
+        function hideDesktopTooltip() {
+          desktopTooltip.classList.remove("is-visible");
+          desktopTooltip.setAttribute("aria-hidden", "true");
+        }
+
+        regionEls.forEach(function (el) {
+          el.addEventListener("mouseenter", function () {
+            showDesktopTooltip(el.getAttribute("data-region"), el);
+          });
+          el.addEventListener("mousemove", function () {
+            showDesktopTooltip(el.getAttribute("data-region"), el);
+          });
+          el.addEventListener("mouseleave", hideDesktopTooltip);
+        });
+
+        dotEls.forEach(function (el) {
+          el.addEventListener("mouseenter", function (e) {
+            e.stopPropagation();
+            showDesktopTooltip(el.getAttribute("data-label"), el);
+          });
+          el.addEventListener("mousemove", function (e) {
+            e.stopPropagation();
+            showDesktopTooltip(el.getAttribute("data-label"), el);
+          });
+          el.addEventListener("mouseleave", hideDesktopTooltip);
+        });
+
+        window.addEventListener("scroll", hideDesktopTooltip, { passive: true });
+      }
+    }
+
+    /* MOBILE: tap on region or dot → info card at bottom */
+    if (isCoarse) {
+      var mobileMapPanel = document.querySelector(".psa-panel--map");
+      if (!mobileMapPanel) return;
+
+      var mRegions = mobileMapPanel.querySelectorAll(".psa-map__region");
+      var mDots = mobileMapPanel.querySelectorAll(".psa-map__dot-group");
+
+      var currentSelection = null;
+
+      function clearSelection() {
+        if (currentSelection) {
+          currentSelection.classList.remove("is-selected");
+          currentSelection = null;
+        }
+      }
+
+      function showInfo(text, target) {
+        if (!mobileInfo || !mobileInfoLabel) return;
+        clearSelection();
+        target.classList.add("is-selected");
+        currentSelection = target;
+
+        mobileInfoLabel.textContent = text || "";
+        mobileInfo.classList.add("is-visible");
+        mobileInfo.setAttribute("aria-hidden", "false");
+      }
+
+      function hideInfo() {
+        if (!mobileInfo) return;
+        mobileInfo.classList.remove("is-visible");
+        mobileInfo.setAttribute("aria-hidden", "true");
+        clearSelection();
+      }
+
+      mRegions.forEach(function (el) {
+        el.addEventListener("click", function (e) {
+          e.stopPropagation();
+          var region = el.getAttribute("data-region");
+          if (currentSelection === el) {
+            hideInfo();
+            return;
+          }
+          showInfo(region, el);
+        });
+      });
+
+      mDots.forEach(function (el) {
+        el.addEventListener("click", function (e) {
+          e.stopPropagation();
+          var label = el.getAttribute("data-label");
+          if (currentSelection === el) {
+            hideInfo();
+            return;
+          }
+          showInfo(label, el);
+        });
+      });
+
+      if (mobileInfoClose) {
+        mobileInfoClose.addEventListener("click", function (e) {
+          e.stopPropagation();
+          hideInfo();
+        });
+      }
+
+      /* Tap anywhere on the panel background dismisses */
+      mobileMapPanel.addEventListener("click", function (e) {
+        var withinInteractive =
+          e.target.closest(".psa-map__region") ||
+          e.target.closest(".psa-map__dot-group") ||
+          e.target.closest(".psa-map__info");
+        if (!withinInteractive) hideInfo();
+      });
+
+      /* Hide on scroll away */
+      window.addEventListener("scroll", function () {
+        var rect = mobileMapPanel.getBoundingClientRect();
+        var vh = window.innerHeight;
+        if (rect.bottom < vh * 0.3 || rect.top > vh * 0.7) hideInfo();
+      }, { passive: true });
+    }
   }
 
   /* ═══ BOOT ═══ */

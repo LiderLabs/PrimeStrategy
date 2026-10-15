@@ -122,14 +122,16 @@ html, body {
   pointer-events: none;
 }
 
-.psa-panel--anchors .psa-panel__bg {
+.psa-panel--anchors .psa-panel__bg,
+.psa-panel--map .psa-panel__bg {
   background-color: #1E4FA8;
   background-image: url("../images/about-bg.jpg");
   background-size: cover;
   background-position: center;
   background-blend-mode: multiply;
 }
-.psa-panel--anchors .psa-panel__bg::after {
+.psa-panel--anchors .psa-panel__bg::after,
+.psa-panel--map .psa-panel__bg::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -269,10 +271,17 @@ html, body {
 @media (max-width: 900px) { .psa-panel__content { padding: 0 30px; } }
 @media (max-width: 600px) { .psa-panel__content { padding: 0 22px; } }
 
-/* Anchors panel content — pull block up out of the slide-over danger zone */
 .psa-panel__content--anchors {
   padding-top: 2vh;
   padding-bottom: 12vh;
+}
+
+/* Map panel content — centered map, room for the tap info card */
+.psa-panel__content--map {
+  padding-top: 4vh;
+  padding-bottom: 4vh;
+  max-height: 100%;
+  overflow: visible;
 }
 
 /* ═══ DISPLAY TYPOGRAPHY — Fraunces ═══ */
@@ -422,6 +431,13 @@ html, body {
   flex-direction: column;
   align-items: center;
   gap: 20px;
+  width: 100%;
+}
+.psa-map__stage {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 .psa-map__svg {
   width: 100%;
@@ -443,9 +459,13 @@ html, body {
     stroke 0.35s var(--ps-ease);
   cursor: pointer;
 }
-.psa-map__region:hover {
+.psa-map__region:hover,
+.psa-map__region.is-selected {
   fill: rgba(255, 235, 210, 0.22);
   stroke: #FFEBD2;
+}
+.psa-map__region.is-selected {
+  fill: rgba(255, 235, 210, 0.32);
 }
 
 /* Outline draw-in — applied to each region path */
@@ -481,10 +501,7 @@ html, body {
 .psa-map__region:nth-of-type(16) { transition-delay: 0.90s, 0s, 0s; }
 
 /* ═══ MAP — CONNECTING LINES ═══ */
-.psa-map__lines {
-  pointer-events: none;
-}
-
+.psa-map__lines { pointer-events: none; }
 .psa-map__line {
   stroke: #E86A34;
   stroke-width: 1.1;
@@ -492,42 +509,34 @@ html, body {
   opacity: 0;
   transition: opacity 1.2s var(--ps-ease) 1.2s;
 }
-
 .psa-panel.is-active .psa-map__line,
 .psa-map.is-revealed .psa-map__line {
   opacity: 0.55;
 }
 
 /* ═══ MAP — DOTS ═══ */
-.psa-map__dots {
-  position: relative;
-}
-
-.psa-map__dot-group {
-  cursor: pointer;
-}
-
+.psa-map__dots { position: relative; }
+.psa-map__dot-group { cursor: pointer; }
 .psa-map__dot {
   fill: #E86A34;
   stroke: #FFFFFF;
   stroke-width: 1.2;
   transition: r 0.3s var(--ps-ease), fill 0.3s var(--ps-ease), stroke 0.3s var(--ps-ease);
 }
-
 .psa-map__dot--hq {
   fill: #E86A34;
   stroke: #FFFFFF;
   stroke-width: 1.5;
   filter: drop-shadow(0 0 6px rgba(232, 106, 52, 0.9));
 }
-
-.psa-map__dot-group:hover .psa-map__dot {
+.psa-map__dot-group:hover .psa-map__dot,
+.psa-map__dot-group.is-selected .psa-map__dot {
   r: 7;
   fill: #FFEBD2;
   stroke: #E86A34;
 }
-
-.psa-map__dot-group:hover .psa-map__dot--hq {
+.psa-map__dot-group:hover .psa-map__dot--hq,
+.psa-map__dot-group.is-selected .psa-map__dot--hq {
   r: 7;
   fill: #FFEBD2;
   stroke: #E86A34;
@@ -573,7 +582,7 @@ html, body {
   to   { transform: rotate(360deg); }
 }
 
-/* ═══ MAP — TOOLTIP ═══ */
+/* ═══ MAP — TOOLTIP (desktop hover) ═══ */
 .psa-map__tooltip {
   position: absolute;
   pointer-events: none;
@@ -593,20 +602,97 @@ html, body {
   z-index: 5;
   box-shadow: 0 8px 20px -6px rgba(10, 30, 69, 0.55);
 }
-
 .psa-map__tooltip.is-visible {
   opacity: 1;
   transform: translate(-50%, calc(-100% - 14px)) scale(1);
 }
 
+/* ═══ MAP — INFO CARD (mobile tap) ═══ */
+.psa-map__info {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 12px;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 18px;
+  border-radius: 14px;
+  background: rgba(6, 18, 42, 0.92);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  border: 1px solid rgba(255, 235, 210, 0.22);
+  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.6);
+  color: #FFFFFF;
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  transition: opacity 0.35s var(--ps-ease), transform 0.35s var(--ps-ease);
+}
+.psa-map__info.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.psa-map__info-label {
+  font-family: var(--ps-font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.005em;
+  color: #FFFFFF;
+  flex: 1;
+}
+.psa-map__info-close {
+  flex: 0 0 auto;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: transparent;
+  color: #FFFFFF;
+  font-size: 16px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.25s var(--ps-ease), border-color 0.25s var(--ps-ease);
+}
+.psa-map__info-close:hover,
+.psa-map__info-close:focus-visible {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.42);
+}
+
 /* ═══ RESPONSIVE — ANCHORS PANEL ═══ */
+
+/* Desktop: hide the mobile-only map panel */
+.psa-panel--map { display: none; }
+
 @media (max-width: 900px) {
+  /* The inline map is hidden on mobile — the dedicated panel handles it */
+  .psa-map--inline { display: none; }
+
+  /* Show the mobile map panel */
+  .psa-panel--map { display: flex; }
+
   .psa-anchors__split {
     grid-template-columns: 1fr;
     gap: 40px;
   }
   .psa-anchors__head { max-width: 100%; }
-  .psa-map__svg { max-width: 340px; }
+
+  /* Map panel sizing on mobile: bigger map, room for info card below */
+  .psa-map__svg { max-width: 88vw; }
+  .psa-map__stage { padding-bottom: 76px; }
+  .psa-panel__content--map {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 }
 
 @media (max-width: 720px) {
@@ -620,11 +706,12 @@ html, body {
 }
 
 @media (max-width: 600px) {
-  .psa-map__svg { max-width: 300px; }
+  .psa-map__svg { max-width: 92vw; }
   .psa-map__compass text { font-size: 11px; }
+  .psa-map__info-label { font-size: 13px; }
 }
 
-/* Reduced motion: show final state of all map animations */
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .psa-map__region {
     stroke-dashoffset: 0 !important;
