@@ -1,8 +1,7 @@
 /* ═══════════════════════════════════════════════════════════════
    PRIMESTRATEGY // SERVICES PAGE
-   Night Atelier. Shutter transitions. Reveals. Parallax.
+   Split reveal with pre-split seam draw. Reveals. Parallax.
    Menu toggle is handled by js/nav.js.
-   No overlay, no click-to-reveal — full content is on the page.
    ═══════════════════════════════════════════════════════════════ */
 
 (function () {
@@ -10,7 +9,7 @@
 
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* ═══ REVEALS + SHUTTER ═══ */
+  /* ═══ REVEALS + SPLIT REVEAL ═══ */
   function initReveals() {
     var revealables = document.querySelectorAll("[data-reveal]");
     var disciplines = document.querySelectorAll(".svc-disc");
@@ -22,7 +21,7 @@
       return;
     }
 
-    // Reveal observer for text + list rows
+    /* Reveal observer — text + list rows fade in once. */
     var revealObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
@@ -37,19 +36,42 @@
 
     revealables.forEach(function (el) { revealObserver.observe(el); });
 
-    // Shutter observer for the wipe transition on each discipline
-    var shutterObserver = new IntersectionObserver(function (entries) {
+    /* Split-reveal observer.
+       Two zones:
+       - "pre" — section is approaching the middle band. Seam draws in.
+       - "active" — section is centered in the band. Panels split.
+       Both clear when the section leaves the viewport band. */
+
+    var preObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
-          entry.target.classList.add("is-active");
+          entry.target.classList.add("is-pre");
+        } else {
+          entry.target.classList.remove("is-pre");
         }
       });
     }, {
-      rootMargin: "-15% 0px -35% 0px",
+      rootMargin: "-10% 0px -10% 0px",
       threshold: 0
     });
 
-    disciplines.forEach(function (el) { shutterObserver.observe(el); });
+    var activeObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-active");
+        } else {
+          entry.target.classList.remove("is-active");
+        }
+      });
+    }, {
+      rootMargin: "-28% 0px -28% 0px",
+      threshold: 0
+    });
+
+    disciplines.forEach(function (el) {
+      preObserver.observe(el);
+      activeObserver.observe(el);
+    });
   }
 
   /* ═══ PARALLAX BACKGROUND ═══ */
