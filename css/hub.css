@@ -1,7 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════
    PRIMESTRATEGY // HUB
    Styles for index.html only — the 3D card landing page.
-   Photographic background + brand-colour gradient wash.
    Desktop: 3D carousel. Mobile: vertical full-bleed card stack.
    ═══════════════════════════════════════════════════════════════ */
 
@@ -126,8 +125,7 @@ html, body {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   MOBILE HUB — vertical full-bleed card stack
-   Hidden on desktop. Built and shown by hub.js when viewport ≤ 900px.
+   MOBILE HUB — vertical stack over the hub background
    ═══════════════════════════════════════════════════════════════ */
 
 .hub-mobile {
@@ -136,40 +134,70 @@ html, body {
 
 @media (max-width: 900px) {
 
-  /* Disable the whole desktop pipeline on mobile */
+  /* Hide canvas on mobile — the 3D rig is desktop-only */
   #hub-canvas { display: none !important; }
-  .hub__backdrop,
-  .hub__bg-image,
-  .hub__bg-wash,
-  .hub__vignette { display: none !important; }
 
-  .hub {
-    background: #0A1E45;
-    overflow: hidden;
+  /* Mobile-only: darken the hub background so cards pop in the gaps */
+  .hub { background: #061428; }
+
+  .hub__bg-image {
+    filter: blur(6px) saturate(110%) brightness(0.55);
+    opacity: 0.55;
+    inset: -6%;
   }
 
-  /* ─── Logo pill — sits behind the logo so it reads on any card ─── */
+  .hub__bg-wash {
+    background:
+      radial-gradient(
+        ellipse 80% 60% at 30% 25%,
+        rgba(212, 82, 30, 0.22) 0%,
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 75% 65% at 80% 80%,
+        rgba(14, 47, 107, 0.32) 0%,
+        transparent 70%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(6, 20, 40, 0.72) 0%,
+        rgba(6, 20, 40, 0.55) 50%,
+        rgba(4, 12, 26, 0.78) 100%
+      );
+  }
+
+  .hub__vignette {
+    background: radial-gradient(
+      ellipse 100% 90% at 50% 45%,
+      transparent 40%,
+      rgba(0, 0, 0, 0.55) 100%
+    );
+  }
+
+  /* ─── Logo — plain image, no container ─── */
   .hub__topbar {
     top: 18px;
     left: 16px;
     z-index: 50;
   }
   .hub__brand {
-    padding: 10px 14px;
-    border-radius: 14px;
-    background: rgba(10, 30, 69, 0.42);
-    backdrop-filter: blur(14px) saturate(160%);
-    -webkit-backdrop-filter: blur(14px) saturate(160%);
-    border: 1px solid rgba(255, 235, 210, 0.18);
-    filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.35));
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: none;
+    filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.55))
+            drop-shadow(0 0 2px rgba(0, 0, 0, 0.40));
   }
   .hub__brand:hover {
     transform: none;
-    filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.35));
+    filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.55))
+            drop-shadow(0 0 2px rgba(0, 0, 0, 0.40));
   }
-  .hub__brand img { height: 30px; }
+  .hub__brand img { height: 32px; }
 
-  /* ─── Mobile scroller ─── */
+  /* ─── Scroller — transparent, backgrounds show through gaps ─── */
   .hub-mobile {
     display: block;
     position: absolute;
@@ -180,25 +208,26 @@ html, body {
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
-    background: #0A1E45;
+    background: transparent;
+    perspective: 1200px;
   }
   .hub-mobile::-webkit-scrollbar { display: none; }
   .hub-mobile { scrollbar-width: none; }
 
-  /* ─── Card wrapper — each snap section ─── */
+  /* ─── Each snap section ─── */
   .hub-mobile__slide {
     scroll-snap-align: start;
     scroll-snap-stop: always;
     height: 100vh;
     height: 100svh;
-    padding: 76px 14px 96px;
+    padding: 70px 14px 96px;
     box-sizing: border-box;
     display: flex;
     align-items: stretch;
     justify-content: stretch;
   }
 
-  /* ─── The card itself — inset, rounded, bordered ─── */
+  /* ─── The card ─── */
   .hub-mobile__card {
     position: relative;
     width: 100%;
@@ -218,16 +247,21 @@ html, body {
     background-repeat: no-repeat;
     border: 1px solid rgba(255, 235, 210, 0.22);
     box-shadow:
-      0 30px 60px -30px rgba(0, 0, 0, 0.65),
+      0 30px 60px -30px rgba(0, 0, 0, 0.75),
       0 0 0 1px rgba(255, 255, 255, 0.04) inset;
     isolation: isolate;
-    transition: transform 0.22s var(--ps-ease, ease),
-                border-color 0.22s var(--ps-ease, ease),
-                box-shadow 0.22s var(--ps-ease, ease);
+    transform: translateY(var(--card-enter-y, 0px)) scale(var(--card-enter-scale, 1));
+    opacity: var(--card-enter-opacity, 1);
+    transition:
+      transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.22s ease,
+      box-shadow 0.22s ease;
     -webkit-tap-highlight-color: transparent;
+    will-change: transform, opacity;
   }
 
-  /* Brand wash overlay — sits over the background image */
+  /* Parallax on the background image layer */
   .hub-mobile__card::before {
     content: "";
     position: absolute;
@@ -240,9 +274,10 @@ html, body {
       var(--wash-1) 45%,
       var(--wash-2) 100%
     );
+    transform: scale(calc(1 + var(--parallax, 0) * 0.04));
   }
 
-  /* Bottom-up dark scrim for text legibility */
+  /* Bottom-up scrim for legibility */
   .hub-mobile__card::after {
     content: "";
     position: absolute;
@@ -253,21 +288,33 @@ html, body {
       180deg,
       transparent 0%,
       transparent 40%,
-      rgba(0, 0, 0, 0.28) 65%,
-      rgba(0, 0, 0, 0.68) 100%
+      rgba(0, 0, 0, 0.32) 65%,
+      rgba(0, 0, 0, 0.72) 100%
     );
   }
 
-  /* ─── Tap feedback ─── */
-  .hub-mobile__card:active {
-    transform: scale(0.986);
-    border-color: rgba(255, 235, 210, 0.45);
-    box-shadow:
-      0 18px 40px -24px rgba(0, 0, 0, 0.72),
-      0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+  /* Image layer — moves slightly with scroll for parallax depth */
+  .hub-mobile__image {
+    position: absolute;
+    inset: -6% 0;
+    z-index: -1;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transform: translate3d(0, var(--parallax-y, 0px), 0);
+    will-change: transform;
   }
 
-  /* ─── Card content — above image, wash, scrim ─── */
+  /* ─── Press feedback ─── */
+  .hub-mobile__card:active {
+    transform: scale(0.985) !important;
+    border-color: rgba(255, 235, 210, 0.55);
+    box-shadow:
+      0 18px 40px -24px rgba(0, 0, 0, 0.85),
+      0 0 0 1px rgba(255, 255, 255, 0.10) inset;
+  }
+
+  /* ─── Content — above all layers ─── */
   .hub-mobile__eyebrow,
   .hub-mobile__title,
   .hub-mobile__subtitle,
@@ -275,6 +322,11 @@ html, body {
   .hub-mobile__cta {
     position: relative;
     z-index: 2;
+    transition:
+      opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: var(--content-opacity, 1);
+    transform: translateY(var(--content-y, 0px));
   }
 
   .hub-mobile__eyebrow {
@@ -285,7 +337,8 @@ html, body {
     text-transform: uppercase;
     color: #FFEBD2;
     margin: 0 0 16px;
-    opacity: 0.94;
+    opacity: calc(0.94 * var(--content-opacity, 1));
+    transition-delay: 0s;
   }
 
   .hub-mobile__title {
@@ -296,7 +349,8 @@ html, body {
     line-height: 1.03;
     margin: 0 0 16px;
     color: #FFFFFF;
-    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.40);
+    transition-delay: 0.06s;
   }
 
   .hub-mobile__title em {
@@ -311,7 +365,8 @@ html, body {
     line-height: 1.45;
     color: rgba(255, 255, 255, 0.95);
     margin: 0 0 14px;
-    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.30);
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
+    transition-delay: 0.12s;
   }
 
   .hub-mobile__summary {
@@ -319,16 +374,17 @@ html, body {
     font-size: 13.5px;
     font-weight: 400;
     line-height: 1.55;
-    color: rgba(255, 255, 255, 0.84);
+    color: rgba(255, 255, 255, 0.86);
     margin: 0;
     display: -webkit-box;
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.28);
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.32);
+    transition-delay: 0.18s;
   }
 
-  /* ─── Per-card CTA button ─── */
+  /* ─── CTA button ─── */
   .hub-mobile__cta {
     display: inline-flex;
     align-items: center;
@@ -344,14 +400,15 @@ html, body {
     font-weight: 700;
     letter-spacing: 0.02em;
     box-shadow:
-      0 12px 26px -12px rgba(0, 0, 0, 0.55),
+      0 12px 26px -12px rgba(0, 0, 0, 0.65),
       0 0 0 1px rgba(255, 255, 255, 0.6) inset;
-    transition: transform 0.22s var(--ps-ease, ease), background 0.22s var(--ps-ease, ease);
+    transition: transform 0.22s ease, background 0.22s ease;
+    transition-delay: 0.24s;
   }
 
   .hub-mobile__cta-arrow {
     display: inline-block;
-    transition: transform 0.28s var(--ps-ease, ease);
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
     font-size: 15px;
     line-height: 1;
   }
@@ -363,7 +420,7 @@ html, body {
     transform: translateX(3px);
   }
 
-  /* ─── Fixed progress dots ─── */
+  /* ─── Dots ─── */
   .hub-mobile__dots {
     position: fixed;
     left: 50%;
@@ -386,8 +443,7 @@ html, body {
     height: 6px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.35);
-    transition: background 0.35s var(--ps-ease, ease),
-                transform 0.35s var(--ps-ease, ease);
+    transition: background 0.35s ease, transform 0.35s ease;
   }
 
   .hub-mobile__dot.is-active {
@@ -395,7 +451,7 @@ html, body {
     transform: scale(1.4);
   }
 
-  /* ─── Scroll hint (first card only) ─── */
+  /* ─── Scroll hint ─── */
   .hub-mobile__hint {
     position: fixed;
     left: 50%;
@@ -418,7 +474,7 @@ html, body {
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.88);
     pointer-events: none;
-    transition: opacity 0.5s var(--ps-ease, ease), transform 0.5s var(--ps-ease, ease);
+    transition: opacity 0.5s ease, transform 0.5s ease;
   }
 
   .hub-mobile__hint.is-hidden {
@@ -435,11 +491,30 @@ html, body {
     0%, 100% { transform: translateY(0); }
     50%      { transform: translateY(4px); }
   }
+
+  /* Card fully off-screen — entrance state */
+  .hub-mobile__card[data-enter="pending"] {
+    --card-enter-y: 40px;
+    --card-enter-scale: 0.96;
+    --card-enter-opacity: 0;
+    --content-opacity: 0;
+    --content-y: 24px;
+  }
 }
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .hub-mobile__hint-arrow { animation: none !important; }
   .hub-mobile { scroll-behavior: auto; }
-  .hub-mobile__card { transition: none !important; }
+  .hub-mobile__card,
+  .hub-mobile__eyebrow,
+  .hub-mobile__title,
+  .hub-mobile__subtitle,
+  .hub-mobile__summary,
+  .hub-mobile__cta { transition: none !important; }
+  .hub-mobile__card[data-enter="pending"] {
+    --card-enter-opacity: 1;
+    --content-opacity: 1;
+    --content-y: 0px;
+  }
 }
