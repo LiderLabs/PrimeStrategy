@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="css/case-study.css">
 </head>
 
-<body class="ps-page-body cs-body" data-active-theme="orange">
+<body class="ps-page-body cs-body">
 
   <div class="ps-cursor-dot"></div>
   <div class="ps-cursor-ring"></div>
@@ -30,6 +30,15 @@
     </div>
     <div class="psa-doors__seam"></div>
     <div class="psa-doors__ring"></div>
+  </div>
+
+  <!-- ═══ FIXED BACKGROUND LAYER ═══
+       One image, one wash, one scrim — visible behind the whole filmstrip.
+       The panels themselves are transparent. -->
+  <div class="cs-bg" aria-hidden="true">
+    <div class="cs-bg__image"></div>
+    <div class="cs-bg__wash"></div>
+    <div class="cs-bg__vignette"></div>
   </div>
 
   <!-- ═══ MOUSE GLOW ═══ -->
@@ -66,8 +75,8 @@
   <main class="cs-film" id="csFilm">
     <div class="cs-track" id="csTrack">
 
-      <!-- PANEL 1 — COVER (Brand Orange) -->
-      <section class="cs-panel cs-panel--cover is-active" data-panel="0" data-theme="orange">
+      <!-- PANEL 1 — COVER -->
+      <section class="cs-panel cs-panel--cover is-active" data-panel="0">
         <div class="cs-panel__inner">
           <div class="cs-panel__head">
             <span class="cs-eyebrow" data-pixel-text>Industry Brief</span>
@@ -81,8 +90,8 @@
         </div>
       </section>
 
-      <!-- PANEL 2 — THE MARKET (Brand Navy) -->
-      <section class="cs-panel" data-panel="1" data-theme="navy">
+      <!-- PANEL 2 — THE MARKET -->
+      <section class="cs-panel" data-panel="1">
         <div class="cs-panel__inner">
           <div class="cs-panel__head">
             <span class="cs-eyebrow" data-pixel-text>The Market</span>
@@ -97,8 +106,8 @@
         </div>
       </section>
 
-      <!-- PANEL 3 — THE GHANAIAN SECTOR (Editorial White) -->
-      <section class="cs-panel" data-panel="2" data-theme="white">
+      <!-- PANEL 3 — THE GHANAIAN SECTOR -->
+      <section class="cs-panel" data-panel="2">
         <div class="cs-panel__inner">
           <div class="cs-panel__head">
             <span class="cs-eyebrow" data-pixel-text>The Ghanaian Sector</span>
@@ -130,8 +139,8 @@
         </div>
       </section>
 
-      <!-- PANEL 4 — CHALLENGES AND REFORM (Slate Grey) -->
-      <section class="cs-panel" data-panel="3" data-theme="grey">
+      <!-- PANEL 4 — CHALLENGES AND REFORM -->
+      <section class="cs-panel" data-panel="3">
         <div class="cs-panel__inner">
           <div class="cs-panel__head">
             <span class="cs-eyebrow" data-pixel-text>Challenges and Reform</span>
@@ -146,8 +155,8 @@
         </div>
       </section>
 
-      <!-- PANEL 5 — WHAT THIS MEANS (Cobalt Blue) -->
-      <section class="cs-panel" data-panel="4" data-theme="blue">
+      <!-- PANEL 5 — WHAT THIS MEANS -->
+      <section class="cs-panel" data-panel="4">
         <div class="cs-panel__inner">
           <div class="cs-panel__head">
             <span class="cs-eyebrow" data-pixel-text>What This Means for Enterprises</span>
@@ -163,8 +172,8 @@
         </div>
       </section>
 
-      <!-- PANEL 6 — CLOSE (Deep Orange) -->
-      <section class="cs-panel cs-panel--close" data-panel="5" data-theme="deeporange">
+      <!-- PANEL 6 — CLOSE -->
+      <section class="cs-panel cs-panel--close" data-panel="5">
         <div class="cs-panel__inner">
           <div class="cs-panel__head">
             <span class="cs-eyebrow" data-pixel-text>Continue</span>
@@ -199,7 +208,7 @@
       var lastPanelIndex = -1;
       var ticking = false;
 
-      /* ═══ ORIGINAL TEXT SCRAMBLE (Glyphs Preserved) ═══ */
+      /* ═══ PIXEL TEXT SCRAMBLE ═══ */
       var pixelGlyphs = ["█", "▓", "▒", "░", "■", "▀", "▄", "▌", "▐"];
 
       function runPixelTextScramble(element, onProgress, onComplete) {
@@ -249,33 +258,17 @@
         }, 28);
       }
 
-      /* ═══ SECTION ARRIVAL: Scramble Drives Section Color Shift ═══ */
+      /* ═══ PANEL ARRIVAL — scramble text, no color shift ═══ */
       function triggerPanelArrival(panel) {
         panel.classList.add("is-active");
-        panel.classList.remove("is-color-settled");
-        panel.style.setProperty("--cs-scramble-progress", "0");
-
-        var activeTheme = panel.getAttribute("data-theme") || "orange";
-        document.body.setAttribute("data-active-theme", activeTheme);
 
         var textTargets = panel.querySelectorAll("[data-pixel-text]");
-        var targetsCount = textTargets.length;
-        var finishedCount = 0;
-
         textTargets.forEach(function (el) {
-          runPixelTextScramble(el, function (scrambleProgress) {
-            panel.style.setProperty("--cs-scramble-progress", scrambleProgress.toFixed(3));
-          }, function () {
-            finishedCount++;
-            if (finishedCount >= targetsCount) {
-              panel.style.setProperty("--cs-scramble-progress", "1");
-              panel.classList.add("is-color-settled");
-            }
-          });
+          runPixelTextScramble(el);
         });
       }
 
-      /* ═══ SCROLL DRIVER WITH PARALLEL SPLIT ENTRY/EXIT ═══ */
+      /* ═══ SCROLL DRIVER ═══ */
       function updateScroll() {
         if (window.innerWidth <= 900) return;
 
@@ -295,9 +288,7 @@
         rawProgress = progress * (total - 1);
         var activeIdx = Math.round(rawProgress);
 
-        /* Parallel opposing glide:
-           Left column enters from bottom & exits to top.
-           Right column enters from top & exits to bottom. */
+        /* Parallel opposing glide */
         panels.forEach(function (panel, i) {
           var dist = rawProgress - i;
 
@@ -317,8 +308,6 @@
               triggerPanelArrival(p);
             } else {
               p.classList.remove("is-active");
-              p.classList.remove("is-color-settled");
-              p.style.setProperty("--cs-scramble-progress", "0");
             }
           });
         }
