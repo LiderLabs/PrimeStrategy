@@ -301,7 +301,7 @@ html, body {
   font-weight: 700;
   line-height: 1.08;
   letter-spacing: -0.025em;
-  color: var(--ps-ink);
+  color: #FFFFFF; /* <--- CHANGED TO WHITE */
   margin: 0 0 40px;
 }
 .psa-panel__title {
