@@ -24,7 +24,7 @@
       ctaLabel: "Open About",
       accent: "#FFEBD2",
       image: "images/about-bg.jpg",
-      washColors: ["rgba(10, 30, 69, 0.82)", "rgba(14, 47, 107, 0.72)", "rgba(6, 18, 42, 0.92)"]
+      washColors: ["rgba(20, 32, 58, 0.75)", "rgba(34, 46, 78, 0.60)", "rgba(12, 20, 40, 0.88)"]
     },
     {
       id: "services",
@@ -36,7 +36,7 @@
       ctaLabel: "View Services",
       accent: "#FFEBD2",
       image: "images/card-services.jpg",
-      washColors: ["rgba(140, 42, 10, 0.82)", "rgba(178, 63, 18, 0.70)", "rgba(100, 30, 6, 0.92)"]
+      washColors: ["rgba(20, 32, 58, 0.75)", "rgba(34, 46, 78, 0.60)", "rgba(12, 20, 40, 0.88)"]
     },
     {
       id: "casestudy",
@@ -48,7 +48,7 @@
       ctaLabel: "Read the Brief",
       accent: "#E86A34",
       image: "images/card-casestudy.jpg",
-      washColors: ["rgba(6, 23, 53, 0.86)", "rgba(10, 30, 69, 0.72)", "rgba(4, 14, 34, 0.94)"]
+      washColors: ["rgba(20, 32, 58, 0.75)", "rgba(34, 46, 78, 0.60)", "rgba(12, 20, 40, 0.88)"]
     },
     {
       id: "careers",
@@ -60,7 +60,7 @@
       ctaLabel: "View Open Roles",
       accent: "#FFEBD2",
       image: "images/card-careers.jpg",
-      washColors: ["rgba(14, 47, 107, 0.82)", "rgba(30, 79, 168, 0.70)", "rgba(10, 30, 69, 0.92)"]
+      washColors: ["rgba(20, 32, 58, 0.75)", "rgba(34, 46, 78, 0.60)", "rgba(12, 20, 40, 0.88)"]
     },
     {
       id: "contact",
@@ -123,7 +123,6 @@
             '<p class="hub-mobile__summary">' + escapeHTML(s.summary) + '</p>' +
             '<span class="hub-mobile__cta">' +
               escapeHTML(s.ctaLabel) +
-              '<span class="hub-mobile__cta-arrow" aria-hidden="true">→</span>' +
             '</span>' +
           '</a>' +
         '</div>'
@@ -185,6 +184,55 @@
       ticking = true;
       requestAnimationFrame(updateOnScroll);
     }, { passive: true });
+
+    /* ═══ SWIPE NAVIGATION LOGIC ═══ */
+    var touchStartY = 0;
+    var touchEndY = 0;
+    var isSwiping = false;
+    var swipeThreshold = 50; // Minimum distance to count as a swipe
+
+    mobileContainer.addEventListener("touchstart", function (e) {
+      touchStartY = e.touches[0].clientY;
+      isSwiping = false;
+    }, { passive: true });
+
+    mobileContainer.addEventListener("touchmove", function (e) {
+      touchEndY = e.touches[0].clientY;
+      // If vertical movement is substantial, mark as swiping
+      if (Math.abs(touchEndY - touchStartY) > 10) {
+        isSwiping = true;
+      }
+    }, { passive: true });
+
+    mobileContainer.addEventListener("touchend", function (e) {
+      if (!isSwiping) return; // Let the click event fire for taps
+
+      var distance = touchStartY - touchEndY;
+      var vh = window.innerHeight;
+      
+      if (Math.abs(distance) > swipeThreshold) {
+        // Swipe Up (scroll down/next)
+        if (distance > 0) {
+          var nextIndex = Math.min(lastIdx + 1, cards.length - 1);
+          mobileContainer.scrollTo({ top: nextIndex * vh, behavior: 'smooth' });
+        } 
+        // Swipe Down (scroll up/prev)
+        else {
+          var prevIndex = Math.max(lastIdx - 1, 0);
+          mobileContainer.scrollTo({ top: prevIndex * vh, behavior: 'smooth' });
+        }
+      }
+
+      // Prevent the click event from firing if a swipe occurred
+      if (isSwiping) {
+        e.preventDefault();
+      }
+      
+      // Reset
+      touchStartY = 0;
+      touchEndY = 0;
+      isSwiping = false;
+    }, { passive: false }); // Note: passive false is needed to preventDefault
 
     window.addEventListener("resize", updateOnScroll);
 
@@ -295,13 +343,10 @@
       ctx.fillStyle = vig;
       ctx.fillRect(0, 0, W, H);
 
-      /* ─── TEXT LAYOUT ─── */
       var padX = 140;
       var padRight = W - 140;
       var padTop = 160;
-      var padBottom = 160;
 
-      // Draw eyebrow if it exists
       if (section.eyebrow) {
         ctx.fillStyle = section.accent;
         ctx.font = "700 34px 'JetBrains Mono', Menlo, monospace";
@@ -311,7 +356,6 @@
         ctx.fillText(section.eyebrow, padX, padTop);
       }
 
-      // Measure blocks to calculate total height for vertical centering
       ctx.fillStyle = "#FFFFFF";
       ctx.font = "700 130px 'Fraunces', 'Playfair Display', Georgia, serif";
       ctx.letterSpacing = "-0.035em";
@@ -330,21 +374,16 @@
       var sumLines = wrapLines(ctx, section.summary, padRight - padX);
       var sumHeight = (Math.min(sumLines.length, 5) * 68);
 
-      // Calculate spacing between blocks
-      var gaps = 60; // Gap between title, subtitle, summary
+      var gaps = 60; 
       var totalTextHeight = titleHeight + gaps + subHeight + gaps + sumHeight;
+      var startY = (H - totalTextHeight) / 2 - 60;
       
-      // Center the whole text block vertically if it's shorter than the card
-      var startY = (H - totalTextHeight) / 2 - 60; // -60 accounts for visual baseline
-      
-      // If we have an eyebrow, adjust the title down slightly
       if (section.eyebrow) {
         startY = padTop + 100;
       }
 
       var currentY = startY;
 
-      // Draw Title
       ctx.fillStyle = "#FFFFFF";
       ctx.font = "700 130px 'Fraunces', 'Playfair Display', Georgia, serif";
       ctx.letterSpacing = "-0.035em";
@@ -353,7 +392,6 @@
       }
       currentY += titleHeight + gaps;
 
-      // Draw Subtitle
       ctx.fillStyle = "rgba(255, 255, 255, 0.98)";
       ctx.font = "600 52px -apple-system, BlinkMacSystemFont, 'Inter', sans-serif";
       ctx.letterSpacing = "-0.010em";
@@ -362,7 +400,6 @@
       }
       currentY += subHeight + gaps;
 
-      // Draw Summary
       ctx.fillStyle = "rgba(255, 255, 255, 0.96)";
       ctx.font = "500 48px -apple-system, BlinkMacSystemFont, 'Inter', sans-serif";
       ctx.letterSpacing = "-0.008em";
