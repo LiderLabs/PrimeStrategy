@@ -87,6 +87,23 @@ html, body {
   );
 }
 
+/* ═══ NEW: TOP SCRIM FOR LOGO CONTRAST ═══ */
+.hub__topbar::before {
+  content: "";
+  position: absolute;
+  top: -32px; /* Stretch above the topbar */
+  left: -44px; /* Stretch left */
+  right: -100vw; /* Stretch across the whole screen */
+  height: 140px; /* Fade height */
+  background: linear-gradient(
+    180deg,
+    rgba(10, 30, 69, 0.65) 0%,
+    rgba(10, 30, 69, 0.0) 100%
+  );
+  z-index: -1;
+  pointer-events: none;
+}
+
 #hub-canvas {
   position: absolute;
   inset: 0;
@@ -112,11 +129,11 @@ html, body {
   display: inline-block;
   text-decoration: none;
   transition: transform 0.4s var(--ps-ease), filter 0.4s var(--ps-ease);
-  filter: drop-shadow(0 4px 12px rgba(10, 30, 69, 0.18));
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.25));
 }
 .hub__brand:hover {
   transform: translateY(-2px);
-  filter: drop-shadow(0 8px 20px rgba(10, 30, 69, 0.24));
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.35));
 }
 .hub__brand img {
   display: block;
@@ -179,6 +196,14 @@ html, body {
     left: 16px;
     z-index: 50;
   }
+  
+  /* Update mobile scrim position */
+  .hub__topbar::before {
+    top: -18px;
+    left: -16px;
+    height: 100px;
+  }
+
   .hub__brand {
     padding: 0;
     border-radius: 0;
