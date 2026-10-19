@@ -419,6 +419,24 @@ body.cs-body {
         rgba(244, 245, 247, 0.78) 60%,
         rgba(240, 242, 245, 0.88) 100%);
   }
+
+  /* Light theme mobile menu */
+  .ps-nav__links {
+    background: #FFFFFF;
+    border-bottom-color: var(--ps-hairline);
+  }
+  .ps-nav__links a {
+    color: var(--ps-ink-soft);
+    border-bottom: 1px solid var(--ps-hairline);
+  }
+  .ps-nav__links a:hover {
+    background: var(--ps-ash-light);
+    color: var(--ps-ink);
+  }
+  .ps-nav__links a.is-active {
+    background: rgba(212, 82, 30, 0.08);
+    color: var(--ps-orange);
+  }
 }
 
 @media (max-width: 600px) {

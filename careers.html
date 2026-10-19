@@ -32,10 +32,10 @@
     <div class="psa-doors__ring"></div>
   </div>
 
-  <!-- ═══ TOP NAV ═══ -->
-  <header class="ps-nav ps-nav--dark" id="siteNav">
+  <!-- ═══ TOP NAV (Light Theme) ═══ -->
+  <header class="ps-nav" id="siteNav">
     <a class="ps-nav__brand" href="index.html" aria-label="PrimeStrategy Home">
-      <img src="images/ps-logo.png" alt="PrimeStrategy — Accra | Washington D.C.">
+      <img src="images/ps-logo.png" alt="PrimeStrategy | Accra | Washington D.C.">
     </a>
     <nav class="ps-nav__links" aria-label="Site navigation">
       <a href="about.html">About</a>
@@ -51,7 +51,7 @@
 
   <!-- ═══ FLOATING RETURN ═══ -->
   <a class="psa-floating-return" href="index.html">
-    <span>←</span> Back to Homepage
+    Back to Homepage
   </a>
 
   <!-- ═══ CONTENT ═══ -->
@@ -68,7 +68,7 @@
         <p class="cr-lead" data-stair>
           PrimeStrategy recruits analysts, field supervisors, software engineers,
           and strategic consultants who want to work on the analytical edge of
-          enterprise transformation — from Accra to clients across West Africa
+          enterprise transformation, from Accra to clients across West Africa
           and beyond.
         </p>
       </div>
@@ -96,7 +96,7 @@
             <h3 class="cr-col__title">Analytics &amp; Insights</h3>
             <p class="cr-col__body">
               Turning field data into defensible strategy. Quantitative modelling,
-              market sizing, business intelligence dashboards — the analytical
+              market sizing, business intelligence dashboards, the analytical
               layer that leadership actually uses.
             </p>
           </article>
@@ -230,7 +230,7 @@
           <div class="cr-form__row">
             <label class="cr-field">
               <span class="cr-field__label">Job Role</span>
-              <select class="cr-field__input" name="role" required>
+              <select class="cr-field__input" id="jobRoleSelect" name="role" required>
                 <option value="">Position</option>
                 <option>Field Research Supervisor</option>
                 <option>Quantitative Data Analyst</option>
@@ -344,7 +344,7 @@
           Join the <em>list</em>.
         </h2>
         <p class="cr-lead" data-stair>
-          New roles, research notes, and firm updates — sent occasionally.
+          New roles, research notes, and firm updates, sent occasionally.
         </p>
 
         <form class="cr-news" id="newsletterForm" novalidate>
@@ -363,6 +363,34 @@
   <script src="js/nav.js"></script>
   <script src="js/transitions.js"></script>
   <script src="js/careers.js"></script>
+
+  <!-- SCRIPT TO AUTO-POPULATE JOB ROLE -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var roleLinks = document.querySelectorAll(".cr-role");
+      var selectField = document.getElementById("jobRoleSelect");
+
+      if (!roleLinks.length || !selectField) return;
+
+      roleLinks.forEach(function(link) {
+        link.addEventListener("click", function(e) {
+          // Get the title text from the H3 inside the link
+          var roleTitleEl = link.querySelector(".cr-role__title");
+          if (roleTitleEl) {
+            var roleTitle = roleTitleEl.textContent.trim();
+
+            // Find the matching option in the select dropdown and select it
+            for (var i = 0; i < selectField.options.length; i++) {
+              if (selectField.options[i].text === roleTitle) {
+                selectField.selectedIndex = i;
+                break;
+              }
+            }
+          }
+        });
+      });
+    });
+  </script>
 
 </body>
 </html>

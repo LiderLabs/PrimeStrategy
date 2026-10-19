@@ -16,8 +16,8 @@
   var SECTIONS = [
     {
       id: "about",
-      eyebrow: "OVERVIEW AND LEADERSHIP",
-      title: "About PrimeStrategy",
+      eyebrow: "", 
+      title: "About", 
       subtitle: "Executive leadership and corporate principles guiding enterprise transformation.",
       summary: "A premier research and IT advisory consultancy. We partner with forward looking organizations using deep industry expertise in strategy, operations, IT, and research to drive measurable results.",
       href: "about.html",
@@ -28,8 +28,8 @@
     },
     {
       id: "services",
-      eyebrow: "ADVISORY PRACTICE",
-      title: "Five Disciplines.\nOne Conviction.",
+      eyebrow: "", 
+      title: "Services", 
       subtitle: "Ten targeted practice areas turning research into market advantage.",
       summary: "Full spectrum enterprise solutions including Consumer Research, Focus Group Discussions, Mystery Shopping, Management Consulting, Market Sizing, and Custom Software Engineering.",
       href: "services.html",
@@ -40,8 +40,8 @@
     },
     {
       id: "casestudy",
-      eyebrow: "INDUSTRY FOCUS AND BRIEF",
-      title: "Sectors Facing\nGrowth and Pressure",
+      eyebrow: "", 
+      title: "Case Study", 
       subtitle: "Empirical market intelligence across Ghana's key sectors.",
       summary: "We specialize in serving clients across all major Ghanaian industries with deep focus in oil and gas, finance, insurance, retail banking, and public sector regulatory landscapes.",
       href: "case-study.html",
@@ -52,8 +52,8 @@
     },
     {
       id: "careers",
-      eyebrow: "FIELD FORCE AND TALENT",
-      title: "Careers and Leadership",
+      eyebrow: "", 
+      title: "Careers", 
       subtitle: "Recruiting analysts, engineers, and strategic consultants.",
       summary: "Join our consulting practice. We seek analysts, field supervisors, software engineers, and consultants passionate about empirical rigor and large scale business transformation.",
       href: "careers.html",
@@ -64,8 +64,8 @@
     },
     {
       id: "contact",
-      eyebrow: "DIRECT CONSULTING DESK",
-      title: "Get in Touch with Us",
+      eyebrow: "", 
+      title: "Contact", 
       subtitle: "Direct desk engagement for executive inquiries and tenders.",
       summary: "Headquartered at Aseda Plaza, Ashalley Botwe, Accra, Ghana, with liaison presence in Washington D.C. Engaging corporate boards, public commissions, and enterprise teams.",
       href: "contact.html",
@@ -107,6 +107,7 @@
         " --wash-2: " + s.washColors[2] + ";";
 
       var imagePosition = s.mobilePosition || "center";
+      var eyebrowHTML = s.eyebrow ? '<span class="hub-mobile__eyebrow">' + escapeHTML(s.eyebrow) + '</span>' : '';
 
       return (
         '<div class="hub-mobile__slide" data-slide-index="' + i + '">' +
@@ -116,7 +117,7 @@
             '<div class="hub-mobile__image" ' +
                  'style="background-image: url(\'' + s.image + '\'); ' +
                         'background-position: ' + imagePosition + ';"></div>' +
-            '<span class="hub-mobile__eyebrow">' + escapeHTML(s.eyebrow) + '</span>' +
+            eyebrowHTML +
             '<h2 class="hub-mobile__title">' + renderTitleHTML(s.title) + '</h2>' +
             '<p class="hub-mobile__subtitle">' + escapeHTML(s.subtitle) + '</p>' +
             '<p class="hub-mobile__summary">' + escapeHTML(s.summary) + '</p>' +
@@ -150,24 +151,19 @@
       var vh = window.innerHeight;
       var scrollTop = mobileContainer.scrollTop;
 
-      /* Active card index — nearest to viewport center */
       var idx = Math.round(scrollTop / vh);
       if (idx < 0) idx = 0;
       if (idx >= dots.length) idx = dots.length - 1;
 
-      /* Update dots */
       dots.forEach(function (d, i) {
         d.classList.toggle("is-active", i === idx);
       });
 
-      /* Hide hint after first scroll */
       if (hint) {
         if (scrollTop > 40) hint.classList.add("is-hidden");
         else hint.classList.remove("is-hidden");
       }
 
-      /* Focus effect: mark the centered card in view, others out.
-         Rebuild only when idx changes — avoids per-frame churn. */
       if (idx !== lastIdx) {
         lastIdx = idx;
         cards.forEach(function (card, i) {
@@ -299,53 +295,79 @@
       ctx.fillStyle = vig;
       ctx.fillRect(0, 0, W, H);
 
+      /* ─── TEXT LAYOUT ─── */
       var padX = 140;
       var padRight = W - 140;
-      var padTop = 150;
+      var padTop = 160;
+      var padBottom = 160;
 
-      ctx.fillStyle = section.accent;
-      ctx.font = "700 34px 'JetBrains Mono', Menlo, monospace";
-      ctx.textAlign = "left";
-      ctx.textBaseline = "alphabetic";
-      ctx.letterSpacing = "0.28em";
-      ctx.fillText(section.eyebrow, padX, padTop);
+      // Draw eyebrow if it exists
+      if (section.eyebrow) {
+        ctx.fillStyle = section.accent;
+        ctx.font = "700 34px 'JetBrains Mono', Menlo, monospace";
+        ctx.textAlign = "left";
+        ctx.textBaseline = "alphabetic";
+        ctx.letterSpacing = "0.28em";
+        ctx.fillText(section.eyebrow, padX, padTop);
+      }
 
+      // Measure blocks to calculate total height for vertical centering
       ctx.fillStyle = "#FFFFFF";
       ctx.font = "700 130px 'Fraunces', 'Playfair Display', Georgia, serif";
       ctx.letterSpacing = "-0.035em";
-
       var titleLines = wrapLines(ctx, section.title, padRight - padX);
-      var titleY = padTop + 168;
-      var lineHeight = 146;
-
-      for (var i = 0; i < titleLines.length && i < 3; i++) {
-        ctx.fillText(titleLines[i], padX, titleY + i * lineHeight);
-      }
+      var titleHeight = (titleLines.length * 146);
 
       ctx.fillStyle = "rgba(255, 255, 255, 0.98)";
       ctx.font = "600 52px -apple-system, BlinkMacSystemFont, 'Inter', sans-serif";
       ctx.letterSpacing = "-0.010em";
-
       var subLines = wrapLines(ctx, section.subtitle, Math.min(1800, padRight - padX));
-      var subY = titleY + titleLines.length * lineHeight + 48;
-      var subLineHeight = 68;
-
-      for (var j = 0; j < Math.min(subLines.length, 2); j++) {
-        ctx.fillText(subLines[j], padX, subY + j * subLineHeight);
-      }
-
-      var summaryY = subY + Math.min(subLines.length, 2) * subLineHeight + 84;
+      var subHeight = (Math.min(subLines.length, 2) * 68);
 
       ctx.fillStyle = "rgba(255, 255, 255, 0.96)";
       ctx.font = "500 48px -apple-system, BlinkMacSystemFont, 'Inter', sans-serif";
       ctx.letterSpacing = "-0.008em";
-
       var sumLines = wrapLines(ctx, section.summary, padRight - padX);
-      var sumLineHeight = 68;
-      var maxSumLines = Math.min(sumLines.length, 5);
+      var sumHeight = (Math.min(sumLines.length, 5) * 68);
 
-      for (var m = 0; m < maxSumLines; m++) {
-        ctx.fillText(sumLines[m], padX, summaryY + m * sumLineHeight);
+      // Calculate spacing between blocks
+      var gaps = 60; // Gap between title, subtitle, summary
+      var totalTextHeight = titleHeight + gaps + subHeight + gaps + sumHeight;
+      
+      // Center the whole text block vertically if it's shorter than the card
+      var startY = (H - totalTextHeight) / 2 - 60; // -60 accounts for visual baseline
+      
+      // If we have an eyebrow, adjust the title down slightly
+      if (section.eyebrow) {
+        startY = padTop + 100;
+      }
+
+      var currentY = startY;
+
+      // Draw Title
+      ctx.fillStyle = "#FFFFFF";
+      ctx.font = "700 130px 'Fraunces', 'Playfair Display', Georgia, serif";
+      ctx.letterSpacing = "-0.035em";
+      for (var i = 0; i < titleLines.length && i < 3; i++) {
+        ctx.fillText(titleLines[i], padX, currentY + (i * 146));
+      }
+      currentY += titleHeight + gaps;
+
+      // Draw Subtitle
+      ctx.fillStyle = "rgba(255, 255, 255, 0.98)";
+      ctx.font = "600 52px -apple-system, BlinkMacSystemFont, 'Inter', sans-serif";
+      ctx.letterSpacing = "-0.010em";
+      for (var j = 0; j < Math.min(subLines.length, 2); j++) {
+        ctx.fillText(subLines[j], padX, currentY + (j * 68));
+      }
+      currentY += subHeight + gaps;
+
+      // Draw Summary
+      ctx.fillStyle = "rgba(255, 255, 255, 0.96)";
+      ctx.font = "500 48px -apple-system, BlinkMacSystemFont, 'Inter', sans-serif";
+      ctx.letterSpacing = "-0.008em";
+      for (var m = 0; m < Math.min(sumLines.length, 5); m++) {
+        ctx.fillText(sumLines[m], padX, currentY + (m * 68));
       }
     }
 

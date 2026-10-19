@@ -239,7 +239,7 @@ html, body {
 }
 
 .psa-panel--closing .psa-panel__bg {
-  background-color: #D4521E;
+  background-color: #0A1E45;
   background-image: url("../images/about-bg.jpg");
   background-size: cover;
   background-position: center;
@@ -251,8 +251,8 @@ html, body {
   inset: 0;
   background: linear-gradient(
     135deg,
-    rgba(212, 82, 30, 0.72) 0%,
-    rgba(178, 63, 18, 0.82) 100%
+    rgba(10, 30, 69, 0.85) 0%,
+    rgba(6, 18, 42, 0.90) 100%
   );
   pointer-events: none;
 }
@@ -276,7 +276,6 @@ html, body {
   padding-bottom: 12vh;
 }
 
-/* Map panel content */
 .psa-panel__content--map {
   padding-top: 3vh;
   padding-bottom: 3vh;
@@ -301,7 +300,7 @@ html, body {
   font-weight: 700;
   line-height: 1.08;
   letter-spacing: -0.025em;
-  color: #FFFFFF; /* <--- CHANGED TO WHITE */
+  color: var(--ps-ink);
   margin: 0 0 40px;
 }
 .psa-panel__title {
@@ -611,10 +610,7 @@ html, body {
   transform: translate(-50%, calc(-100% - 14px)) scale(1);
 }
 
-/* ═══ MAP — INFO CARD (mobile tap) ═══
-   Sits in normal flow between the copy and the map. No absolute
-   positioning. It appears/disappears by growing/shrinking its own
-   height, so it never overlaps the SVG or the next panel. */
+/* ═══ MAP — INFO CARD (mobile tap) ═══ */
 .psa-map__info {
   display: flex;
   align-items: center;
@@ -687,10 +683,7 @@ html, body {
 .psa-panel--map { display: none; }
 
 @media (max-width: 900px) {
-  /* The inline map is hidden on mobile — the dedicated panel handles it */
   .psa-map--inline { display: none; }
-
-  /* Show the mobile map panel */
   .psa-panel--map { display: flex; }
 
   .psa-anchors__split {
@@ -699,7 +692,6 @@ html, body {
   }
   .psa-anchors__head { max-width: 100%; }
 
-  /* Map panel sizing on mobile: bigger map */
   .psa-map__svg { max-width: 80vw; }
   .psa-map__stage { padding-bottom: 8px; }
   .psa-panel__content--map {
@@ -707,8 +699,6 @@ html, body {
     padding-right: 20px;
   }
 
-  /* CEO panel: auto height on mobile (drop sticky) so all
-     paragraphs fit without overflowing into the next panel. */
   .psa-panel--ceo {
     position: relative;
     top: auto;

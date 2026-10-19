@@ -32,9 +32,7 @@
     <div class="psa-doors__ring"></div>
   </div>
 
-  <!-- ═══ FIXED BACKGROUND LAYER ═══
-       One image, one wash, one scrim — visible behind the whole filmstrip.
-       The panels themselves are transparent. -->
+  <!-- ═══ FIXED BACKGROUND LAYER ═══ -->
   <div class="cs-bg" aria-hidden="true">
     <div class="cs-bg__image"></div>
     <div class="cs-bg__wash"></div>
@@ -44,10 +42,10 @@
   <!-- ═══ MOUSE GLOW ═══ -->
   <div class="cs-glow" id="csGlow" aria-hidden="true"></div>
 
-  <!-- ═══ TOP NAV ═══ -->
-  <header class="ps-nav ps-nav--dark" id="siteNav">
+  <!-- ═══ TOP NAV (Light Theme) ═══ -->
+  <header class="ps-nav" id="siteNav">
     <a class="ps-nav__brand" href="index.html" aria-label="PrimeStrategy Home">
-      <img src="images/ps-logo.png" alt="PrimeStrategy — Accra | Washington D.C.">
+      <img src="images/ps-logo.png" alt="PrimeStrategy | Accra | Washington D.C.">
     </a>
     <nav class="ps-nav__links" aria-label="Site navigation">
       <a href="about.html">About</a>
@@ -68,7 +66,7 @@
 
   <!-- ═══ FLOATING RETURN ═══ -->
   <a class="psa-floating-return" href="index.html">
-    <span>←</span> Back to Homepage
+    Back to Homepage
   </a>
 
   <!-- ═══ HORIZONTAL FILMSTRIP ═══ -->
@@ -166,8 +164,8 @@
           </div>
           <div class="cs-panel__body">
             <p>Ghana's insurance sector sits at an inflection point: the regulatory floor is rising, awareness is being actively pushed by the National Insurance Commission, and the ratio of insured individuals to the population remains low enough that expansion is a function of reach rather than replacement.</p>
-            <p>For insurers and adjacent financial services providers, this creates three imperatives. First, distribution must follow the population — into the four regions the pilot campaign targeted first, and beyond. Second, product design must speak to a market still building its first relationship with insurance rather than a mature book of loyal policyholders. Third, capital planning must anticipate the higher prudential floor that the regulator has signalled.</p>
-            <p>PrimeStrategy works with enterprises at exactly this stage — where market structure, consumer behaviour, and regulation intersect. Our research and advisory practice supports strategy, distribution, and analytics decisions in markets moving faster than their operating models.</p>
+            <p>For insurers and adjacent financial services providers, this creates three imperatives. First, distribution must follow the population, into the four regions the pilot campaign targeted first, and beyond. Second, product design must speak to a market still building its first relationship with insurance rather than a mature book of loyal policyholders. Third, capital planning must anticipate the higher prudential floor that the regulator has signalled.</p>
+            <p>PrimeStrategy works with enterprises at exactly this stage, where market structure, consumer behaviour, and regulation intersect. Our research and advisory practice supports strategy, distribution, and analytics decisions in markets moving faster than their operating models.</p>
           </div>
         </div>
       </section>
@@ -258,7 +256,7 @@
         }, 28);
       }
 
-      /* ═══ PANEL ARRIVAL — scramble text, no color shift ═══ */
+      /* ═══ PANEL ARRIVAL ═══ */
       function triggerPanelArrival(panel) {
         panel.classList.add("is-active");
 

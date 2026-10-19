@@ -114,7 +114,7 @@ body.svc-body {
 }
 .svc-open__title em {
   font-style: italic;
-  color: #FFEBD2;
+  color: #E86A34; /* Restored to Orange */
   font-weight: 700;
 }
 .svc-open__lead {
@@ -137,8 +137,6 @@ body.svc-body {
   position: relative;
   padding: 160px 0;
   overflow: hidden;
-  /* Solid background — the theme color sits under the panels so that
-     as the panels split, this is what's revealed. */
   background: #0A1E45;
 }
 .svc-disc[data-theme="navy"] {
@@ -183,8 +181,7 @@ body.svc-body {
   box-shadow: inset 0 0 80px rgba(10, 30, 69, 0.06);
 }
 
-/* Seam line — draws in from the center outward before the split.
-   Implemented as a 1px vertical gradient that scales vertically. */
+/* Seam line */
 .svc-disc__panel--l::after,
 .svc-disc__panel--r::after {
   content: "";
@@ -216,11 +213,7 @@ body.svc-body {
 .svc-disc__panel--l::after { right: 0; }
 .svc-disc__panel--r::after { left: 0; }
 
-/* State sequence:
-   1. Idle: no seam.
-   2. Entering (.is-pre): seam draws in.
-   3. Active (.is-active): panels split apart.
-   JS toggles these classes. */
+/* State sequence */
 .svc-disc.is-pre .svc-disc__panel--l::after,
 .svc-disc.is-pre .svc-disc__panel--r::after {
   height: 65%;
@@ -259,14 +252,19 @@ body.svc-body {
   color: inherit;
   margin: 0 0 32px;
 }
+
+/* Updated to Orange for Navy sections */
 .svc-disc__title em {
   font-style: italic;
   font-weight: 700;
-  color: #FFEBD2;
+  color: #E86A34; 
 }
+
+/* Light sections get the darker orange for readability */
 .svc-disc[data-theme="white"] .svc-disc__title em {
   color: #D4521E;
 }
+
 .svc-disc__lead {
   display: block;
   font-family: var(--ps-font-sans);
@@ -382,6 +380,8 @@ body.svc-body {
   color: #FFEBD2;
   font-weight: 700;
 }
+
+/* Button - Arrow Removed */
 .svc-close__btn {
   display: inline-flex;
   align-items: center;
@@ -399,22 +399,15 @@ body.svc-body {
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 12px 30px -10px rgba(255, 235, 210, 0.35);
 }
-.svc-close__btn::after {
-  content: "→";
-  display: inline-block;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
+
 .svc-close__btn:hover {
   background: #FFFFFF;
   transform: translateY(-2px);
   box-shadow: 0 20px 40px -12px rgba(255, 235, 210, 0.45);
 }
-.svc-close__btn:hover::after { transform: translateX(4px); }
 
 /* ═══════════════════════════════════════════════════════════════
-   REVEALS — stagger fires after split begins.
-   The panels take 1.15s to split. Content delays start ~900ms in
-   so text arrives as panels clear.
+   REVEALS
    ═══════════════════════════════════════════════════════════════ */
 [data-reveal] {
   opacity: 0;
@@ -470,6 +463,24 @@ body.svc-body {
   .svc-disc__inner,
   .svc-close__inner { padding: 0 32px; }
   .svc-disc { padding: 110px 0; }
+
+  /* Light theme mobile menu */
+  .ps-nav__links {
+    background: #FFFFFF;
+    border-bottom-color: var(--ps-hairline);
+  }
+  .ps-nav__links a {
+    color: var(--ps-ink-soft);
+    border-bottom: 1px solid var(--ps-hairline);
+  }
+  .ps-nav__links a:hover {
+    background: var(--ps-ash-light);
+    color: var(--ps-ink);
+  }
+  .ps-nav__links a.is-active {
+    background: rgba(212, 82, 30, 0.08);
+    color: var(--ps-orange);
+  }
 
   .svc-row {
     grid-template-columns: 1fr;
