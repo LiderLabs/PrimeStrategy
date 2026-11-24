@@ -1,7 +1,7 @@
 /* ═══════════════════════════════════════════════════════════════
    PRIMESTRATEGY // ABOUT PAGE
-   Background motion, reveals, CEO rule, closing underline,
-   Ghana map — panel-triggered draw-in, region + dot interactions.
+   Background motion, stacked card scroll animation, reveals,
+   CEO rule, closing underline, Ghana map.
    Menu toggle is handled by js/nav.js — no menu code here.
    ═══════════════════════════════════════════════════════════════ */
 
@@ -12,6 +12,24 @@
   var hasGsap = typeof gsap !== "undefined";
   if (hasGsap && typeof ScrollTrigger !== "undefined") {
     gsap.registerPlugin(ScrollTrigger);
+  }
+
+  /* ═══ SAFETY FALLBACK FOR #psaDoors OVERLAY ═══ */
+  function ensureDoorsCleared() {
+    var doors = document.getElementById("psaDoors");
+    if (!doors) return;
+
+    setTimeout(function () {
+      var centerEl = document.elementFromPoint(window.innerWidth / 2, window.innerHeight / 2);
+      if (centerEl && doors.contains(centerEl)) {
+        doors.style.transition = "opacity 0.4s ease";
+        doors.style.opacity = "0";
+        setTimeout(function () {
+          doors.style.display = "none";
+        }, 450);
+      }
+      doors.style.pointerEvents = "none";
+    }, 1500);
   }
 
   /* ═══ BACKGROUND MOTION ═══ */
@@ -49,10 +67,59 @@
     );
   }
 
+  /* ═══ STACKED CARD SCROLL ANIMATION ═══ */
+  function initStackCards() {
+    if (reduced || !hasGsap || typeof ScrollTrigger === "undefined") return;
+
+    var mm = gsap.matchMedia();
+
+    mm.add("(min-width: 901px)", function () {
+      var panels = gsap.utils.toArray(".psa-main--stacked .psa-panel");
+      if (panels.length < 2) return;
+
+      panels.forEach(function (panel, index) {
+        if (index === panels.length - 1) return;
+        var nextPanel = panels[index + 1];
+        var content = panel.querySelector(".psa-panel__content");
+        if (!content || !nextPanel) return;
+
+        gsap.fromTo(
+          content,
+          { scale: 1, opacity: 1, y: 0 },
+          {
+            scale: 0.94,
+            opacity: 0,
+            y: -24,
+            ease: "none",
+            scrollTrigger: {
+              trigger: nextPanel,
+              start: "top 95%",
+              end: "top 15%",
+              scrub: true,
+              invalidateOnRefresh: true
+            }
+          }
+        );
+      });
+    });
+  }
+
   /* ═══ REVEALS ═══ */
   function initReveals() {
     var panels = document.querySelectorAll(".psa-panel");
     if (!panels.length) return;
+
+    function revealAll(el) {
+      el.querySelectorAll("[data-reveal]").forEach(function (child) {
+        child.classList.add("is-revealed");
+      });
+    }
+
+    var opening = document.querySelector(".psa-panel--opening");
+    if (opening) {
+      opening.classList.add("is-active");
+      revealAll(opening);
+    }
 
     if (reduced) {
       document.querySelectorAll("[data-reveal]").forEach(function (el) {
@@ -63,21 +130,17 @@
 
     var ticking = false;
 
-    function revealAll(el) {
-      el.querySelectorAll("[data-reveal]").forEach(function (child) {
-        child.classList.add("is-revealed");
-      });
-    }
-
     function update() {
       var vh = window.innerHeight;
       var navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--ps-nav-h"), 10) || 68;
       panels.forEach(function (panel) {
         var rect = panel.getBoundingClientRect();
-        var active = rect.top <= navH + vh * 0.15 && rect.bottom > navH + vh * 0.35;
+        var active = rect.top <= navH + vh * 0.2 && rect.bottom > navH + vh * 0.25;
         if (active) {
           panel.classList.add("is-active");
           revealAll(panel);
+        } else if (!panel.classList.contains("psa-panel--opening")) {
+          panel.classList.remove("is-active");
         }
       });
       ticking = false;
@@ -323,8 +386,10 @@
 
   /* ═══ BOOT ═══ */
   function boot() {
+    ensureDoorsCleared();
     initBackground();
     initReveals();
+    initStackCards();
     initCeoReveals();
     initCeoRule();
     initClosingUnderline();
@@ -332,6 +397,7 @@
 
     if (hasGsap && typeof ScrollTrigger !== "undefined") {
       setTimeout(function () { ScrollTrigger.refresh(); }, 200);
+      window.addEventListener("load", function () { ScrollTrigger.refresh(); });
     }
   }
 

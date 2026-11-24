@@ -17,11 +17,11 @@
     {
       id: "about",
       eyebrow: "", 
-      title: "About", 
-      subtitle: "Executive leadership and corporate principles guiding enterprise transformation.",
-      summary: "A premier research and IT advisory consultancy. We partner with forward looking organizations using deep industry expertise in strategy, operations, IT, and research to drive measurable results.",
+      title: "About Us", 
+      subtitle: "What We Do. Dedicated to helping organizations achieve sustainable growth.",
+      summary: "We are an indigenous consulting firm providing practical solutions through strategic advisory, market research, and data analytics to public and private sector organizations.",
       href: "about.html",
-      ctaLabel: "Open About",
+      ctaLabel: "Learn About Us",
       accent: "#FFEBD2",
       image: "images/about-bg.jpg",
       washColors: ["rgba(20, 32, 58, 0.75)", "rgba(34, 46, 78, 0.60)", "rgba(12, 20, 40, 0.88)"]
@@ -29,35 +29,35 @@
     {
       id: "services",
       eyebrow: "", 
-      title: "Services", 
-      subtitle: "Ten targeted practice areas turning research into market advantage.",
-      summary: "Full spectrum enterprise solutions including Consumer Research, Focus Group Discussions, Mystery Shopping, Management Consulting, Market Sizing, and Custom Software Engineering.",
+      title: "Our Services", 
+      subtitle: "Insights. Strategy. Solutions.",
+      summary: "We develop practical solutions through research, business intelligence, and industry expertise to improve performance and support sustainable growth.",
       href: "services.html",
-      ctaLabel: "View Services",
+      ctaLabel: "Explore Our Services",
       accent: "#FFEBD2",
       image: "images/card-services.jpg",
       washColors: ["rgba(20, 32, 58, 0.75)", "rgba(34, 46, 78, 0.60)", "rgba(12, 20, 40, 0.88)"]
     },
     {
-      id: "casestudy",
+      id: "client-experience",
       eyebrow: "", 
-      title: "Case Study", 
-      subtitle: "Empirical market intelligence across Ghana's key sectors.",
-      summary: "We specialize in serving clients across all major Ghanaian industries with deep focus in oil and gas, finance, insurance, retail banking, and public sector regulatory landscapes.",
-      href: "case-study.html",
-      ctaLabel: "Read the Brief",
-      accent: "#E86A34",
-      image: "images/card-casestudy.jpg",
+      title: "Client Experience", 
+      subtitle: "Our Work. Our Impact.",
+      summary: "We measure our success by the value we create for the organizations we serve. Explore our project experiences, client partnerships, and the impact of our work.",
+      href: "client-experience.html",
+      ctaLabel: "View Our Impact",
+      accent: "#FFEBD2",
+      image: "images/card-casestudy.jpg", /* We can reuse the old case study image here */
       washColors: ["rgba(20, 32, 58, 0.75)", "rgba(34, 46, 78, 0.60)", "rgba(12, 20, 40, 0.88)"]
     },
     {
       id: "careers",
       eyebrow: "", 
-      title: "Careers", 
-      subtitle: "Recruiting analysts, engineers, and strategic consultants.",
-      summary: "Join our consulting practice. We seek analysts, field supervisors, software engineers, and consultants passionate about empirical rigor and large scale business transformation.",
+      title: "Careers & Opportunities", 
+      subtitle: "Building Tomorrow's Business Leaders.",
+      summary: "We invest in the next generation through practical learning opportunities and professional development to help individuals grow and succeed.",
       href: "careers.html",
-      ctaLabel: "View Open Roles",
+      ctaLabel: "View Opportunities",
       accent: "#FFEBD2",
       image: "images/card-careers.jpg",
       washColors: ["rgba(20, 32, 58, 0.75)", "rgba(34, 46, 78, 0.60)", "rgba(12, 20, 40, 0.88)"]
@@ -65,11 +65,11 @@
     {
       id: "contact",
       eyebrow: "", 
-      title: "Contact", 
-      subtitle: "Direct desk engagement for executive inquiries and tenders.",
-      summary: "Headquartered at Aseda Plaza, Ashalley Botwe, Accra, Ghana, with liaison presence in Washington D.C. Engaging corporate boards, public commissions, and enterprise teams.",
+      title: "Contact Us", 
+      subtitle: "Let's Work Together.",
+      summary: "Every business challenge presents an opportunity for growth. Connect with us to explore how we can help you achieve your business objectives.",
       href: "contact.html",
-      ctaLabel: "Start a Conversation",
+      ctaLabel: "Get in Touch",
       accent: "#FFEBD2",
       image: "images/card-contact.jpg",
       mobilePosition: "75% center",
@@ -185,11 +185,10 @@
       requestAnimationFrame(updateOnScroll);
     }, { passive: true });
 
-    /* ═══ SWIPE NAVIGATION LOGIC ═══ */
     var touchStartY = 0;
     var touchEndY = 0;
     var isSwiping = false;
-    var swipeThreshold = 50; // Minimum distance to count as a swipe
+    var swipeThreshold = 50;
 
     mobileContainer.addEventListener("touchstart", function (e) {
       touchStartY = e.touches[0].clientY;
@@ -198,49 +197,42 @@
 
     mobileContainer.addEventListener("touchmove", function (e) {
       touchEndY = e.touches[0].clientY;
-      // If vertical movement is substantial, mark as swiping
       if (Math.abs(touchEndY - touchStartY) > 10) {
         isSwiping = true;
       }
     }, { passive: true });
 
     mobileContainer.addEventListener("touchend", function (e) {
-      if (!isSwiping) return; // Let the click event fire for taps
+      if (!isSwiping) return;
 
       var distance = touchStartY - touchEndY;
       var vh = window.innerHeight;
       
       if (Math.abs(distance) > swipeThreshold) {
-        // Swipe Up (scroll down/next)
         if (distance > 0) {
           var nextIndex = Math.min(lastIdx + 1, cards.length - 1);
           mobileContainer.scrollTo({ top: nextIndex * vh, behavior: 'smooth' });
-        } 
-        // Swipe Down (scroll up/prev)
-        else {
+        } else {
           var prevIndex = Math.max(lastIdx - 1, 0);
           mobileContainer.scrollTo({ top: prevIndex * vh, behavior: 'smooth' });
         }
       }
 
-      // Prevent the click event from firing if a swipe occurred
       if (isSwiping) {
         e.preventDefault();
       }
       
-      // Reset
       touchStartY = 0;
       touchEndY = 0;
       isSwiping = false;
-    }, { passive: false }); // Note: passive false is needed to preventDefault
+    }, { passive: false });
 
     window.addEventListener("resize", updateOnScroll);
-
     updateOnScroll();
   }
 
   /* ═══════════════════════════════════════════════════════════════
-     DESKTOP — unchanged
+     DESKTOP
      ═══════════════════════════════════════════════════════════════ */
 
   function buildDesktop() {
@@ -248,7 +240,7 @@
 
     var CARD_W = 7.6, CARD_H = 4.28, CARD_D = 0.10, FLOOR_Y = -2.9;
 
-    var BASE_CAM_POS = new THREE.Vector3(0, 0.15, 12.4);
+    var BASE_CAM_POS = new THREE.Vector3(0, 0.2, 17.0); 
     var BASE_CAM_LOOK = new THREE.Vector3(0, 0.0, 0);
 
     var width = hub.clientWidth || window.innerWidth;
@@ -566,7 +558,7 @@
         var arcRotY = -diff * 0.22;
         var arcScale = Math.max(0.78, 1 - absDiff * 0.12);
 
-        card.position.set(arcX, 0, arcZ);
+        card.position.set(arcX, -0.3, arcZ);
         card.rotation.set(0, arcRotY, 0);
         card.scale.setScalar(arcScale);
 

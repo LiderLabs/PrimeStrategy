@@ -3,14 +3,267 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Careers — PrimeStrategy Limited</title>
+  <title>Careers & Opportunities — PrimeStrategy Ghana Ltd.</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,600;1,9..144,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,600;1,9..144,700&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="css/shared.css">
   <link rel="stylesheet" href="css/page.css">
-  <link rel="stylesheet" href="css/careers.css">
+  
+  <style>
+    /* ═══════════════════════════════════════════════
+       REFINED BRAND COLORS (Softer, Less Saturated)
+       ═══════════════════════════════════════════════ */
+    :root {
+      --ps-orange: #E67E22;   /* Softer, lighter orange */
+      --ps-blue: #34495E;     /* Muted, elegant dark slate-blue */
+      --ps-slate: #7F8C8D;    /* Clean grey for body text */
+      --ps-light-grey: #BDC3C7;
+      --ps-bg: #FAFAFA;       /* Very subtle off-white */
+      --ps-text: #2C3E50;     
+      --ps-white: #FFFFFF;
+      --ps-border: rgba(52, 73, 94, 0.08);
+    }
+
+    /* ── Base Styles ── */
+    .cr-body {
+      background-color: var(--ps-bg);
+      color: var(--ps-text);
+      overflow-x: hidden;
+    }
+
+    .cr-section {
+      padding: 7rem 5vw;
+      position: relative;
+    }
+
+    .cr-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .cr-header {
+      margin-bottom: 4rem;
+      max-width: 800px;
+    }
+
+    /* ── Typography ── */
+    .cr-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600; /* Reduced from 700 */
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ps-blue);
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    .cr-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.5rem, 5vw, 3.8rem);
+      line-height: 1.15;
+      font-weight: 600; /* Softer weight */
+      color: var(--ps-blue);
+      margin-bottom: 1.5rem;
+    }
+
+    .cr-title em {
+      color: var(--ps-orange);
+      font-style: italic;
+    }
+
+    .cr-lead {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--ps-slate);
+      max-width: 700px;
+    }
+
+    /* ── 01. HERO ── */
+    .cr-hero {
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      background: var(--ps-white);
+      border-bottom: 1px solid var(--ps-border);
+    }
+
+    /* ── 02. OPPORTUNITIES GRID ── */
+    .cr-opportunities-section {
+      background: var(--ps-bg);
+    }
+
+    .cr-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      margin-top: 3rem;
+    }
+
+    .cr-card {
+      background: var(--ps-white);
+      border: 1px solid var(--ps-border);
+      padding: 3rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .cr-card h3 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--ps-blue);
+      margin-bottom: 1rem;
+    }
+
+    /* CHANGED FROM ORANGE TO GREY/SLATE */
+    .cr-card h4 {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--ps-slate);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .cr-card p {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: #6B7280;
+      margin-bottom: 1rem;
+    }
+
+    .cr-card p:last-of-type {
+      margin-bottom: 2rem;
+    }
+
+    .cr-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--ps-blue);
+      color: var(--ps-white);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.3s ease, transform 0.2s ease;
+      width: 100%;
+    }
+
+    .cr-btn:hover {
+      background: #2C3E50;
+      transform: translateY(-2px);
+    }
+
+    /* ── 03. APPLICATION FORM ── */
+    .cr-apply-section {
+      background: var(--ps-white);
+      border-top: 1px solid var(--ps-border);
+    }
+
+    .cr-form {
+      background: var(--ps-bg);
+      padding: 3.5rem;
+      border-radius: 8px;
+      border: 1px solid var(--ps-border);
+      max-width: 800px;
+      margin-top: 2rem;
+    }
+
+    .cr-form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .cr-form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 1.5rem;
+    }
+
+    .cr-form-row .cr-form-group {
+      margin-bottom: 0;
+    }
+
+    .cr-form-group label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--ps-blue);
+      margin-bottom: 0.5rem;
+    }
+
+    .cr-form-group input,
+    .cr-form-group select {
+      width: 100%;
+      padding: 1rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      color: var(--ps-text);
+      background: var(--ps-white);
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 4px;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    .cr-form-group input:focus,
+    .cr-form-group select:focus {
+      border-color: var(--ps-blue);
+    }
+
+    .cr-submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--ps-orange);
+      color: var(--ps-white);
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 1rem 3rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+      margin-top: 1rem;
+    }
+
+    .cr-submit-btn:hover {
+      background: #D35400;
+      transform: translateY(-2px);
+    }
+
+    /* Mobile Adjustments */
+    @media (max-width: 900px) {
+      .cr-grid {
+        grid-template-columns: 1fr;
+      }
+      .cr-form-row {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+      .cr-form {
+        padding: 2rem;
+      }
+    }
+  </style>
 </head>
 
 <body class="ps-page-body cr-body">
@@ -32,16 +285,16 @@
     <div class="psa-doors__ring"></div>
   </div>
 
-  <!-- ═══ TOP NAV (Light Theme) ═══ -->
+  <!-- ═══ TOP NAV ═══ -->
   <header class="ps-nav" id="siteNav">
     <a class="ps-nav__brand" href="index.html" aria-label="PrimeStrategy Home">
-      <img src="images/ps-logo.png" alt="PrimeStrategy | Accra | Washington D.C.">
+      <img src="images/ps-logo.png" alt="PrimeStrategy — Accra | Washington D.C.">
     </a>
     <nav class="ps-nav__links" aria-label="Site navigation">
       <a href="about.html">About</a>
       <a href="services.html">Services</a>
-      <a href="case-study.html">Case Study</a>
-      <a href="careers.html" class="is-active">Careers</a>
+      <a href="client-experience.html">Client Experience</a>
+      <a href="careers.html" class="is-active">Careers &amp; Opportunities</a>
       <a href="contact.html">Contact</a>
     </nav>
     <button class="ps-nav__toggle" aria-label="Open navigation" aria-expanded="false">
@@ -55,342 +308,148 @@
   </a>
 
   <!-- ═══ CONTENT ═══ -->
-  <main class="cr-main">
-
-    <!-- ═══ HERO ═══ -->
-    <section class="cr-section cr-hero" data-theme="white">
-      <div class="cr-section__inner">
-        <span class="cr-eyebrow" data-stair>Careers</span>
-        <h1 class="cr-title cr-title--xl" data-stair>
-          Join the practice.<br>
-          Shape the <em>work</em>.
-        </h1>
-        <p class="cr-lead" data-stair>
-          PrimeStrategy recruits analysts, field supervisors, software engineers,
-          and strategic consultants who want to work on the analytical edge of
-          enterprise transformation, from Accra to clients across West Africa
-          and beyond.
-        </p>
-      </div>
-    </section>
-
-    <!-- ═══ WHY JOIN US ═══ -->
-    <section class="cr-section cr-why" data-theme="grey">
-      <div class="cr-section__inner">
-        <span class="cr-eyebrow" data-stair>Why PrimeStrategy</span>
-        <h2 class="cr-title" data-stair>
-          Three tracks. One <em>practice</em>.
-        </h2>
-
-        <div class="cr-cols">
-          <article class="cr-col" data-stair>
-            <h3 class="cr-col__title">Field &amp; Research</h3>
-            <p class="cr-col__body">
-              On-the-ground consumer studies, mystery shopping programs, and
-              large-scale field research across Ghana and West Africa. You
-              work at the source of primary data.
-            </p>
-          </article>
-
-          <article class="cr-col" data-stair>
-            <h3 class="cr-col__title">Analytics &amp; Insights</h3>
-            <p class="cr-col__body">
-              Turning field data into defensible strategy. Quantitative modelling,
-              market sizing, business intelligence dashboards, the analytical
-              layer that leadership actually uses.
-            </p>
-          </article>
-
-          <article class="cr-col" data-stair>
-            <h3 class="cr-col__title">Consulting &amp; Engineering</h3>
-            <p class="cr-col__body">
-              Enterprise consulting engagements and custom software builds for
-              banking, insurance, energy, and public-sector clients. Partner-level
-              exposure from day one.
-            </p>
-          </article>
+  <main>
+    
+    <!-- 01. HERO -->
+    <section class="cr-section cr-hero">
+      <div class="cr-inner">
+        <div class="cr-header">
+          <span class="cr-eyebrow gsap-fade-up">Careers &amp; Opportunities</span>
+          <h1 class="cr-title gsap-fade-up">Building Tomorrow's <em>Business Leaders</em>.</h1>
+          <p class="cr-lead gsap-fade-up">
+            At PrimeStrategy Ghana Ltd., we believe in investing in the next generation of professionals.<br><br>
+            Through practical learning opportunities and professional development, we provide individuals with the experience, skills, and exposure needed to grow and succeed in the business environment.<br><br>
+            We are committed to nurturing talent, building confidence, and creating opportunities for individuals to develop their potential and contribute meaningfully to the corporate world.
+          </p>
         </div>
       </div>
     </section>
 
-    <!-- ═══ OPEN ROLES ═══ -->
-    <section class="cr-section cr-roles" data-theme="white">
-      <div class="cr-section__inner">
-        <span class="cr-eyebrow" data-stair>Open Roles</span>
-        <h2 class="cr-title" data-stair>
-          Positions we are <em>hiring</em>.
-        </h2>
+    <!-- 02. OPPORTUNITIES -->
+    <section class="cr-section cr-opportunities-section">
+      <div class="cr-inner">
+        <div class="cr-grid">
+          
+          <!-- Internships -->
+          <div class="cr-card gsap-fade-up">
+            <div>
+              <span class="cr-eyebrow">Internship Opportunities</span>
+              <h3>Join Our Internship Cohort</h3>
+              <h4>Are you a motivated student or young professional eager to gain practical industry experience?</h4>
+              <p>Our internship programme provides opportunities to develop valuable skills, gain exposure to real business projects, and explore career paths in consulting, research, business development, and related fields.</p>
+              <p>Join our Internship Cohort and take the next step towards building your professional career.</p>
+            </div>
+            <a href="#apply" class="cr-btn" onclick="document.getElementById('roleSelect').value='Internship Cohort'">Apply for Internship</a>
+          </div>
 
-        <div class="cr-role-list">
-
-          <a class="cr-role" href="#apply" data-stair>
-            <div class="cr-role__left">
-              <h3 class="cr-role__title">Field Research Supervisor</h3>
-              <p class="cr-role__desc">
-                Lead field teams on consumer research and mystery shopping
-                engagements across Ghana. Manage recruitment, training, quality
-                control, and field logistics.
-              </p>
+          <!-- Careers -->
+          <div class="cr-card gsap-fade-up">
+            <div>
+              <span class="cr-eyebrow">Career Opportunities</span>
+              <h3>Grow Your Career With Us</h3>
+              <h4>We welcome talented and passionate professionals who are interested in contributing to our work and growing within a dynamic business environment.</h4>
+              <p>Explore opportunities to build your career and contribute to delivering meaningful solutions for our clients.</p>
             </div>
-            <div class="cr-role__right">
-              <span class="cr-role__tag">Accra</span>
-              <span class="cr-role__tag cr-role__tag--soft">Full-time</span>
-            </div>
-          </a>
-
-          <a class="cr-role" href="#apply" data-stair>
-            <div class="cr-role__left">
-              <h3 class="cr-role__title">Quantitative Data Analyst</h3>
-              <p class="cr-role__desc">
-                Design surveys, model field data, and build dashboards for
-                enterprise clients. Strong statistics and Python or R a must.
-              </p>
-            </div>
-            <div class="cr-role__right">
-              <span class="cr-role__tag">Accra</span>
-              <span class="cr-role__tag cr-role__tag--soft">Full-time</span>
-            </div>
-          </a>
-
-          <a class="cr-role" href="#apply" data-stair>
-            <div class="cr-role__left">
-              <h3 class="cr-role__title">Strategic Management Consultant</h3>
-              <p class="cr-role__desc">
-                Work alongside senior leadership on strategy, operating model,
-                and change engagements in banking, insurance, and energy.
-              </p>
-            </div>
-            <div class="cr-role__right">
-              <span class="cr-role__tag">Accra</span>
-              <span class="cr-role__tag cr-role__tag--soft">Full-time</span>
-            </div>
-          </a>
-
-          <a class="cr-role" href="#apply" data-stair>
-            <div class="cr-role__left">
-              <h3 class="cr-role__title">Front-End Software Engineer</h3>
-              <p class="cr-role__desc">
-                Build custom enterprise dashboards and client-facing web apps.
-                JavaScript, React, and a feel for editorial design.
-              </p>
-            </div>
-            <div class="cr-role__right">
-              <span class="cr-role__tag">Accra / Remote</span>
-              <span class="cr-role__tag cr-role__tag--soft">Full-time</span>
-            </div>
-          </a>
-
-          <a class="cr-role" href="#apply" data-stair>
-            <div class="cr-role__left">
-              <h3 class="cr-role__title">Consumer Research Associate</h3>
-              <p class="cr-role__desc">
-                Moderated focus groups, in-depth interviews, and qualitative
-                synthesis for category and brand studies.
-              </p>
-            </div>
-            <div class="cr-role__right">
-              <span class="cr-role__tag">Accra</span>
-              <span class="cr-role__tag cr-role__tag--soft">Contract</span>
-            </div>
-          </a>
-
-          <a class="cr-role" href="#apply" data-stair>
-            <div class="cr-role__left">
-              <h3 class="cr-role__title">Business Development Executive</h3>
-              <p class="cr-role__desc">
-                Own the corporate engagement pipeline. Tender responses,
-                executive outreach, and long-cycle enterprise relationship
-                management.
-              </p>
-            </div>
-            <div class="cr-role__right">
-              <span class="cr-role__tag">Accra</span>
-              <span class="cr-role__tag cr-role__tag--soft">Full-time</span>
-            </div>
-          </a>
+            <a href="#apply" class="cr-btn" onclick="document.getElementById('roleSelect').value='Professional Role'">Apply for a Role</a>
+          </div>
 
         </div>
       </div>
     </section>
 
-    <!-- ═══ APPLY FORM ═══ -->
-    <section class="cr-section cr-apply" id="apply" data-theme="grey">
-      <div class="cr-section__inner">
-        <span class="cr-eyebrow" data-stair>Apply</span>
-        <h2 class="cr-title" data-stair>
-          Submit your <em>application</em>.
-        </h2>
-        <p class="cr-lead" data-stair>
-          Fill in the form below. Our talent team reviews every application
-          and responds within two weeks.
-        </p>
+    <!-- 03. APPLICATION FORM -->
+    <section class="cr-section cr-apply-section" id="apply">
+      <div class="cr-inner">
+        <div class="cr-header">
+          <span class="cr-eyebrow gsap-fade-up">Apply Now</span>
+          <h2 class="cr-title gsap-fade-up">Submit your <em>Application</em>.</h2>
+          <p class="cr-lead gsap-fade-up">Fill in the form below to apply for our internship cohort or a professional role. Our team reviews every application.</p>
+        </div>
 
-        <form class="cr-form" id="careersForm" novalidate>
-
-          <div class="cr-form__row">
-            <label class="cr-field">
-              <span class="cr-field__label">Job Role</span>
-              <select class="cr-field__input" id="jobRoleSelect" name="role" required>
-                <option value="">Position</option>
-                <option>Field Research Supervisor</option>
-                <option>Quantitative Data Analyst</option>
-                <option>Strategic Management Consultant</option>
-                <option>Front-End Software Engineer</option>
-                <option>Consumer Research Associate</option>
-                <option>Business Development Executive</option>
-                <option>Other</option>
-              </select>
-            </label>
+        <form class="cr-form gsap-fade-up">
+          <div class="cr-form-group">
+            <label for="roleSelect">I am applying for</label>
+            <select id="roleSelect" required>
+              <option value="">Select an option...</option>
+              <option value="Internship Cohort">Internship Cohort</option>
+              <option value="Professional Role">Professional Role</option>
+            </select>
           </div>
 
-          <div class="cr-form__row cr-form__row--2">
-            <label class="cr-field">
-              <span class="cr-field__label">First Name</span>
-              <input class="cr-field__input" type="text" name="firstName" autocomplete="given-name" required>
-            </label>
-            <label class="cr-field">
-              <span class="cr-field__label">Last Name</span>
-              <input class="cr-field__input" type="text" name="lastName" autocomplete="family-name" required>
-            </label>
+          <div class="cr-form-row">
+            <div class="cr-form-group">
+              <label for="firstName">First Name</label>
+              <input type="text" id="firstName" required>
+            </div>
+            <div class="cr-form-group">
+              <label for="lastName">Last Name</label>
+              <input type="text" id="lastName" required>
+            </div>
           </div>
 
-          <div class="cr-form__row">
-            <label class="cr-field">
-              <span class="cr-field__label">Email</span>
-              <input class="cr-field__input" type="email" name="email" autocomplete="email" required>
-            </label>
+          <div class="cr-form-row">
+            <div class="cr-form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" required>
+            </div>
+            <div class="cr-form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" required>
+            </div>
           </div>
 
-          <div class="cr-form__row">
-            <label class="cr-field">
-              <span class="cr-field__label">Phone</span>
-              <input class="cr-field__input" type="tel" name="phone" autocomplete="tel" required>
-            </label>
+          <div class="cr-form-group">
+            <label for="resume">Upload Resume / CV (PDF)</label>
+            <input type="file" id="resume" accept=".pdf,.doc,.docx" required style="padding: 0.75rem;">
           </div>
 
-          <div class="cr-form__row">
-            <label class="cr-field">
-              <span class="cr-field__label">Street Address</span>
-              <input class="cr-field__input" type="text" name="street" autocomplete="street-address">
-            </label>
-          </div>
-
-          <div class="cr-form__row cr-form__row--2">
-            <label class="cr-field">
-              <span class="cr-field__label">City</span>
-              <input class="cr-field__input" type="text" name="city" autocomplete="address-level2">
-            </label>
-            <label class="cr-field">
-              <span class="cr-field__label">State / Region</span>
-              <input class="cr-field__input" type="text" name="region" autocomplete="address-level1">
-            </label>
-          </div>
-
-          <div class="cr-form__row cr-form__row--2">
-            <label class="cr-field">
-              <span class="cr-field__label">GhanaPost Address</span>
-              <input class="cr-field__input" type="text" name="ghanapost">
-            </label>
-            <label class="cr-field">
-              <span class="cr-field__label">Postal Address</span>
-              <input class="cr-field__input" type="text" name="postal">
-            </label>
-          </div>
-
-          <div class="cr-form__row cr-form__row--2">
-            <label class="cr-field">
-              <span class="cr-field__label">Country of Origin</span>
-              <input class="cr-field__input" type="text" name="country" autocomplete="country-name">
-            </label>
-            <label class="cr-field">
-              <span class="cr-field__label">Qualification Level</span>
-              <select class="cr-field__input" name="qualification">
-                <option value="">Choose Qualification Level</option>
-                <option>Bachelor's Degree</option>
-                <option>Master's Degree</option>
-                <option>PhD</option>
-                <option>Professional Certification</option>
-                <option>Other</option>
-              </select>
-            </label>
-          </div>
-
-          <div class="cr-form__row cr-form__row--2">
-            <label class="cr-field cr-field--file">
-              <span class="cr-field__label">Resume</span>
-              <input class="cr-field__input cr-field__input--file" type="file" name="resume" accept=".pdf,.doc,.docx">
-            </label>
-            <label class="cr-field cr-field--file">
-              <span class="cr-field__label">Passport-Sized Photo</span>
-              <input class="cr-field__input cr-field__input--file" type="file" name="photo" accept="image/*">
-            </label>
-          </div>
-
-          <div class="cr-form__row">
-            <button type="submit" class="cr-submit">Submit</button>
-          </div>
-
-          <p class="cr-form__msg" id="formMsg" role="status" aria-live="polite"></p>
-
+          <button type="submit" class="cr-submit-btn">Submit Application</button>
         </form>
-      </div>
-    </section>
-
-    <!-- ═══ CLOSING / NEWSLETTER ═══ -->
-    <section class="cr-section cr-close" data-theme="white">
-      <div class="cr-section__inner">
-        <span class="cr-eyebrow" data-stair>Stay in Touch</span>
-        <h2 class="cr-title cr-title--xl" data-stair>
-          Join the <em>list</em>.
-        </h2>
-        <p class="cr-lead" data-stair>
-          New roles, research notes, and firm updates, sent occasionally.
-        </p>
-
-        <form class="cr-news" id="newsletterForm" novalidate>
-          <input class="cr-news__input" type="email" name="email" placeholder="Email Address" autocomplete="email" required>
-          <button class="cr-news__btn" type="submit">Subscribe</button>
-        </form>
-        <p class="cr-form__msg" id="newsMsg" role="status" aria-live="polite"></p>
       </div>
     </section>
 
   </main>
 
+  <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="js/cursor.js"></script>
   <script src="js/nav.js"></script>
   <script src="js/transitions.js"></script>
-  <script src="js/careers.js"></script>
-
-  <!-- SCRIPT TO AUTO-POPULATE JOB ROLE -->
+  
+  <!-- GSAP Scroll Animations -->
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      var roleLinks = document.querySelectorAll(".cr-role");
-      var selectField = document.getElementById("jobRoleSelect");
+    document.addEventListener("DOMContentLoaded", () => {
+      gsap.registerPlugin(ScrollTrigger);
 
-      if (!roleLinks.length || !selectField) return;
+      // 1. Initial Hero Animations
+      gsap.from(".cr-hero .gsap-fade-up", {
+        y: 30,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.15,
+        ease: "power3.out",
+        delay: 0.2
+      });
 
-      roleLinks.forEach(function(link) {
-        link.addEventListener("click", function(e) {
-          // Get the title text from the H3 inside the link
-          var roleTitleEl = link.querySelector(".cr-role__title");
-          if (roleTitleEl) {
-            var roleTitle = roleTitleEl.textContent.trim();
+      // 2. Global Scroll Animations for ALL elements with .gsap-fade-up
+      gsap.utils.toArray(".gsap-fade-up").forEach(elem => {
+        // Skip the hero elements since they already animated in on load
+        if (elem.closest('.cr-hero')) return;
 
-            // Find the matching option in the select dropdown and select it
-            for (var i = 0; i < selectField.options.length; i++) {
-              if (selectField.options[i].text === roleTitle) {
-                selectField.selectedIndex = i;
-                break;
-              }
-            }
-          }
+        gsap.from(elem, {
+          scrollTrigger: {
+            trigger: elem,
+            start: "top 85%", 
+            toggleActions: "play none none reverse"
+          },
+          y: 40,
+          opacity: 0,
+          duration: 0.8,
+          ease: "power3.out"
         });
       });
     });
   </script>
-
 </body>
 </html>

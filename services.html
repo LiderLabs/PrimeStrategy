@@ -3,14 +3,257 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Services — PrimeStrategy Limited</title>
+  <title>Services — PrimeStrategy Ghana Ltd.</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,600;1,9..144,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,600;1,9..144,700&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="css/shared.css">
   <link rel="stylesheet" href="css/page.css">
-  <link rel="stylesheet" href="css/services.css">
+  
+  <style>
+    /* ═══════════════════════════════════════════════
+       REFINED BRAND COLORS
+       ═══════════════════════════════════════════════ */
+    :root {
+      --ps-orange: #E67E22;   
+      --ps-blue: #34495E;     
+      --ps-slate: #7F8C8D;    
+      --ps-bg: #FAFAFA;       
+      --ps-text: #2C3E50;     
+      --ps-white: #FFFFFF;
+      --ps-border: rgba(52, 73, 94, 0.08);
+    }
+
+    /* ── Base Styles ── */
+    .svc-body {
+      background-color: var(--ps-bg);
+      color: var(--ps-text);
+      overflow-x: hidden;
+    }
+
+    .svc-section {
+      padding: 7rem 5vw;
+      position: relative;
+    }
+
+    .svc-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* ── Typography ── */
+    .svc-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ps-blue);
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    .svc-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1.15;
+      font-weight: 600;
+      color: var(--ps-blue);
+      margin-bottom: 1.5rem;
+    }
+
+    .svc-title em {
+      color: var(--ps-orange);
+      font-style: italic;
+    }
+
+    .svc-lead {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.15rem;
+      line-height: 1.8;
+      color: var(--ps-slate);
+      max-width: 700px;
+    }
+
+    /* ── 01. HERO ── */
+    .svc-hero {
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      background: var(--ps-white);
+      border-bottom: 1px solid var(--ps-border);
+    }
+
+    /* ── 02. CORE SERVICES GRID ── */
+    .svc-services-section {
+      background: var(--ps-bg);
+    }
+
+    /* Mobile-first grid approach */
+    .svc-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    @media (min-width: 768px) {
+      .svc-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .svc-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2.5rem;
+      }
+    }
+
+    .svc-card {
+      background: var(--ps-white);
+      border: 1px solid var(--ps-border);
+      padding: 2.5rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease;
+      display: flex;
+      flex-direction: column;
+      will-change: transform;
+    }
+
+    /* Highly conspicuous hover effect */
+    .svc-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(52, 73, 94, 0.12);
+      border-color: var(--ps-orange);
+    }
+
+    .svc-card h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--ps-blue);
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+
+    .svc-card p {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--ps-slate);
+      flex-grow: 1;
+    }
+
+    /* ── 03. SPECIALIZED SOLUTIONS BANNER ── */
+    .svc-specialized-banner {
+      background: var(--ps-white);
+      border-top: 1px solid var(--ps-border);
+      border-bottom: 1px solid var(--ps-border);
+    }
+
+    /* ── 04. WHY PARTNER SECTION ── */
+    .svc-why-section {
+      background: var(--ps-blue);
+      color: var(--ps-white);
+    }
+
+    .svc-why-section .svc-title {
+      color: var(--ps-white);
+    }
+
+    .svc-why-section .svc-lead {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .svc-why-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      margin-top: 4rem;
+    }
+
+    @media (min-width: 768px) {
+      .svc-why-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+      }
+    }
+
+    .svc-why-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
+    }
+
+    /* Hand-drawn Icon styles */
+    .svc-why-icon {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+      color: var(--ps-orange);
+      margin-top: 0.2rem;
+    }
+
+    .svc-why-content h4 {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--ps-white);
+      margin-bottom: 0.5rem;
+    }
+
+    .svc-why-content p {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* ── 05. CLOSING CTA ── */
+    .svc-close {
+      padding: 8rem 5vw;
+      text-align: center;
+      background: var(--ps-bg);
+    }
+
+    .svc-close-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--ps-blue);
+      margin-bottom: 2rem;
+    }
+
+    .svc-close-title em {
+      color: var(--ps-orange);
+      font-style: italic;
+    }
+
+    .svc-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--ps-orange);
+      color: var(--ps-white);
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 1rem 3rem;
+      border: none;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .svc-btn:hover {
+      background: #D35400;
+      transform: translateY(-2px);
+    }
+  </style>
 </head>
 
 <body class="ps-page-body svc-body">
@@ -32,15 +275,7 @@
     <div class="psa-doors__ring"></div>
   </div>
 
-  <!-- ═══ FIXED BACKGROUND ═══ -->
-  <div class="svc-bg" aria-hidden="true">
-    <div class="svc-bg__image" id="svcBgImage"></div>
-    <div class="svc-bg__tint"></div>
-    <div class="svc-bg__vignette"></div>
-    <div class="svc-bg__grain"></div>
-  </div>
-
-  <!-- ═══ TOP NAV (Changed to Light Theme) ═══ -->
+  <!-- ═══ TOP NAV ═══ -->
   <header class="ps-nav" id="siteNav">
     <a class="ps-nav__brand" href="index.html" aria-label="PrimeStrategy Home">
       <img src="images/ps-logo.png" alt="PrimeStrategy — Accra | Washington D.C.">
@@ -48,8 +283,8 @@
     <nav class="ps-nav__links" aria-label="Site navigation">
       <a href="about.html">About</a>
       <a href="services.html" class="is-active">Services</a>
-      <a href="case-study.html">Case Study</a>
-      <a href="careers.html">Careers</a>
+      <a href="client-experience.html">Client Experience</a>
+      <a href="careers.html">Careers &amp; Opportunities</a>
       <a href="contact.html">Contact</a>
     </nav>
     <button class="ps-nav__toggle" aria-label="Open navigation" aria-expanded="false">
@@ -63,199 +298,240 @@
   </a>
 
   <!-- ═══ CONTENT ═══ -->
-  <main class="svc-main">
-
-    <!-- ═══ OPENING ═══ -->
-    <section class="svc-open">
-      <div class="svc-open__inner">
-        <span class="svc-eyebrow" data-reveal>Our Services</span>
-        <h1 class="svc-open__title" data-reveal>
-          Five disciplines.<br>
-          One <em>conviction</em>.
-        </h1>
-        <p class="svc-open__lead" data-reveal>
-          PrimeStrategy organises its advisory practice around five areas of
-          deep specialist expertise, from management consulting to field
-          research and analytics.
-        </p>
+  <main>
+    
+    <!-- 01. HERO -->
+    <section class="svc-section svc-hero">
+      <div class="svc-inner">
+        <div class="svc-header">
+          <span class="svc-eyebrow gsap-fade-up">Our Services</span>
+          <h1 class="svc-title gsap-fade-up">Insights. Strategy. <em>Solutions</em>.</h1>
+          <p class="svc-lead gsap-fade-up">
+            At PrimeStrategy Ghana Ltd., we serve as a strategic consulting and business solutions partner, helping organizations address challenges, identify opportunities, and achieve their business objectives. Through research, business intelligence, data analytics, and industry expertise, we develop practical solutions that improve performance, strengthen operations, and support sustainable growth.
+          </p>
+        </div>
       </div>
     </section>
 
-    <!-- ═══ 01 — MANAGEMENT CONSULTING (NAVY) ═══ -->
-    <section class="svc-disc" data-theme="navy">
-      <div class="svc-disc__panel svc-disc__panel--l" aria-hidden="true"></div>
-      <div class="svc-disc__panel svc-disc__panel--r" aria-hidden="true"></div>
-      <div class="svc-disc__inner">
-        <header class="svc-disc__head">
-          <span class="svc-eyebrow" data-reveal>Management Consulting</span>
-          <h2 class="svc-disc__title" data-reveal>
-            Strategic advisory for enterprises navigating <em>growth</em>.
-          </h2>
-          <p class="svc-disc__lead" data-reveal>
-            Strategic advisory and organizational implementation for
-            enterprises navigating growth, complexity, and change.
+    <!-- 02. CORE SERVICES GRID -->
+    <section class="svc-section svc-services-section">
+      <div class="svc-inner">
+        <div class="svc-header">
+          <h2 class="svc-title gsap-fade-up" style="font-size: 2.2rem;">Our Core Services</h2>
+        </div>
+        
+        <div class="svc-grid">
+          <div class="svc-card gsap-card">
+            <h3>Strategic Consulting &amp; Advisory</h3>
+            <p>We partner with organizations to assess business challenges, identify opportunities, and develop practical strategies that strengthen operations, improve competitiveness, and support sustainable growth.</p>
+          </div>
+
+          <div class="svc-card gsap-card">
+            <h3>Business &amp; Market Intelligence</h3>
+            <p>We provide organizations with valuable insights into industry trends, competitive landscapes, market potential, and emerging opportunities to support strategic planning, business expansion, and informed decision-making.</p>
+          </div>
+
+          <div class="svc-card gsap-card">
+            <h3>Consumer &amp; Market Research</h3>
+            <p>We help organizations understand consumer behaviour, market dynamics, and customer expectations through structured research that informs business strategies, product development, and market positioning.</p>
+          </div>
+
+          <div class="svc-card gsap-card">
+            <h3>Customer Experience &amp; Service Excellence</h3>
+            <p>We help organizations assess and improve customer experiences through mystery shopping, customer satisfaction studies, service quality evaluations, and customer feedback analysis. Our insights help identify service gaps, strengthen customer relationships, and improve overall service delivery.</p>
+          </div>
+
+          <div class="svc-card gsap-card">
+            <h3>Data Analytics &amp; Performance Improvement</h3>
+            <p>We transform business data into meaningful insights, helping organizations monitor performance, identify operational gaps, improve efficiency, and make informed decisions that support business growth.</p>
+          </div>
+
+          <div class="svc-card gsap-card">
+            <h3>Project Management &amp; Advisory</h3>
+            <p>We support organizations in planning, evaluating, and executing projects through feasibility assessments, project coordination, and strategic guidance that minimize risks, improve resource utilization, and achieve successful project outcomes.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03. SPECIALIZED SOLUTIONS BANNER -->
+    <section class="svc-section svc-specialized-banner">
+      <div class="svc-inner">
+        <div class="svc-header">
+          <span class="svc-eyebrow gsap-fade-up">Specialized Business Solutions</span>
+          <h2 class="svc-title gsap-fade-up">Strategic partnerships for technology and <em>real estate</em>.</h2>
+          <p class="svc-lead gsap-fade-up" style="margin-bottom: 3rem;">
+            Beyond our core consulting services, we connect organizations and individuals with specialized business solutions through our strategic partnerships, providing access to expertise in technology, real estate, and related sectors.
           </p>
-        </header>
-        <div class="svc-list">
+        </div>
 
-          <article class="svc-row" data-reveal>
-            <h3 class="svc-row__title">Management Consulting</h3>
-            <p class="svc-row__body">Our management consulting practice refines strategy, operational workflows, and executive performance. We work alongside senior leadership to diagnose the enterprise, design the operating model, and implement the transformation, from boardroom strategy through process optimization, organizational design, and change management.</p>
-          </article>
+        <div class="svc-grid">
+          <div class="svc-card gsap-card">
+            <h3>Technology &amp; Digital Transformation</h3>
+            <p>We support organizations in adopting technology solutions that improve business processes, enhance operational efficiency, and support digital transformation. Through our technical partnerships, we facilitate access to software development, IT infrastructure, systems integration, business automation, and other tailored digital solutions.</p>
+          </div>
 
-          <article class="svc-row" data-reveal>
-            <h3 class="svc-row__title">Market &amp; Business Analysis</h3>
-            <p class="svc-row__body">We produce rigorous commercial assessments covering market structure, competitive positioning, and opportunity mapping for enterprises entering new categories or defending leadership. Our analyses combine primary field data with secondary market intelligence to give leadership a defensible view of where to invest and where to retrench.</p>
-          </article>
+          <div class="svc-card gsap-card">
+            <h3>Real Estate &amp; Property Advisory</h3>
+            <p>We support individuals, businesses, and investors in identifying and evaluating real estate opportunities through market research, feasibility assessments, and strategic advisory. Through our development partnerships, we also facilitate access to property development, construction, and related real estate solutions.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04. WHY PARTNER WITH PRIMESTRATEGY -->
+    <section class="svc-section svc-why-section">
+      <div class="svc-inner">
+        <div class="svc-header">
+          <span class="svc-eyebrow gsap-fade-up" style="color: var(--ps-orange);">Why Partner With PrimeStrategy?</span>
+          <h2 class="svc-title gsap-fade-up">Your Business. Our <em>Commitment</em>.</h2>
+          <p class="svc-lead gsap-fade-up">
+            We believe every organization faces unique challenges and opportunities. Our approach focuses on understanding our clients' needs and providing practical solutions that create meaningful business value.
+          </p>
+        </div>
+
+        <div class="svc-why-grid">
+          
+          <!-- Item 1 -->
+          <div class="svc-why-item gsap-fade-up">
+            <!-- Hand-drawn Magnifying Glass -->
+            <svg class="svc-why-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="42" cy="42" r="24" />
+              <path d="M58 58 L82 82" />
+              <path d="M32 42 L52 42" />
+              <path d="M42 32 L42 52" />
+              <path d="M28 28 L20 20" />
+              <path d="M56 28 L64 20" />
+            </svg>
+            <div class="svc-why-content">
+              <h4>Research Driven Approach</h4>
+              <p>Our recommendations are informed by credible research, data, and practical industry insights to support confident business decisions.</p>
+            </div>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="svc-why-item gsap-fade-up">
+            <!-- Hand-drawn Puzzle Pieces -->
+            <svg class="svc-why-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 30 L40 30 C40 20 60 20 60 30 L80 30 L80 60 L60 60 C60 70 40 70 40 60 L20 60 Z" />
+              <path d="M20 65 L20 85 L50 85 L50 65 Z" />
+              <path d="M55 65 L80 65 L80 85 L55 85" />
+            </svg>
+            <div class="svc-why-content">
+              <h4>Practical Business Solutions</h4>
+              <p>We go beyond identifying challenges to developing strategies and solutions that organizations can implement to improve performance.</p>
+            </div>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="svc-why-item gsap-fade-up">
+            <!-- Hand-drawn Globe/Map -->
+            <svg class="svc-why-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="50" cy="50" r="32" />
+              <ellipse cx="50" cy="50" rx="16" ry="32" />
+              <path d="M18 50 L82 50" />
+              <path d="M25 30 Q50 40 75 30" />
+              <path d="M25 70 Q50 60 75 70" />
+              <path d="M40 20 Q50 50 40 80" />
+            </svg>
+            <div class="svc-why-content">
+              <h4>Industry Experience</h4>
+              <p>Our experience working across different industries enables us to understand diverse business environments and provide solutions suited to each client's needs.</p>
+            </div>
+          </div>
+
+          <!-- Item 4 -->
+          <div class="svc-why-item gsap-fade-up">
+            <!-- Hand-drawn Target/Bullseye -->
+            <svg class="svc-why-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="50" cy="50" r="30" />
+              <circle cx="50" cy="50" r="18" />
+              <circle cx="50" cy="50" r="6" fill="currentColor" />
+              <path d="M50 10 L50 20" />
+              <path d="M50 80 L50 90" />
+              <path d="M10 50 L20 50" />
+              <path d="M80 50 L90 50" />
+              <path d="M72 28 L65 35" />
+              <path d="M35 65 L28 72" />
+            </svg>
+            <div class="svc-why-content">
+              <h4>Commitment to Results</h4>
+              <p>We work closely with clients to understand their objectives, address their challenges, and deliver solutions that support measurable business outcomes.</p>
+            </div>
+          </div>
 
         </div>
       </div>
     </section>
 
-    <!-- ═══ 02 — MARKET & CONSUMER RESEARCH (WHITE) ═══ -->
-    <section class="svc-disc" data-theme="white">
-      <div class="svc-disc__panel svc-disc__panel--l" aria-hidden="true"></div>
-      <div class="svc-disc__panel svc-disc__panel--r" aria-hidden="true"></div>
-      <div class="svc-disc__inner">
-        <header class="svc-disc__head">
-          <span class="svc-eyebrow" data-reveal>Market &amp; Consumer Research</span>
-          <h2 class="svc-disc__title" data-reveal>
-            Primary studies that arm leadership with <em>category</em> leadership.
-          </h2>
-          <p class="svc-disc__lead" data-reveal>
-            Quantitative and qualitative primary market studies that arm
-            leadership with category leadership.
-          </p>
-        </header>
-        <div class="svc-list">
-
-          <article class="svc-row" data-reveal>
-            <h3 class="svc-row__title">Consumer Research</h3>
-            <p class="svc-row__body">Tailored consumer studies that uncover preferences, loyalty drivers, and brand equity across demographic and psychographic segments. We design mixed-method research programs and deliver findings as strategic recommendations rather than raw data dumps.</p>
-          </article>
-
-          <article class="svc-row" data-reveal>
-            <h3 class="svc-row__title">Focus Group Discussion</h3>
-            <p class="svc-row__body">Full-service focus group moderation in modern facilities. Our moderators draw out the insight that surveys miss, the emotional drivers behind purchase decisions, the language consumers actually use, and the objections that never surface in written feedback.</p>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══ 03 — QUANTITATIVE DATA ANALYTICS (NAVY) ═══ -->
-    <section class="svc-disc" data-theme="navy">
-      <div class="svc-disc__panel svc-disc__panel--l" aria-hidden="true"></div>
-      <div class="svc-disc__panel svc-disc__panel--r" aria-hidden="true"></div>
-      <div class="svc-disc__inner">
-        <header class="svc-disc__head">
-          <span class="svc-eyebrow" data-reveal>Quantitative Data Analytics</span>
-          <h2 class="svc-disc__title" data-reveal>
-            Data science pipelines that turn field data into <em>decisions</em>.
-          </h2>
-          <p class="svc-disc__lead" data-reveal>
-            Data science pipelines and business intelligence architecture
-            that turn field data into decisions.
-          </p>
-        </header>
-        <div class="svc-list">
-
-          <article class="svc-row" data-reveal>
-            <h3 class="svc-row__title">Data Analytics</h3>
-            <p class="svc-row__body">Data science pipelines identifying the characteristics of your best customers, the drivers of your revenue, and the warning signals ahead of churn. We build end-to-end analytics, from data capture and cleaning through modelling, to executive dashboards that leadership actually uses.</p>
-          </article>
-
-          <article class="svc-row" data-reveal>
-            <h3 class="svc-row__title">Market Sizing</h3>
-            <p class="svc-row__body">We determine the addressable market volume, segment opportunities, and barriers to entry, arming leadership with the competitive entry solutions needed to justify investment, size a new venture, or prioritize between competing growth options.</p>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══ 04 — CUSTOMIZED SOFTWARE & IT (WHITE) ═══ -->
-    <section class="svc-disc" data-theme="white">
-      <div class="svc-disc__panel svc-disc__panel--l" aria-hidden="true"></div>
-      <div class="svc-disc__panel svc-disc__panel--r" aria-hidden="true"></div>
-      <div class="svc-disc__inner">
-        <header class="svc-disc__head">
-          <span class="svc-eyebrow" data-reveal>Customized Software &amp; IT</span>
-          <h2 class="svc-disc__title" data-reveal>
-            Enterprise engineering that raises <em>productivity</em>.
-          </h2>
-          <p class="svc-disc__lead" data-reveal>
-            Custom enterprise engineering that leverages digital tools to
-            minimize cost and raise productivity.
-          </p>
-        </header>
-        <div class="svc-list">
-
-          <article class="svc-row" data-reveal>
-            <h3 class="svc-row__title">Software Development</h3>
-            <p class="svc-row__body">Customized enterprise IT engineering that leverages digital tools to minimize operating costs and raise productivity. We build applications designed for the specific workflows of your business, not generic software you have to bend to fit.</p>
-          </article>
-
-          <article class="svc-row" data-reveal>
-            <h3 class="svc-row__title">Data Capture &amp; Entry</h3>
-            <p class="svc-row__body">Structured, quality-controlled capture of field, survey, and legacy document data ensuring reliable analytics foundations. We handle large-scale data entry projects with quality control at every stage, so downstream analytics starts from clean ground.</p>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══ 05 — FIELD & MYSTERY STUDIES (NAVY) ═══ -->
-    <section class="svc-disc" data-theme="navy">
-      <div class="svc-disc__panel svc-disc__panel--l" aria-hidden="true"></div>
-      <div class="svc-disc__panel svc-disc__panel--r" aria-hidden="true"></div>
-      <div class="svc-disc__inner">
-        <header class="svc-disc__head">
-          <span class="svc-eyebrow" data-reveal>Field &amp; Mystery Studies</span>
-          <h2 class="svc-disc__title" data-reveal>
-            Trained field evaluators turned into <em>actionable</em> reports.
-          </h2>
-          <p class="svc-disc__lead" data-reveal>
-            Trained field evaluators and mystery shopping programs
-            transformed into actionable reports.
-          </p>
-        </header>
-        <div class="svc-list">
-
-          <article class="svc-row" data-reveal>
-            <h3 class="svc-row__title">Mystery Shopping</h3>
-            <p class="svc-row__body">Trained field evaluators pose as ordinary customers across your branches, service points, and call centers, collecting digital and audio-visual telemetry. Reports are transformed into actionable service-level enhancement recommendations that give management a defensible view of the actual customer experience.</p>
-          </article>
-
-          <article class="svc-row" data-reveal>
-            <h3 class="svc-row__title">Market Research</h3>
-            <p class="svc-row__body">Quantitative and qualitative primary market studies helping corporations defend competitive advantage and achieve category leadership. Engagements combine field research, channel analysis, and customer interviews to give leadership a full picture of how their category is actually moving.</p>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══ CLOSING ═══ -->
+    <!-- 05. CLOSING CTA -->
     <section class="svc-close">
-      <div class="svc-close__inner">
-        <p class="svc-close__line" data-reveal>
-          Let's discuss <em>your</em> practice.
-        </p>
-        <a class="svc-close__btn" href="contact.html" data-reveal>
-          Contact PrimeStrategy
-        </a>
+      <div class="svc-inner">
+        <h2 class="svc-close-title gsap-fade-up">Let's discuss <em>your</em> business challenges.</h2>
+        <a href="contact.html" class="svc-btn gsap-fade-up">Partner With Us</a>
       </div>
     </section>
 
   </main>
 
+  <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="js/cursor.js"></script>
   <script src="js/nav.js"></script>
   <script src="js/transitions.js"></script>
-  <script src="js/services.js"></script>
+  
+  <!-- GSAP Scroll Animations -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      gsap.registerPlugin(ScrollTrigger);
 
+      // 1. Hero Entrance
+      gsap.from(".svc-hero .gsap-fade-up", {
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.15,
+        ease: "power4.out",
+        delay: 0.2
+      });
+
+      // 2. Section Headers and Text (Fade and slide)
+      gsap.utils.toArray(".gsap-fade-up").forEach(elem => {
+        if (elem.closest('.svc-hero')) return;
+
+        gsap.from(elem, {
+          scrollTrigger: {
+            trigger: elem,
+            start: "top 85%", 
+            toggleActions: "play none none reverse"
+          },
+          y: 40,
+          opacity: 0,
+          duration: 0.8,
+          ease: "power3.out"
+        });
+      });
+
+      // 3. CONSPICUOUS Card Animations (Scale up, pop in, and rotate slightly)
+      gsap.utils.toArray(".svc-grid").forEach(grid => {
+        gsap.from(grid.querySelectorAll(".gsap-card"), {
+          scrollTrigger: {
+            trigger: grid,
+            start: "top 85%",
+            toggleActions: "play none none reverse"
+          },
+          y: 80,
+          opacity: 0,
+          scale: 0.9,
+          rotationX: 10, // Slight 3D flip effect
+          duration: 0.8,
+          stagger: 0.15, // Delay between each card appearing
+          ease: "back.out(1.5)", // Bouncy, conspicuous ease
+          clearProps: "all" // Cleans up transforms after animation finishes
+        });
+      });
+    });
+  </script>
 </body>
 </html>
