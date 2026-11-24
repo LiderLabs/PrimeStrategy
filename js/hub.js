@@ -47,7 +47,7 @@
       href: "client-experience.html",
       ctaLabel: "View Our Impact",
       accent: "#FFEBD2",
-      image: "images/card-casestudy.jpg", /* We can reuse the old case study image here */
+      image: "images/card-casestudy.jpg",
       washColors: ["rgba(20, 32, 58, 0.75)", "rgba(34, 46, 78, 0.60)", "rgba(12, 20, 40, 0.88)"]
     },
     {
@@ -87,148 +87,84 @@
     return window.innerWidth <= 900;
   }
 
-  function escapeHTML(s) {
-    return String(s).replace(/[&<>"']/g, function (c) {
-      return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c];
-    });
-  }
-
-  function renderTitleHTML(raw) {
-    return escapeHTML(raw).replace(/\n/g, "<br>");
-  }
-
   function buildMobile() {
     if (!mobileContainer) return;
 
-    var slidesHTML = SECTIONS.map(function (s, i) {
-      var inlineStyle =
-        " --wash-0: " + s.washColors[0] + ";" +
-        " --wash-1: " + s.washColors[1] + ";" +
-        " --wash-2: " + s.washColors[2] + ";";
-
-      var imagePosition = s.mobilePosition || "center";
-      var eyebrowHTML = s.eyebrow ? '<span class="hub-mobile__eyebrow">' + escapeHTML(s.eyebrow) + '</span>' : '';
-
+    // Create mobile cards HTML
+    var html = SECTIONS.map(function (s, i) {
       return (
-        '<div class="hub-mobile__slide" data-slide-index="' + i + '">' +
-          '<a class="hub-mobile__card" href="' + s.href + '" ' +
-             'data-index="' + i + '" ' +
-             'style="' + inlineStyle + '">' +
-            '<div class="hub-mobile__image" ' +
-                 'style="background-image: url(\'' + s.image + '\'); ' +
-                        'background-position: ' + imagePosition + ';"></div>' +
-            eyebrowHTML +
-            '<h2 class="hub-mobile__title">' + renderTitleHTML(s.title) + '</h2>' +
-            '<p class="hub-mobile__subtitle">' + escapeHTML(s.subtitle) + '</p>' +
-            '<p class="hub-mobile__summary">' + escapeHTML(s.summary) + '</p>' +
-            '<span class="hub-mobile__cta">' +
-              escapeHTML(s.ctaLabel) +
-            '</span>' +
-          '</a>' +
-        '</div>'
+        '<a href="' + s.href + '" class="mobile-card" style="background-image: url(\'' + s.image + '\'); animation-delay: ' + (0.1 * i) + 's;">' +
+          '<div class="mobile-card-content">' +
+            '<span class="mobile-card-subtitle">' + s.subtitle + '</span>' +
+            '<h2 class="mobile-card-title">' + s.title + '</h2>' +
+            '<p class="mobile-card-summary">' + s.summary + '</p>' +
+          '</div>' +
+        '</a>'
       );
     }).join("");
 
-    var dotsHTML = SECTIONS.map(function (s, i) {
-      return '<span class="hub-mobile__dot' + (i === 0 ? " is-active" : "") + '"></span>';
-    }).join("");
+    mobileContainer.innerHTML = html;
 
-    mobileContainer.innerHTML =
-      slidesHTML +
-      '<div class="hub-mobile__dots" aria-hidden="true">' + dotsHTML + '</div>' +
-      '<div class="hub-mobile__hint" id="hubMobileHint" aria-hidden="true">' +
-        '<span>Scroll</span><span class="hub-mobile__hint-arrow">↓</span>' +
-      '</div>';
-
-    var dots = mobileContainer.querySelectorAll(".hub-mobile__dot");
-    var cards = mobileContainer.querySelectorAll(".hub-mobile__card");
-    var hint = document.getElementById("hubMobileHint");
-    var ticking = false;
-    var lastIdx = -1;
-
-    function updateOnScroll() {
-      var vh = window.innerHeight;
-      var scrollTop = mobileContainer.scrollTop;
-
-      var idx = Math.round(scrollTop / vh);
-      if (idx < 0) idx = 0;
-      if (idx >= dots.length) idx = dots.length - 1;
-
-      dots.forEach(function (d, i) {
-        d.classList.toggle("is-active", i === idx);
-      });
-
-      if (hint) {
-        if (scrollTop > 40) hint.classList.add("is-hidden");
-        else hint.classList.remove("is-hidden");
+    // Inject specific CSS for the mobile cards
+    var style = document.createElement('style');
+    style.innerHTML = `
+      .mobile-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        min-height: 240px;
+        border-radius: 12px;
+        padding: 2rem;
+        text-decoration: none;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        opacity: 0;
+        transform: translateY(30px);
+        animation: slideUpCard 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        margin-bottom: 1.5rem; /* Spacing between cards */
       }
-
-      if (idx !== lastIdx) {
-        lastIdx = idx;
-        cards.forEach(function (card, i) {
-          if (i === idx) {
-            card.classList.add("is-focused");
-            card.classList.remove("is-neighbor");
-          } else {
-            card.classList.remove("is-focused");
-            card.classList.add("is-neighbor");
-          }
-        });
+      .mobile-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: linear-gradient(to top, rgba(12,20,40,0.95) 0%, rgba(12,20,40,0.4) 60%, transparent 100%);
+        z-index: 1;
       }
-
-      ticking = false;
-    }
-
-    mobileContainer.addEventListener("scroll", function () {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(updateOnScroll);
-    }, { passive: true });
-
-    var touchStartY = 0;
-    var touchEndY = 0;
-    var isSwiping = false;
-    var swipeThreshold = 50;
-
-    mobileContainer.addEventListener("touchstart", function (e) {
-      touchStartY = e.touches[0].clientY;
-      isSwiping = false;
-    }, { passive: true });
-
-    mobileContainer.addEventListener("touchmove", function (e) {
-      touchEndY = e.touches[0].clientY;
-      if (Math.abs(touchEndY - touchStartY) > 10) {
-        isSwiping = true;
+      .mobile-card-content {
+        position: relative;
+        z-index: 2;
       }
-    }, { passive: true });
-
-    mobileContainer.addEventListener("touchend", function (e) {
-      if (!isSwiping) return;
-
-      var distance = touchStartY - touchEndY;
-      var vh = window.innerHeight;
-      
-      if (Math.abs(distance) > swipeThreshold) {
-        if (distance > 0) {
-          var nextIndex = Math.min(lastIdx + 1, cards.length - 1);
-          mobileContainer.scrollTo({ top: nextIndex * vh, behavior: 'smooth' });
-        } else {
-          var prevIndex = Math.max(lastIdx - 1, 0);
-          mobileContainer.scrollTo({ top: prevIndex * vh, behavior: 'smooth' });
-        }
+      .mobile-card-subtitle {
+        display: block;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #E86A34;
+        margin-bottom: 0.5rem;
       }
-
-      if (isSwiping) {
-        e.preventDefault();
+      .mobile-card-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.6rem;
+        color: #FFFFFF;
+        margin: 0 0 0.5rem 0;
       }
-      
-      touchStartY = 0;
-      touchEndY = 0;
-      isSwiping = false;
-    }, { passive: false });
-
-    window.addEventListener("resize", updateOnScroll);
-    updateOnScroll();
+      .mobile-card-summary {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.85rem;
+        color: rgba(255,255,255,0.8);
+        margin: 0;
+        line-height: 1.5;
+      }
+      @keyframes slideUpCard {
+        to { opacity: 1; transform: translateY(0); }
+      }
+    `;
+    document.head.appendChild(style);
   }
 
   /* ═══════════════════════════════════════════════════════════════
@@ -695,7 +631,7 @@
   }
 
   /* ═══════════════════════════════════════════════════════════════
-     BOOT
+     BOOT & RESIZE HANDLING
      ═══════════════════════════════════════════════════════════════ */
 
   if (isMobile()) {
@@ -703,5 +639,18 @@
   } else {
     buildDesktop();
   }
+
+  // Handle window resizing (switching between mobile stack and desktop 3D carousel)
+  var resizeTimer;
+  window.addEventListener("resize", function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () {
+      // Reload the page smoothly if they cross the 900px threshold
+      if ((window.innerWidth <= 900 && !mobileContainer.hasChildNodes()) || 
+          (window.innerWidth > 900 && mobileContainer.hasChildNodes())) {
+        window.location.reload();
+      }
+    }, 500);
+  });
 
 })();
