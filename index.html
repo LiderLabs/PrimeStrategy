@@ -94,34 +94,35 @@
         overflow-y: auto;
       }
 
-      /* Keep video playing in the background */
+      /* Ensure video is fixed and behind everything */
       .bg-video {
         position: fixed;
         top: 0; left: 0;
         width: 100vw; height: 100vh;
         object-fit: cover;
-        z-index: -1;
-        filter: brightness(0.25); 
+        z-index: -2; /* Pushed far back */
+        filter: brightness(0.3); 
       }
 
-      /* FIX: Pin the logo to the top left so it doesn't float over the cards */
+      /* Logo locked to top center */
       .hub__topbar {
         position: fixed;
         top: 15px; 
-        left: 20px;
-        z-index: 50; /* Ensure it stays above everything */
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 50; 
       }
       
       .hub__brand img {
-        height: 35px; /* Slightly smaller for mobile */
+        height: 35px; 
       }
 
       /* Make the header flow naturally down the page */
       .hero-header {
         position: relative;
         width: 100%;
-        padding: 8rem 5vw 2rem 5vw; /* Added top padding to clear the logo */
-        background: linear-gradient(to bottom, rgba(12,20,40,0.9) 0%, rgba(12,20,40,0) 100%);
+        padding: 8rem 5vw 2rem 5vw; 
+        background: transparent; /* Let video show through */
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -145,9 +146,9 @@
         height: auto;
         z-index: 5;
         padding-bottom: 4rem;
+        background: transparent !important;
       }
 
-      /* Hide the 3D canvas on mobile, we use the CSS cards instead */
       #hub-canvas {
         display: none;
       }
@@ -333,7 +334,6 @@
       <span class="word-wrap"><span class="word delay-25">solutions.</span></span>
     </p>
 
-    <!-- Buttons are now placed inside the header so they stack naturally on mobile -->
     <div class="hero-footer-buttons" id="mobileHeroBtns" style="display: none;">
       <a href="services.html" class="btn btn-primary">Explore Our Services</a>
       <a href="contact.html" class="btn btn-secondary">Partner with Us</a>
@@ -342,19 +342,15 @@
 
   <!-- 3. HUB / CARDS CONTAINER -->
   <div class="hub" id="hub">
-    <!-- Hide old backdrop elements -->
     <div class="hub__backdrop" aria-hidden="true" style="display:none;"></div>
     <div class="hub__bg-image" aria-hidden="true" style="display:none;"></div>
     <div class="hub__bg-wash" aria-hidden="true" style="display:none;"></div>
     <div class="hub__vignette" aria-hidden="true" style="display:none;"></div>
 
-    <!-- Desktop 3D Canvas -->
     <canvas id="hub-canvas"></canvas>
     
-    <!-- Mobile CSS Cards (Fills via hub.js) -->
     <div class="hub-mobile" id="hubMobile" aria-hidden="true"></div>
 
-    <!-- Logo -->
     <header class="hub__topbar">
       <a class="hub__brand" href="index.html" aria-label="PrimeStrategy Home">
         <img src="images/ps-logo-light.png" alt="PrimeStrategy">
