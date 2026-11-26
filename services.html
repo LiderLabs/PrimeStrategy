@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Services — PrimeStrategy Ghana Ltd.</title>
+  <title>Services | PrimeStrategy Ghana Ltd.</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,31 +14,95 @@
   
   <style>
     /* ═══════════════════════════════════════════════
-       REFINED BRAND COLORS
+       BRAND COLORS
        ═══════════════════════════════════════════════ */
     :root {
       --ps-orange: #E67E22;   
       --ps-blue: #34495E;     
-      --ps-slate: #7F8C8D;    
-      --ps-bg: #FAFAFA;       
-      --ps-text: #2C3E50;     
+      --ps-slate: #55676B;    
       --ps-white: #FFFFFF;
-      --ps-border: rgba(52, 73, 94, 0.08);
+      --ps-navy: 10, 18, 36;
+      --svc-nav-h: var(--ps-nav-h, 68px);
+
+      /* The background photo. The filename has a space and brackets, so they are
+         URL-encoded here (%20). If you rename the file to bg-services.jpg,
+         change this one line to: url('images/bg-services.jpg') */
+      --svc-photo: url('images/bg-services%20(2).jpg');
     }
 
-    /* ── Base Styles ── */
+    html { scroll-behavior: smooth; }
+
     .svc-body {
-      background-color: var(--ps-bg);
-      color: var(--ps-text);
+      background-color: #0c1428;
+      color: #2C3E50;
       overflow-x: hidden;
     }
 
-    .svc-section {
-      padding: 7rem 5vw;
+    main {
       position: relative;
+      z-index: 1;
+      overflow-x: clip;
+    }
+
+    /* ── Scroll progress bar ── */
+    .svc-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--ps-orange);
+      transform: scaleX(0);
+      transform-origin: left center;
+      z-index: 9999;
+      pointer-events: none;
+    }
+
+    /* ═══════════════════════════════════════════════
+       SECTIONS — each carries its OWN copy of the photo
+       Per-section variables set the crop (--svc-pos) and
+       the scrim (--svc-scrim) so every section feels distinct
+       while staying on-brand.
+       ═══════════════════════════════════════════════ */
+    .svc-section {
+      position: relative;
+      overflow: hidden;
+      padding: 7rem 5vw;
+      isolation: isolate;
+    }
+
+    .svc-section + .svc-section,
+    .svc-section + .svc-close {
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .svc-sbg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+      background: #0c1428;
+    }
+    .svc-sbg__img {
+      position: absolute;
+      inset: -10% 0;
+      background-image: var(--svc-photo);
+      background-size: cover;
+      background-position: var(--svc-pos, center);
+      background-repeat: no-repeat;
+      will-change: transform;
+    }
+    .svc-sbg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--svc-scrim);
     }
 
     .svc-inner {
+      position: relative;
+      z-index: 1;
       max-width: 1200px;
       margin: 0 auto;
     }
@@ -46,24 +110,36 @@
     /* ── Typography ── */
     .svc-eyebrow {
       font-family: 'Inter', sans-serif;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 600;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--ps-blue);
+      color: var(--ps-orange);
       display: block;
-      margin-bottom: 1rem;
+      margin-bottom: 1.1rem;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.45);
+    }
+    /* No dash lines beside the small headings (also overrides shared.css / page.css) */
+    .svc-eyebrow::before,
+    .svc-eyebrow::after {
+      content: none !important;
+      display: none !important;
     }
 
     .svc-title {
       font-family: 'Fraunces', serif;
-      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-size: clamp(2.1rem, 5vw, 4rem);
       line-height: 1.15;
       font-weight: 600;
-      color: var(--ps-blue);
+      color: var(--ps-white);
       margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
+      text-shadow: 0 3px 20px rgba(0,0,0,0.45), 0 1px 3px rgba(0,0,0,0.35);
     }
-
+    .svc-title--sm {
+      font-size: clamp(1.8rem, 3.6vw, 2.5rem);
+      margin-bottom: 0;
+    }
     .svc-title em {
       color: var(--ps-orange);
       font-style: italic;
@@ -71,32 +147,82 @@
 
     .svc-lead {
       font-family: 'Inter', sans-serif;
-      font-size: 1.15rem;
+      font-size: 1.12rem;
       line-height: 1.8;
-      color: var(--ps-slate);
+      color: #F1F5F9;
       max-width: 700px;
+      text-shadow: 0 2px 14px rgba(0,0,0,0.5), 0 1px 3px rgba(0,0,0,0.35);
     }
+
+    /* Masked line reveal for the hero title */
+    .svc-line {
+      display: inline-block;
+      overflow: hidden;
+      vertical-align: top;
+      padding: 0.05em 0.08em 0.14em 0;
+      margin-bottom: -0.1em;
+    }
+    .svc-line > span { display: inline-block; will-change: transform; }
+
+    /* Word-by-word reveal for headings (spans are added by the script) */
+    .svc-mask {
+      display: inline-block;
+      overflow: hidden;
+      vertical-align: top;
+      padding: 0.05em 0.1em 0.16em;
+      margin: -0.05em -0.1em -0.16em;
+    }
+    .svc-mask.is-done { overflow: visible; }
+    .svc-word { display: inline-block; }
+    .svc-nowrap { white-space: nowrap; }
 
     /* ── 01. HERO ── */
     .svc-hero {
-      min-height: 60vh;
+      --svc-pos: center 45%;
+      --svc-scrim: linear-gradient(90deg, rgba(var(--ps-navy), 0.74) 0%, rgba(var(--ps-navy), 0.46) 55%, rgba(var(--ps-navy), 0.22) 100%);
+      min-height: 88vh;
       display: flex;
       align-items: center;
-      background: var(--ps-white);
-      border-bottom: 1px solid var(--ps-border);
+      padding-top: calc(var(--svc-nav-h) + 3rem);
     }
 
-    /* ── 02. CORE SERVICES GRID ── */
+    /* ── 02. CORE SERVICES ── */
     .svc-services-section {
-      background: var(--ps-bg);
+      --svc-pos: left center;
+      --svc-scrim: linear-gradient(90deg, rgba(var(--ps-navy), 0.70) 0%, rgba(var(--ps-navy), 0.46) 60%, rgba(var(--ps-navy), 0.34) 100%);
     }
 
-    /* Mobile-first grid approach */
+    /* ── 03. SPECIALIZED SOLUTIONS ── */
+    .svc-specialized-banner {
+      --svc-pos: right center;
+      --svc-scrim: linear-gradient(90deg, rgba(var(--ps-navy), 0.74) 0%, rgba(var(--ps-navy), 0.48) 60%, rgba(var(--ps-navy), 0.30) 100%);
+    }
+
+    /* ── 04. WHY PARTNER ── */
+    .svc-why-section {
+      --svc-pos: center 75%;
+      --svc-scrim: linear-gradient(180deg, rgba(36, 52, 70, 0.82) 0%, rgba(52, 73, 94, 0.72) 100%);
+      color: var(--ps-white);
+    }
+
+    /* ── 05. CLOSING CTA ── */
+    .svc-close {
+      --svc-pos: center 55%;
+      --svc-scrim: radial-gradient(ellipse at center, rgba(var(--ps-navy), 0.52) 0%, rgba(var(--ps-navy), 0.72) 100%);
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+      padding: 8rem 5vw;
+      text-align: center;
+    }
+
+    /* ── Grids ── */
     .svc-grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 1.5rem;
       margin-top: 3rem;
+      perspective: 1200px;
     }
 
     @media (min-width: 768px) {
@@ -109,78 +235,64 @@
     @media (min-width: 1024px) {
       .svc-grid {
         grid-template-columns: repeat(3, 1fr);
-        gap: 2.5rem;
+        gap: 2rem;
       }
+      .svc-grid--two { grid-template-columns: repeat(2, 1fr); }
     }
 
+    /* ── Cards: clean, frosted, no numbering, no accent line ── */
     .svc-card {
-      background: var(--ps-white);
-      border: 1px solid var(--ps-border);
-      padding: 2.5rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.02);
-      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease;
+      position: relative;
+      background: rgba(255, 255, 255, 0.95);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      padding: 2.25rem 2.25rem 2.5rem;
+      border-radius: 6px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22);
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s ease;
       display: flex;
       flex-direction: column;
-      will-change: transform;
-    }
-
-    /* Highly conspicuous hover effect */
-    .svc-card:hover {
-      transform: translateY(-10px) scale(1.02);
-      box-shadow: 0 20px 40px rgba(52, 73, 94, 0.12);
-      border-color: var(--ps-orange);
     }
 
     .svc-card h3 {
       font-family: 'Inter', sans-serif;
-      font-size: 1.3rem;
+      font-size: 1.22rem;
       font-weight: 700;
       color: var(--ps-blue);
-      margin-bottom: 1rem;
+      margin-bottom: 0.9rem;
       line-height: 1.3;
+      letter-spacing: -0.005em;
     }
 
     .svc-card p {
       font-family: 'Inter', sans-serif;
       font-size: 0.95rem;
-      line-height: 1.7;
+      line-height: 1.75;
       color: var(--ps-slate);
       flex-grow: 1;
     }
 
-    /* ── 03. SPECIALIZED SOLUTIONS BANNER ── */
-    .svc-specialized-banner {
-      background: var(--ps-white);
-      border-top: 1px solid var(--ps-border);
-      border-bottom: 1px solid var(--ps-border);
+    @media (hover: hover) {
+      .svc-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 22px 46px rgba(0, 0, 0, 0.32);
+      }
     }
+    .svc-card:active { transform: scale(0.99); }
 
-    /* ── 04. WHY PARTNER SECTION ── */
-    .svc-why-section {
-      background: var(--ps-blue);
-      color: var(--ps-white);
-    }
-
-    .svc-why-section .svc-title {
-      color: var(--ps-white);
-    }
-
-    .svc-why-section .svc-lead {
-      color: rgba(255, 255, 255, 0.8);
-    }
-
+    /* ── Why-partner items ── */
     .svc-why-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 3rem;
+      gap: 2.5rem;
       margin-top: 4rem;
     }
 
     @media (min-width: 768px) {
       .svc-why-grid {
         grid-template-columns: 1fr 1fr;
-        gap: 4rem;
+        gap: 3rem 4rem;
       }
     }
 
@@ -188,15 +300,16 @@
       display: flex;
       align-items: flex-start;
       gap: 1.5rem;
+      padding-top: 1.75rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.22);
     }
 
-    /* Hand-drawn Icon styles */
     .svc-why-icon {
-      width: 40px;
-      height: 40px;
+      width: 44px;
+      height: 44px;
       flex-shrink: 0;
       color: var(--ps-orange);
-      margin-top: 0.2rem;
+      margin-top: 0.15rem;
     }
 
     .svc-why-content h4 {
@@ -210,24 +323,20 @@
     .svc-why-content p {
       font-family: 'Inter', sans-serif;
       font-size: 1rem;
-      line-height: 1.6;
-      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.65;
+      color: rgba(255, 255, 255, 0.86);
     }
 
-    /* ── 05. CLOSING CTA ── */
-    .svc-close {
-      padding: 8rem 5vw;
-      text-align: center;
-      background: var(--ps-bg);
-    }
-
+    /* ── Closing CTA ── */
     .svc-close-title {
       font-family: 'Fraunces', serif;
-      font-size: clamp(2rem, 4vw, 3rem);
-      color: var(--ps-blue);
+      font-size: clamp(1.9rem, 4vw, 3rem);
+      line-height: 1.2;
+      color: var(--ps-white);
       margin-bottom: 2rem;
+      letter-spacing: -0.01em;
+      text-shadow: 0 3px 20px rgba(0,0,0,0.5);
     }
-
     .svc-close-title em {
       color: var(--ps-orange);
       font-style: italic;
@@ -240,23 +349,71 @@
       background: var(--ps-orange);
       color: var(--ps-white);
       font-family: 'Inter', sans-serif;
-      font-size: 1rem;
-      font-weight: 500;
-      padding: 1rem 3rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 1.05rem 3rem;
       border: none;
       border-radius: 4px;
       text-decoration: none;
       transition: background 0.3s ease, transform 0.2s ease;
     }
+    @media (hover: hover) {
+      .svc-btn:hover {
+        background: #D35400;
+        transform: translateY(-2px);
+      }
+    }
 
-    .svc-btn:hover {
-      background: #D35400;
-      transform: translateY(-2px);
+    /* ═══════════════════════════════════════════════
+       MOBILE
+       ═══════════════════════════════════════════════ */
+    @media (max-width: 767px) {
+      .svc-section { padding: 4.5rem 1.25rem; }
+
+      /* Text spans the full width on phones, so use an even scrim */
+      .svc-hero,
+      .svc-services-section,
+      .svc-specialized-banner {
+        --svc-scrim: linear-gradient(180deg, rgba(var(--ps-navy), 0.60) 0%, rgba(var(--ps-navy), 0.68) 100%);
+      }
+
+      .svc-hero {
+        min-height: 92vh;
+        min-height: 92svh;
+        padding-top: calc(var(--svc-nav-h) + 2rem);
+      }
+
+      .svc-lead { font-size: 1rem; line-height: 1.7; }
+      .svc-eyebrow { font-size: 0.72rem; letter-spacing: 0.12em; }
+
+      .svc-grid { margin-top: 2rem; gap: 1.25rem; }
+      .svc-card { padding: 1.75rem 1.5rem 2rem; }
+      .svc-card h3 { font-size: 1.12rem; }
+
+      .svc-why-grid { gap: 1.75rem; margin-top: 2.5rem; }
+      .svc-why-item { gap: 1rem; padding-top: 1.5rem; }
+      .svc-why-icon { width: 36px; height: 36px; }
+      .svc-why-content h4 { font-size: 1.1rem; }
+      .svc-why-content p { font-size: 0.95rem; }
+
+      .svc-close { padding: 5rem 1.25rem 7rem; }
+      .svc-btn { width: 100%; max-width: 360px; padding: 1rem 1.5rem; }
+    }
+
+    @media (max-width: 380px) {
+      .svc-title { font-size: 1.9rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
     }
   </style>
 </head>
 
 <body class="ps-page-body svc-body">
+
+  <div class="svc-progress" id="svcProgress" aria-hidden="true"></div>
 
   <div class="ps-cursor-dot"></div>
   <div class="ps-cursor-ring"></div>
@@ -278,7 +435,7 @@
   <!-- ═══ TOP NAV ═══ -->
   <header class="ps-nav" id="siteNav">
     <a class="ps-nav__brand" href="index.html" aria-label="PrimeStrategy Home">
-      <img src="images/ps-logo.png" alt="PrimeStrategy — Accra | Washington D.C.">
+      <img src="images/ps-logo.png" alt="PrimeStrategy, Accra | Washington D.C.">
     </a>
     <nav class="ps-nav__links" aria-label="Site navigation">
       <a href="about.html">About</a>
@@ -302,10 +459,15 @@
     
     <!-- 01. HERO -->
     <section class="svc-section svc-hero">
+      <div class="svc-sbg" aria-hidden="true"><div class="svc-sbg__img"></div></div>
       <div class="svc-inner">
         <div class="svc-header">
           <span class="svc-eyebrow gsap-fade-up">Our Services</span>
-          <h1 class="svc-title gsap-fade-up">Insights. Strategy. <em>Solutions</em>.</h1>
+          <h1 class="svc-title" id="svcHeroTitle">
+            <span class="svc-line"><span>Insights.</span></span>
+            <span class="svc-line"><span>Strategy.</span></span>
+            <span class="svc-line"><span><em>Solutions</em>.</span></span>
+          </h1>
           <p class="svc-lead gsap-fade-up">
             At PrimeStrategy Ghana Ltd., we serve as a strategic consulting and business solutions partner, helping organizations address challenges, identify opportunities, and achieve their business objectives. Through research, business intelligence, data analytics, and industry expertise, we develop practical solutions that improve performance, strengthen operations, and support sustainable growth.
           </p>
@@ -315,9 +477,10 @@
 
     <!-- 02. CORE SERVICES GRID -->
     <section class="svc-section svc-services-section">
+      <div class="svc-sbg" aria-hidden="true"><div class="svc-sbg__img"></div></div>
       <div class="svc-inner">
         <div class="svc-header">
-          <h2 class="svc-title gsap-fade-up" style="font-size: 2.2rem;">Our Core Services</h2>
+          <h2 class="svc-title svc-title--sm gsap-fade-up">Our Core Services</h2>
         </div>
         
         <div class="svc-grid">
@@ -356,6 +519,7 @@
 
     <!-- 03. SPECIALIZED SOLUTIONS BANNER -->
     <section class="svc-section svc-specialized-banner">
+      <div class="svc-sbg" aria-hidden="true"><div class="svc-sbg__img"></div></div>
       <div class="svc-inner">
         <div class="svc-header">
           <span class="svc-eyebrow gsap-fade-up">Specialized Business Solutions</span>
@@ -365,7 +529,7 @@
           </p>
         </div>
 
-        <div class="svc-grid">
+        <div class="svc-grid svc-grid--two">
           <div class="svc-card gsap-card">
             <h3>Technology &amp; Digital Transformation</h3>
             <p>We support organizations in adopting technology solutions that improve business processes, enhance operational efficiency, and support digital transformation. Through our technical partnerships, we facilitate access to software development, IT infrastructure, systems integration, business automation, and other tailored digital solutions.</p>
@@ -381,9 +545,10 @@
 
     <!-- 04. WHY PARTNER WITH PRIMESTRATEGY -->
     <section class="svc-section svc-why-section">
+      <div class="svc-sbg" aria-hidden="true"><div class="svc-sbg__img"></div></div>
       <div class="svc-inner">
         <div class="svc-header">
-          <span class="svc-eyebrow gsap-fade-up" style="color: var(--ps-orange);">Why Partner With PrimeStrategy?</span>
+          <span class="svc-eyebrow gsap-fade-up">Why Partner With PrimeStrategy?</span>
           <h2 class="svc-title gsap-fade-up">Your Business. Our <em>Commitment</em>.</h2>
           <p class="svc-lead gsap-fade-up">
             We believe every organization faces unique challenges and opportunities. Our approach focuses on understanding our clients' needs and providing practical solutions that create meaningful business value.
@@ -393,9 +558,8 @@
         <div class="svc-why-grid">
           
           <!-- Item 1 -->
-          <div class="svc-why-item gsap-fade-up">
-            <!-- Hand-drawn Magnifying Glass -->
-            <svg class="svc-why-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+          <div class="svc-why-item">
+            <svg class="svc-why-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <circle cx="42" cy="42" r="24" />
               <path d="M58 58 L82 82" />
               <path d="M32 42 L52 42" />
@@ -410,9 +574,8 @@
           </div>
 
           <!-- Item 2 -->
-          <div class="svc-why-item gsap-fade-up">
-            <!-- Hand-drawn Puzzle Pieces -->
-            <svg class="svc-why-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+          <div class="svc-why-item">
+            <svg class="svc-why-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M20 30 L40 30 C40 20 60 20 60 30 L80 30 L80 60 L60 60 C60 70 40 70 40 60 L20 60 Z" />
               <path d="M20 65 L20 85 L50 85 L50 65 Z" />
               <path d="M55 65 L80 65 L80 85 L55 85" />
@@ -424,9 +587,8 @@
           </div>
 
           <!-- Item 3 -->
-          <div class="svc-why-item gsap-fade-up">
-            <!-- Hand-drawn Globe/Map -->
-            <svg class="svc-why-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+          <div class="svc-why-item">
+            <svg class="svc-why-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <circle cx="50" cy="50" r="32" />
               <ellipse cx="50" cy="50" rx="16" ry="32" />
               <path d="M18 50 L82 50" />
@@ -441,9 +603,8 @@
           </div>
 
           <!-- Item 4 -->
-          <div class="svc-why-item gsap-fade-up">
-            <!-- Hand-drawn Target/Bullseye -->
-            <svg class="svc-why-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+          <div class="svc-why-item">
+            <svg class="svc-why-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <circle cx="50" cy="50" r="30" />
               <circle cx="50" cy="50" r="18" />
               <circle cx="50" cy="50" r="6" fill="currentColor" />
@@ -466,6 +627,7 @@
 
     <!-- 05. CLOSING CTA -->
     <section class="svc-close">
+      <div class="svc-sbg" aria-hidden="true"><div class="svc-sbg__img"></div></div>
       <div class="svc-inner">
         <h2 class="svc-close-title gsap-fade-up">Let's discuss <em>your</em> business challenges.</h2>
         <a href="contact.html" class="svc-btn gsap-fade-up">Partner With Us</a>
@@ -483,54 +645,265 @@
   
   <!-- GSAP Scroll Animations -->
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("DOMContentLoaded", function () {
+      if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
       gsap.registerPlugin(ScrollTrigger);
 
-      // 1. Hero Entrance
-      gsap.from(".svc-hero .gsap-fade-up", {
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.15,
-        ease: "power4.out",
-        delay: 0.2
-      });
+      /* Wraps every word in spans so it can be animated. Keeps <em> styling. */
+      function splitWords(el) {
+        if (el.dataset.split) return el.querySelectorAll(".svc-word");
+        el.dataset.split = "true";
 
-      // 2. Section Headers and Text (Fade and slide)
-      gsap.utils.toArray(".gsap-fade-up").forEach(elem => {
-        if (elem.closest('.svc-hero')) return;
+        (function walk(node) {
+          Array.prototype.slice.call(node.childNodes).forEach(function (child) {
+            if (child.nodeType === 1) { walk(child); return; }
+            if (child.nodeType !== 3) return;
+            var frag = document.createDocumentFragment();
+            child.textContent.split(/(\s+)/).forEach(function (part) {
+              if (!part) return;
+              if (/^\s+$/.test(part)) {
+                frag.appendChild(document.createTextNode(" "));
+                return;
+              }
+              var mask = document.createElement("span");
+              var word = document.createElement("span");
+              mask.className = "svc-mask";
+              word.className = "svc-word";
+              word.textContent = part;
+              mask.appendChild(word);
+              frag.appendChild(mask);
+            });
+            node.replaceChild(frag, child);
+          });
+        })(el);
 
-        gsap.from(elem, {
+        /* Stop punctuation after an <em> from wrapping onto its own line */
+        el.querySelectorAll("em").forEach(function (em) {
+          var next = em.nextSibling;
+          if (!next || next.nodeType !== 1) return;
+          var keep = document.createElement("span");
+          keep.className = "svc-nowrap";
+          em.parentNode.insertBefore(keep, em);
+          keep.appendChild(em);
+          keep.appendChild(next);
+        });
+
+        return el.querySelectorAll(".svc-word");
+      }
+
+      var mm = gsap.matchMedia();
+
+      mm.add({
+        isDesktop: "(min-width: 768px)",
+        isMobile: "(max-width: 767px)",
+        reduce: "(prefers-reduced-motion: reduce)"
+      }, function (context) {
+        var isDesktop = context.conditions.isDesktop;
+
+        // Respect reduced-motion: leave everything visible and static
+        if (context.conditions.reduce) return;
+
+        var REPLAY = "play none none reverse"; // replays when you scroll back up and down
+
+        /* 1. Scroll progress bar */
+        gsap.to("#svcProgress", {
+          scaleX: 1,
+          ease: "none",
           scrollTrigger: {
-            trigger: elem,
-            start: "top 85%", 
-            toggleActions: "play none none reverse"
+            trigger: document.body,
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 0.3
+          }
+        });
+
+        /* 2. Background parallax + slow zoom */
+        gsap.utils.toArray(".svc-section, .svc-close").forEach(function (section) {
+          var img = section.querySelector(".svc-sbg__img");
+          if (!img) return;
+          gsap.fromTo(img,
+            { yPercent: isDesktop ? -8 : -5, scale: 1.25 },
+            {
+              yPercent: isDesktop ? 8 : 5,
+              scale: 1,
+              ease: "none",
+              scrollTrigger: {
+                trigger: section,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 0.6
+              }
+            }
+          );
+        });
+
+        /* 3. Section reveal: each section opens from a framed panel to full width */
+        gsap.utils.toArray(".svc-section:not(.svc-hero), .svc-close").forEach(function (section) {
+          var scroll = {
+            trigger: section,
+            start: "top bottom",
+            end: "clamp(top 25%)",
+            scrub: 0.6
+          };
+          gsap.fromTo(section.querySelector(".svc-sbg"),
+            { clipPath: isDesktop ? "inset(18% 10% 0% 10% round 40px)" : "inset(10% 6% 0% 6% round 24px)" },
+            { clipPath: "inset(0% 0% 0% 0% round 0px)", ease: "none", scrollTrigger: scroll }
+          );
+          gsap.fromTo(section.querySelector(".svc-inner"),
+            { y: isDesktop ? 140 : 80, scale: 0.92 },
+            { y: 0, scale: 1, ease: "none", scrollTrigger: Object.assign({}, scroll) }
+          );
+        });
+
+        /* 4. Hero entrance: eyebrow, title lines, lead words */
+        var heroWords = splitWords(document.querySelector(".svc-hero .svc-lead"));
+        gsap.timeline({ delay: 0.25, defaults: { ease: "power4.out" } })
+          .from(".svc-hero .svc-eyebrow", { x: -80, opacity: 0, letterSpacing: "0.6em", duration: 1.1 })
+          .from("#svcHeroTitle .svc-line > span", {
+            yPercent: 120,
+            rotation: 8,
+            transformOrigin: "left top",
+            duration: 1.3,
+            stagger: 0.22
+          }, "-=0.7")
+          .from(heroWords, { yPercent: 110, opacity: 0, duration: 0.7, stagger: 0.018 }, "-=0.8");
+
+        /* Hero content drifts away as you scroll */
+        gsap.to(".svc-hero .svc-header", {
+          yPercent: -22,
+          scale: 0.92,
+          opacity: 0.1,
+          transformOrigin: "left center",
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".svc-hero",
+            start: "top top",
+            end: "bottom top",
+            scrub: true
+          }
+        });
+
+        /* 5. Small headings slide in from the left */
+        gsap.utils.toArray(".svc-eyebrow").forEach(function (el) {
+          if (el.closest(".svc-hero")) return;
+          gsap.from(el, {
+            x: -100,
+            opacity: 0,
+            letterSpacing: "0.6em",
+            duration: 1.1,
+            ease: "power3.out",
+            scrollTrigger: { trigger: el, start: "clamp(top 85%)", toggleActions: REPLAY }
+          });
+        });
+
+        /* 6. Headings rise word by word */
+        gsap.utils.toArray(".svc-title:not(#svcHeroTitle), .svc-close-title").forEach(function (title) {
+          var words = splitWords(title);
+          var masks = title.querySelectorAll(".svc-mask");
+          gsap.from(words, {
+            yPercent: 120,
+            rotation: 10,
+            transformOrigin: "left top",
+            duration: 1,
+            stagger: 0.09,
+            ease: "power4.out",
+            scrollTrigger: { trigger: title, start: "clamp(top 82%)", toggleActions: REPLAY },
+            onUpdate: function () {
+              var done = this.progress() === 1;
+              masks.forEach(function (m) { m.classList.toggle("is-done", done); });
+            }
+          });
+        });
+
+        /* 7. Intro paragraphs light up word by word as you scroll */
+        gsap.utils.toArray(".svc-lead").forEach(function (lead) {
+          if (lead.closest(".svc-hero")) return;
+          gsap.fromTo(splitWords(lead),
+            { opacity: 0.08, y: 18 },
+            {
+              opacity: 1,
+              y: 0,
+              ease: "none",
+              stagger: 0.1,
+              scrollTrigger: {
+                trigger: lead,
+                start: "clamp(top 90%)",
+                end: "clamp(top 45%)",
+                scrub: 0.4
+              }
+            }
+          );
+        });
+
+        /* 8. Cards flip up one after another */
+        var hidden = { opacity: 0, y: 130, scale: 0.85, rotationX: isDesktop ? 35 : 18 };
+        gsap.set(".gsap-card", Object.assign({ transition: "none", transformOrigin: "center bottom" }, hidden));
+        ScrollTrigger.batch(".gsap-card", {
+          start: "clamp(top 88%)",
+          onEnter: function (batch) {
+            gsap.to(batch, {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              rotationX: 0,
+              duration: 1.2,
+              stagger: 0.2,
+              ease: "back.out(1.3)",
+              overwrite: true,
+              // hand transform back to CSS so the hover effect works
+              onComplete: function () { gsap.set(batch, { clearProps: "transform,transition" }); }
+            });
           },
-          y: 40,
+          onLeaveBack: function (batch) {
+            gsap.set(batch, { transition: "none", transformOrigin: "center bottom" });
+            gsap.to(batch, Object.assign({ duration: 0.5, stagger: 0.08, overwrite: true }, hidden));
+          }
+        });
+
+        /* 9. "Why partner" items: slide in, text follows, icons draw themselves */
+        gsap.utils.toArray(".svc-why-item").forEach(function (item, i) {
+          var fromX = isDesktop ? (i % 2 === 0 ? -180 : 180) : (i % 2 === 0 ? -90 : 90);
+          var shapes = item.querySelectorAll(".svc-why-icon circle, .svc-why-icon ellipse, .svc-why-icon path");
+          var lengths = Array.prototype.map.call(shapes, function (s) {
+            try { return s.getTotalLength(); } catch (e) { return 200; }
+          });
+
+          gsap.timeline({
+            scrollTrigger: { trigger: item, start: "clamp(top 85%)", toggleActions: REPLAY }
+          })
+            .from(item, { x: fromX, opacity: 0, duration: 1.1, ease: "power3.out" })
+            .from(item.querySelectorAll("h4, p"), {
+              y: 40, opacity: 0, duration: 0.7, stagger: 0.18, ease: "power3.out"
+            }, "-=0.7")
+            .from(item.querySelector(".svc-why-icon"), {
+              scale: 0, rotation: -180, duration: 1, ease: "back.out(1.7)"
+            }, 0.2)
+            .fromTo(shapes,
+              {
+                strokeDasharray: function (idx) { return lengths[idx]; },
+                strokeDashoffset: function (idx) { return lengths[idx]; }
+              },
+              { strokeDashoffset: 0, duration: 1.5, stagger: 0.1, ease: "power2.inOut" },
+              0.3
+            );
+        });
+
+        /* 10. Closing button pops in */
+        gsap.set(".svc-btn", { transition: "none" });
+        gsap.from(".svc-btn", {
+          y: 60,
+          scale: 0.6,
           opacity: 0,
-          duration: 0.8,
-          ease: "power3.out"
+          duration: 1.1,
+          delay: 0.3,
+          ease: "back.out(2)",
+          scrollTrigger: { trigger: ".svc-btn", start: "clamp(top 95%)", toggleActions: REPLAY },
+          onComplete: function () { gsap.set(".svc-btn", { clearProps: "transform,transition" }); }
         });
       });
 
-      // 3. CONSPICUOUS Card Animations (Scale up, pop in, and rotate slightly)
-      gsap.utils.toArray(".svc-grid").forEach(grid => {
-        gsap.from(grid.querySelectorAll(".gsap-card"), {
-          scrollTrigger: {
-            trigger: grid,
-            start: "top 85%",
-            toggleActions: "play none none reverse"
-          },
-          y: 80,
-          opacity: 0,
-          scale: 0.9,
-          rotationX: 10, // Slight 3D flip effect
-          duration: 0.8,
-          stagger: 0.15, // Delay between each card appearing
-          ease: "back.out(1.5)", // Bouncy, conspicuous ease
-          clearProps: "all" // Cleans up transforms after animation finishes
-        });
-      });
+      // Recalculate trigger positions after fonts / images settle
+      window.addEventListener("load", function () { ScrollTrigger.refresh(); });
     });
   </script>
 </body>

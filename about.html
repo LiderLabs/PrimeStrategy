@@ -8,18 +8,85 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,600;1,9..144,700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="css/shared.css">
   <link rel="stylesheet" href="css/page.css">
   <link rel="stylesheet" href="css/about.css">
 
   <style>
+    /* ═══════════════════════════════════════════════
+       REFINED BRAND COLORS
+       ═══════════════════════════════════════════════ */
+    :root {
+      --ps-orange: #E67E22;   
+      --ps-blue: #34495E;     
+      --ps-slate: #7F8C8D;    
+    }
+
     /* --- POINTER & LAYER SAFETY --- */
     .psa-panel__bg,
-    .psa-panel__scrim,
     .psa-bg,
     .ps-cursor-dot,
     .ps-cursor-ring {
       pointer-events: none !important;
+    }
+
+    /* ═══════════════════════════════════════════════
+       CONSPICUOUS BACKGROUND IMAGE
+       Every panel carries its own full-strength copy of
+       the photo (so stacked cards stay opaque and text
+       from lower cards never bleeds through).
+       ═══════════════════════════════════════════════ */
+    .psa-panel__bg {
+      position: absolute !important;
+      inset: 0 !important;
+      z-index: 0 !important;
+      background-image: url('images/about-bg.jpg') !important;
+      background-size: cover !important;
+      background-position: center !important;
+      background-repeat: no-repeat !important;
+      background-color: #0c1428 !important;
+      opacity: 1 !important;
+      filter: none !important;
+      mix-blend-mode: normal !important;
+      transform: none !important;
+    }
+    .psa-panel__bg::before,
+    .psa-panel__bg::after {
+      display: none !important;
+    }
+
+    /* Global fixed layer: image only, no wash / vignette */
+    .psa-bg__image {
+      opacity: 1 !important;
+      filter: none !important;
+    }
+    .psa-bg__wash,
+    .psa-bg__vignette {
+      display: none !important;
+    }
+
+    /* Very light scrims: just enough shading on the text side.
+       Raise the 0.55 / 0.28 numbers if text ever feels hard to read,
+       lower them for an even brighter image. */
+    .psa-panel__scrim {
+      z-index: 1 !important;
+      background: linear-gradient(90deg, rgba(10,18,36,0.50) 0%, rgba(10,18,36,0.30) 55%, rgba(10,18,36,0.18) 100%) !important;
+    }
+    .psa-panel__scrim--light {
+      z-index: 1 !important;
+      background: linear-gradient(90deg, rgba(10,18,36,0.55) 0%, rgba(10,18,36,0.28) 55%, rgba(10,18,36,0.05) 100%) !important;
+    }
+
+    /* Keep text crisp over a bright, visible photo */
+    .psa-panel__content h1,
+    .psa-panel__content h2,
+    .psa-panel__content p,
+    .psa-panel__content .ps-eyebrow,
+    .psa-panel__content .psa-pullquote,
+    .psa-panel__content .read-more-btn,
+    .psa-closing__line {
+      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55), 0 1px 3px rgba(0, 0, 0, 0.45);
     }
 
     /* --- STACKED CARD LAYOUT & TOP CLEARANCE --- */
@@ -41,6 +108,7 @@
       padding-top: calc(var(--ps-nav-h, 68px) + clamp(1.25rem, 3vh, 2.5rem));
       padding-bottom: clamp(2rem, 4vh, 3.5rem);
       overflow: hidden;
+      background-color: #0c1428;
     }
 
     .psa-main--stacked .psa-panel:nth-child(1) { z-index: 1; }
@@ -48,10 +116,8 @@
     .psa-main--stacked .psa-panel:nth-child(3) { z-index: 3; }
     .psa-main--stacked .psa-panel:nth-child(4) { z-index: 4; }
 
-    /* Prevent underlying card text from bleeding through rising cards */
+    /* Rounded rising cards (blur removed so the photo stays sharp) */
     .psa-main--stacked .psa-panel:not(.psa-panel--opening) {
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
       border-top-left-radius: 24px;
       border-top-right-radius: 24px;
       box-shadow: 0 -20px 50px rgba(0, 0, 0, 0.18);
@@ -116,7 +182,7 @@
     .split-container.is-expanded .split-panel-left {
       width: 38%;
       padding-right: 2rem;
-      border-right: 1px solid rgba(0, 0, 0, 0.12);
+      border-right: 1px solid rgba(255, 255, 255, 0.25);
     }
 
     .split-container.is-expanded .split-panel-right {
@@ -133,6 +199,7 @@
       margin-bottom: 0.85rem;
       font-size: clamp(0.9rem, 1.02vw, 1rem);
       line-height: 1.5;
+      color: #F1F5F9;
     }
 
     .split-panel-right p:last-child {
@@ -144,7 +211,7 @@
       margin-top: 0.4rem;
       background: transparent;
       border: none;
-      color: #E86A34;
+      color: var(--ps-orange);
       font-family: 'Inter', sans-serif;
       font-weight: 700;
       cursor: pointer;
@@ -156,7 +223,7 @@
       transition: border-color 0.3s;
     }
     .read-more-btn:hover {
-      border-color: #E86A34;
+      border-color: var(--ps-orange);
     }
 
     /* Mobile / Short-Screen Flow */
@@ -167,6 +234,12 @@
         border-radius: 0;
       }
 
+      /* Slightly stronger scrim on small screens where text spans the full width */
+      .psa-panel__scrim,
+      .psa-panel__scrim--light {
+        background: linear-gradient(to bottom, rgba(10,18,36,0.40) 0%, rgba(10,18,36,0.55) 100%) !important;
+      }
+
       .split-container.is-expanded {
         flex-direction: column;
       }
@@ -174,7 +247,7 @@
         width: 100%;
         padding-right: 0;
         border-right: none;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         padding-bottom: 1.25rem;
         margin-bottom: 1.25rem;
       }
@@ -187,7 +260,7 @@
     .psa-vision-mission strong {
       font-weight: 700;
       font-style: normal;
-      color: #111;
+      color: #FFFFFF;
     }
     .psa-anchors__split {
       align-items: center;
@@ -197,13 +270,12 @@
     }
     .psa-vision-block h2 {
       margin-bottom: 0.5rem;
-      color: #E86A34;
+      color: var(--ps-orange);
     }
     .psa-vision-block p {
       font-size: 1.1rem;
       line-height: 1.6;
     }
-       <p class="psa-pullquote" data-reveal style="border-left: none !important; padding-left: 0 !important; margin-left: 0 !important;">
   </style>
 </head>
 
@@ -225,10 +297,11 @@
     <div class="psa-doors__ring"></div>
   </div>
 
+  <!-- FIXED BACKGROUND: full-strength image, no wash/vignette -->
   <div class="psa-bg" aria-hidden="true">
-    <div class="psa-bg__image" id="psaBgImage"></div>
-    <div class="psa-bg__wash"></div>
-    <div class="psa-bg__vignette"></div>
+    <div class="psa-bg__image" id="psaBgImage" style="background-image: url('images/about-bg.jpg'); background-size: cover; background-position: center;"></div>
+    <div class="psa-bg__wash"></div> 
+    <div class="psa-bg__vignette"></div> 
   </div>
 
   <header class="ps-nav" id="siteNav">
@@ -239,7 +312,7 @@
       <a href="about.html" class="is-active">About</a>
       <a href="services.html">Services</a>
       <a href="client-experience.html">Client Experience</a>
-      <a href="careers.html">Careers</a>
+      <a href="careers.html">Careers &amp; Opportunities</a>
       <a href="contact.html">Contact</a>
     </nav>
     <button class="ps-nav__toggle" aria-label="Open navigation" aria-expanded="false">
@@ -259,9 +332,9 @@
       <div class="psa-panel__scrim psa-panel__scrim--light" aria-hidden="true"></div>
       <div class="psa-container psa-panel__content">
 
-        <span class="ps-eyebrow" data-reveal>About PrimeStrategy</span>
-        <h1 class="psa-display" data-reveal>
-          What We <span class="psa-em">Do</span>.
+        <span class="ps-eyebrow" data-reveal style="color: var(--ps-orange);">About PrimeStrategy</span>
+        <h1 class="psa-display" data-reveal style="color: #FFFFFF;">
+          What We <span class="psa-em" style="color: var(--ps-orange);">Do</span>.
         </h1>
 
         <div class="psa-lead">
@@ -305,18 +378,18 @@
 
           <!-- Left Side: Vision & Mission Text -->
           <div class="psa-anchors__head">
-            <span class="ps-eyebrow ps-eyebrow--light" data-reveal>Our Purpose</span>
+            <span class="ps-eyebrow ps-eyebrow--light" data-reveal style="color: var(--ps-orange);">Our Purpose</span>
 
             <div class="psa-vision-mission" data-reveal style="margin-top: 2rem;">
               <div class="psa-vision-block">
-                <h2 class="psa-heading" style="font-size: 1.6rem;">Our Vision</h2>
+                <h2 class="psa-heading" style="font-size: 1.6rem; color: var(--ps-orange);">Our Vision</h2>
                 <p class="psa-anchors__lead">
                   <strong>To become a trusted strategic consulting partner, helping organizations unlock opportunities, improve performance, and achieve sustainable growth through informed decisions and practical business solutions.</strong>
                 </p>
               </div>
 
               <div class="psa-vision-block">
-                <h2 class="psa-heading" style="font-size: 1.6rem;">Our Mission</h2>
+                <h2 class="psa-heading" style="font-size: 1.6rem; color: var(--ps-orange);">Our Mission</h2>
                 <p class="psa-anchors__lead">
                   <strong>To provide organizations with strategic guidance, research driven insights, and innovative business solutions that address challenges, strengthen performance, and create lasting value.</strong>
                 </p>
@@ -401,10 +474,10 @@
       <div class="psa-panel__bg" aria-hidden="true"></div>
       <div class="psa-panel__scrim psa-panel__scrim--light" aria-hidden="true"></div>
       <div class="psa-container psa-panel__content">
-        <span class="ps-eyebrow" data-reveal>Our Expertise</span>
-        <h2 class="psa-heading" data-reveal>Core Services</h2>
+        <span class="ps-eyebrow" data-reveal style="color: var(--ps-orange);">Our Expertise</span>
+        <h2 class="psa-heading" data-reveal style="color: #FFFFFF;">Core Services</h2>
 
-        <p class="psa-pullquote" data-reveal>
+        <p class="psa-pullquote" data-reveal style="color: #F1F5F9;">
           We partner with organizations to assess business challenges, identify opportunities, and develop practical strategies that strengthen operations and support sustainable growth.
         </p>
 
