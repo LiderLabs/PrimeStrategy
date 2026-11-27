@@ -7,309 +7,403 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,600;1,9..144,700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,600;1,9..144,700&display=swap" rel="stylesheet">
+
+  <link rel="preload" as="image" href="images/about-bg.jpg" fetchpriority="high">
+
   <link rel="stylesheet" href="css/shared.css">
   <link rel="stylesheet" href="css/page.css">
   <link rel="stylesheet" href="css/about.css">
 
   <style>
     /* ═══════════════════════════════════════════════
-       REFINED BRAND COLORS
+       PRIMESTRATEGY — DESIGN TOKENS
        ═══════════════════════════════════════════════ */
     :root {
-      --ps-orange: #E67E22;   
-      --ps-blue: #34495E;     
-      --ps-slate: #7F8C8D;    
+      --ps-orange: #E67E22;
+      --ps-blue:   #34495E;
+      --ps-slate:  #7F8C8D;
+      --ps-navy:   #0A1428;
+
+      --container: 1200px;
+      --gutter: clamp(24px, 6vw, 96px);
+      --measure: 62ch;
+      --scrim-base: 0.65;
     }
 
-    /* --- POINTER & LAYER SAFETY --- */
-    .psa-panel__bg,
-    .psa-bg,
-    .ps-cursor-dot,
-    .ps-cursor-ring {
-      pointer-events: none !important;
+    .ps-body {
+      background-color: var(--ps-navy);
+      color: #FFFFFF;
+      overflow-x: hidden;
+    }
+
+    .psa-container,
+    .psa-hero__inner {
+      width: 100%;
+      max-width: var(--container);
+      margin: 0 auto;
+      padding-inline: var(--gutter);
     }
 
     /* ═══════════════════════════════════════════════
-       CONSPICUOUS BACKGROUND IMAGE
-       Every panel carries its own full-strength copy of
-       the photo (so stacked cards stay opaque and text
-       from lower cards never bleeds through).
+       01. HERO
        ═══════════════════════════════════════════════ */
-    .psa-panel__bg {
-      position: absolute !important;
-      inset: 0 !important;
-      z-index: 0 !important;
-      background-image: url('images/about-bg.jpg') !important;
-      background-size: cover !important;
-      background-position: center !important;
-      background-repeat: no-repeat !important;
-      background-color: #0c1428 !important;
-      opacity: 1 !important;
-      filter: none !important;
-      mix-blend-mode: normal !important;
-      transform: none !important;
-    }
-    .psa-panel__bg::before,
-    .psa-panel__bg::after {
-      display: none !important;
-    }
-
-    /* Global fixed layer: image only, no wash / vignette */
-    .psa-bg__image {
-      opacity: 1 !important;
-      filter: none !important;
-    }
-    .psa-bg__wash,
-    .psa-bg__vignette {
-      display: none !important;
-    }
-
-    /* Very light scrims: just enough shading on the text side.
-       Raise the 0.55 / 0.28 numbers if text ever feels hard to read,
-       lower them for an even brighter image. */
-    .psa-panel__scrim {
-      z-index: 1 !important;
-      background: linear-gradient(90deg, rgba(10,18,36,0.50) 0%, rgba(10,18,36,0.30) 55%, rgba(10,18,36,0.18) 100%) !important;
-    }
-    .psa-panel__scrim--light {
-      z-index: 1 !important;
-      background: linear-gradient(90deg, rgba(10,18,36,0.55) 0%, rgba(10,18,36,0.28) 55%, rgba(10,18,36,0.05) 100%) !important;
-    }
-
-    /* Keep text crisp over a bright, visible photo */
-    .psa-panel__content h1,
-    .psa-panel__content h2,
-    .psa-panel__content p,
-    .psa-panel__content .ps-eyebrow,
-    .psa-panel__content .psa-pullquote,
-    .psa-panel__content .read-more-btn,
-    .psa-closing__line {
-      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55), 0 1px 3px rgba(0, 0, 0, 0.45);
-    }
-
-    /* --- STACKED CARD LAYOUT & TOP CLEARANCE --- */
-    .psa-main--stacked {
+    .psa-hero {
       position: relative;
-      overflow: visible !important;
+      min-height: 92svh;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      background-image: url('images/about-bg.jpg');
+      background-size: cover;
+      background-position: center right;
+      background-attachment: scroll;
+      background-color: var(--ps-navy);
     }
 
-    .psa-main--stacked .psa-panel {
+    .psa-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(10, 20, 40, var(--scrim-base));
+      z-index: 1;
+    }
+    .psa-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(10, 20, 40, 0.35) 0%, rgba(10, 20, 40, 0.10) 45%, rgba(10, 20, 40, 0.00) 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .psa-hero__text::before {
+      content: '';
+      position: absolute;
+      inset: -2rem -3rem;
+      background: radial-gradient(ellipse at 30% 50%, rgba(10, 20, 40, 0.35) 0%, rgba(10, 20, 40, 0.00) 70%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .psa-hero__inner {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: minmax(0, 720px) 1fr;
+      align-items: center;
+      gap: clamp(2rem, 6vw, 6rem);
+      padding-block: clamp(7rem, 12vh, 10rem) clamp(4rem, 8vh, 6rem);
+    }
+
+    .psa-hero__text {
+      position: relative;
+      max-width: var(--measure);
+    }
+
+    .psa-eyebrow,
+    .psa-title .psa-title__eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.05rem; 
+      font-weight: 800;   
+      letter-spacing: 0.08em; 
+      text-transform: uppercase;
+      color: var(--ps-orange);
+      margin: 0 0 1rem;
+      display: block;
+    }
+
+    .psa-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(3rem, 6vw, 5rem);
+      line-height: 1.05;
+      font-weight: 700;
+      margin: 0 0 2rem;
+      color: #FFFFFF;
+      letter-spacing: -0.01em;
+    }
+    .psa-title em {
+      color: var(--ps-orange);
+      font-style: italic;
+    }
+
+    .psa-full-text {
+      color: #E2E8F0;
+      font-family: 'Inter', sans-serif;
+      font-size: 1.15rem;
+      line-height: 1.75;
+      max-width: 52ch; 
+    }
+    .psa-full-text p { margin: 0 0 1.5rem; }
+    .psa-full-text p:last-child { margin-bottom: 0; }
+
+    .psa-hero__actions {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      margin-top: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .psa-scroll-cue {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      color: #A0AAB8;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      background: none;
+      cursor: pointer;
+      padding: 0;
+      transition: color 0.3s ease;
+    }
+    .psa-scroll-cue:hover { color: #FFFFFF; }
+    .psa-scroll-cue:hover svg { stroke: var(--ps-orange); }
+    .psa-scroll-cue svg {
+      width: 16px;
+      height: 16px;
+      animation: psaBounce 2s infinite ease-in-out;
+      transition: stroke 0.3s ease;
+    }
+
+    @keyframes psaBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(4px); }
+    }
+
+    .psa-ghost-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.6rem;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 6px;
+      color: #FFFFFF;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      background: rgba(255,255,255,0.02);
+      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    
+    .psa-ghost-link:hover,
+    .psa-ghost-link:focus-visible {
+      background: rgba(255,255,255,0.06);
+      border-color: var(--ps-orange);
+      transform: translateY(-2px) scale(1.02);
+      outline: none;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    }
+    
+    .psa-ghost-link svg {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .psa-ghost-link:hover svg { transform: translateX(4px); }
+
+    /* ═══════════════════════════════════════════════
+       02. THE PRACTICE
+       ═══════════════════════════════════════════════ */
+    .psa-practice {
+      background-color: var(--ps-navy);
+      padding-block: clamp(6rem, 12vh, 9rem);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .psa-practice__inner {
+      display: grid;
+      grid-template-columns: 350px 1fr;
+      gap: clamp(3rem, 8vw, 8rem);
+      align-items: start;
+    }
+
+    .psa-practice__label {
       position: sticky;
-      top: 0;
-      min-height: 100vh;
-      height: auto;
+      top: 10rem;
+    }
+
+    .psa-practice__label h2 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      font-weight: 700;
+      color: #FFFFFF;
+      margin: 0;
+      line-height: 1.1;
+    }
+    .psa-practice__label h2 em {
+      color: var(--ps-orange);
+      font-style: italic;
+    }
+
+    .psa-practice__body {
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
-      align-items: stretch;
-      box-sizing: border-box;
-      padding-top: calc(var(--ps-nav-h, 68px) + clamp(1.25rem, 3vh, 2.5rem));
-      padding-bottom: clamp(2rem, 4vh, 3.5rem);
-      overflow: hidden;
-      background-color: #0c1428;
+      gap: 3rem; 
+      padding-top: 0.5rem;
     }
 
-    .psa-main--stacked .psa-panel:nth-child(1) { z-index: 1; }
-    .psa-main--stacked .psa-panel:nth-child(2) { z-index: 2; }
-    .psa-main--stacked .psa-panel:nth-child(3) { z-index: 3; }
-    .psa-main--stacked .psa-panel:nth-child(4) { z-index: 4; }
-
-    /* Rounded rising cards (blur removed so the photo stays sharp) */
-    .psa-main--stacked .psa-panel:not(.psa-panel--opening) {
-      border-top-left-radius: 24px;
-      border-top-right-radius: 24px;
-      box-shadow: 0 -20px 50px rgba(0, 0, 0, 0.18);
-    }
-
-    .psa-main--stacked .psa-panel .psa-panel__content {
-      position: relative;
-      z-index: 5;
-      margin-top: auto;
-      margin-bottom: auto;
-      will-change: transform, opacity;
-    }
-
-    /* --- FORCE VISIBILITY FOR OPENING CONTENT --- */
-    .psa-panel--opening [data-reveal],
-    .psa-panel--opening .psa-lead,
-    .psa-panel--opening .psa-lead [data-reveal] {
-      opacity: 1 !important;
-      transform: none !important;
-    }
-
-    /* Compact opening typography so expanded text fits within 100vh */
-    .psa-main--stacked .psa-panel--opening .psa-display {
-      font-size: clamp(2.2rem, 4.4vw, 3.8rem);
-      line-height: 1.05;
-      margin-top: 0.35rem;
-      margin-bottom: 0.75rem;
-    }
-
-    /* --- SPLIT PANEL STYLES --- */
-    .split-container {
-      display: flex;
-      width: 100%;
-      overflow: hidden;
-      position: relative;
-      min-height: 0;
-      align-items: flex-start;
-      margin-top: 1rem;
-    }
-
-    .split-panel-left {
-      width: 100%;
-      flex-shrink: 0;
-      transition: all 0.75s cubic-bezier(0.16, 1, 0.3, 1);
-      padding-right: 0;
-    }
-
-    .split-panel-right {
-      width: 0;
-      max-height: 0;
-      flex-shrink: 0;
-      opacity: 0;
-      transform: translateX(40px);
-      transition: width 0.75s cubic-bezier(0.16, 1, 0.3, 1),
-                  opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
-                  transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
-                  padding 0.75s cubic-bezier(0.16, 1, 0.3, 1);
-      overflow: hidden;
-    }
-
-    /* Expanded split: 38% left / 62% right so all 3 paragraphs fit comfortably on screen */
-    .split-container.is-expanded .split-panel-left {
-      width: 38%;
-      padding-right: 2rem;
-      border-right: 1px solid rgba(255, 255, 255, 0.25);
-    }
-
-    .split-container.is-expanded .split-panel-right {
-      width: 62%;
-      max-height: 1200px;
-      opacity: 1;
-      transform: translateX(0);
-      padding-left: 2rem;
-    }
-
-    /* Text Styling */
-    .split-panel-left p,
-    .split-panel-right p {
-      margin-bottom: 0.85rem;
-      font-size: clamp(0.9rem, 1.02vw, 1rem);
-      line-height: 1.5;
-      color: #F1F5F9;
-    }
-
-    .split-panel-right p:last-child {
-      margin-bottom: 0;
-    }
-
-    .read-more-btn {
-      display: inline-block;
-      margin-top: 0.4rem;
-      background: transparent;
-      border: none;
-      color: var(--ps-orange);
+    .psa-practice__body p {
       font-family: 'Inter', sans-serif;
-      font-weight: 700;
-      cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      font-size: 0.85rem;
-      padding: 0;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.3s;
-    }
-    .read-more-btn:hover {
-      border-color: var(--ps-orange);
+      font-size: 1.15rem;
+      line-height: 1.8;
+      color: #CBD5E1;
+      margin: 0;
+      max-width: 60ch;
     }
 
-    /* Mobile / Short-Screen Flow */
-    @media (max-width: 900px) {
-      .psa-main--stacked .psa-panel {
-        position: relative;
-        min-height: auto;
-        border-radius: 0;
-      }
-
-      /* Slightly stronger scrim on small screens where text spans the full width */
-      .psa-panel__scrim,
-      .psa-panel__scrim--light {
-        background: linear-gradient(to bottom, rgba(10,18,36,0.40) 0%, rgba(10,18,36,0.55) 100%) !important;
-      }
-
-      .split-container.is-expanded {
-        flex-direction: column;
-      }
-      .split-container.is-expanded .split-panel-left {
-        width: 100%;
-        padding-right: 0;
-        border-right: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        padding-bottom: 1.25rem;
-        margin-bottom: 1.25rem;
-      }
-      .split-container.is-expanded .split-panel-right {
-        width: 100%;
-        padding-left: 0;
-      }
+    /* ═══════════════════════════════════════════════
+       03. VISION & MISSION
+       ═══════════════════════════════════════════════ */
+    .psa-section {
+      position: relative;
+      min-height: 100vh;
+      padding-block: clamp(6rem, 12vh, 8rem);
+      display: flex;
+      align-items: center;
+      background-color: var(--ps-navy);
+      border-top: 1px solid rgba(255,255,255,0.05);
     }
 
-    .psa-vision-mission strong {
-      font-weight: 700;
-      font-style: normal;
-      color: #FFFFFF;
+    .psa-section-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 70% 50%, rgba(52, 73, 94, 0.4) 0%, var(--ps-navy) 80%);
+      z-index: 0;
+      pointer-events: none;
     }
-    .psa-anchors__split {
+
+    .psa-container { position: relative; z-index: 1; }
+
+    .psa-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2.5rem, 6vw, 4rem);
       align-items: center;
     }
-    .psa-vision-block {
-      margin-bottom: 2.5rem;
-    }
+
+    .psa-vision-block { margin-bottom: 3rem; }
     .psa-vision-block h2 {
-      margin-bottom: 0.5rem;
+      font-family: 'Fraunces', serif;
+      font-size: 1.8rem;
       color: var(--ps-orange);
+      margin: 0 0 1rem;
     }
     .psa-vision-block p {
+      font-family: 'Inter', sans-serif;
       font-size: 1.1rem;
-      line-height: 1.6;
+      line-height: 1.7;
+      color: #CBD5E1;
+      max-width: var(--measure);
+    }
+
+    .psa-map-wrapper {
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .psa-tags {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .psa-tag {
+      display: inline-block;
+      padding: 1rem 1.5rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 4px;
+      color: #E2E8F0;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .psa-tag:hover,
+    .psa-tag:focus-visible {
+      background: var(--ps-orange);
+      color: #fff;
+      border-color: var(--ps-orange);
+      transform: translateY(-2px);
+      outline: none;
+    }
+    .psa-tag:focus-visible {
+      box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.35);
+    }
+
+    .psa-closing {
+      text-align: center;
+      justify-content: center;
+      min-height: 50vh;
+    }
+    .psa-closing-line {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: #fff;
+      margin: 0;
+    }
+
+    /* ═══════════════════════════════════════════════
+       RESPONSIVE
+       ═══════════════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .psa-hero__inner { grid-template-columns: 1fr; }
+      .psa-practice__inner { grid-template-columns: 1fr; }
+      .psa-practice__label { position: static; margin-bottom: 3rem; }
+    }
+
+    @media (max-width: 900px) {
+      .psa-hero {
+        background-position: center;
+        min-height: auto;
+      }
+      .psa-hero::after {
+        background: linear-gradient(180deg, rgba(10, 20, 40, 0.35) 0%, rgba(10, 20, 40, 0.00) 100%);
+      }
+      .psa-grid-2 { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .psa-ghost-link { width: 100%; justify-content: space-between; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .psa-scroll-cue svg { animation: none; }
+      .psa-ghost-link { transition: none; }
+      .psa-tag { transition: none; }
+      .psa-ghost-link:hover svg { transform: none; }
     }
   </style>
 </head>
 
-<body class="ps-page-body">
+<body class="ps-page-body ps-body">
 
   <div class="ps-cursor-dot"></div>
   <div class="ps-cursor-ring"></div>
 
   <div class="psa-doors" id="psaDoors" aria-hidden="true">
-    <div class="psa-doors__panel psa-doors__panel--l">
-      <div class="psa-doors__img"></div>
-      <div class="psa-doors__shade"></div>
-    </div>
-    <div class="psa-doors__panel psa-doors__panel--r">
-      <div class="psa-doors__img"></div>
-      <div class="psa-doors__shade"></div>
-    </div>
-    <div class="psa-doors__seam"></div>
-    <div class="psa-doors__ring"></div>
-  </div>
-
-  <!-- FIXED BACKGROUND: full-strength image, no wash/vignette -->
-  <div class="psa-bg" aria-hidden="true">
-    <div class="psa-bg__image" id="psaBgImage" style="background-image: url('images/about-bg.jpg'); background-size: cover; background-position: center;"></div>
-    <div class="psa-bg__wash"></div> 
-    <div class="psa-bg__vignette"></div> 
+    <div class="psa-doors__panel psa-doors__panel--l"><div class="psa-doors__img"></div><div class="psa-doors__shade"></div></div>
+    <div class="psa-doors__panel psa-doors__panel--r"><div class="psa-doors__img"></div><div class="psa-doors__shade"></div></div>
+    <div class="psa-doors__seam"></div><div class="psa-doors__ring"></div>
   </div>
 
   <header class="ps-nav" id="siteNav">
     <a class="ps-nav__brand" href="index.html" aria-label="PrimeStrategy Home">
-      <img src="images/ps-logo.png" alt="PrimeStrategy — Accra | Washington D.C.">
+      <img src="images/ps-logo-light.png" alt="PrimeStrategy — Accra | Washington D.C.">
     </a>
     <nav class="ps-nav__links" aria-label="Site navigation">
-      <a href="about.html" class="is-active">About</a>
+      <a href="about.html" class="is-active" aria-current="page">About</a>
       <a href="services.html">Services</a>
       <a href="client-experience.html">Client Experience</a>
       <a href="careers.html">Careers &amp; Opportunities</a>
@@ -320,189 +414,159 @@
     </button>
   </header>
 
-  <a class="psa-floating-return" href="index.html">
-    Back to Homepage
-  </a>
+  <main>
 
-  <main class="psa-main psa-main--stacked">
+    <!-- 01. HERO -->
+    <section class="psa-hero" aria-labelledby="hero-title">
+      <div class="psa-hero__inner">
+        <div class="psa-hero__text">
+          <h1 id="hero-title" class="psa-title">
+            <span class="psa-title__eyebrow">About PrimeStrategy</span>
+            What We <em>Do</em>.
+          </h1>
 
-    <!-- OPENING & WHAT WE DO -->
-    <section class="psa-panel psa-panel--opening">
-      <div class="psa-panel__bg" aria-hidden="true"></div>
-      <div class="psa-panel__scrim psa-panel__scrim--light" aria-hidden="true"></div>
-      <div class="psa-container psa-panel__content">
+          <div class="psa-full-text">
+            <p>
+              PrimeStrategy Ghana Ltd. is an indigenous strategic consulting and business solutions firm dedicated to helping organizations address business challenges, improve performance, and achieve sustainable growth.
+            </p>
+          </div>
 
-        <span class="ps-eyebrow" data-reveal style="color: var(--ps-orange);">About PrimeStrategy</span>
-        <h1 class="psa-display" data-reveal style="color: #FFFFFF;">
-          What We <span class="psa-em" style="color: var(--ps-orange);">Do</span>.
-        </h1>
-
-        <div class="psa-lead">
-
-          <div class="split-container" id="whatWeDoContainer">
-
-            <!-- Left Panel -->
-            <div class="split-panel-left">
-              <p>
-                PrimeStrategy Ghana Ltd. is an indigenous strategic consulting and business solutions firm dedicated to helping organizations address business challenges, improve performance, and achieve sustainable growth.
-              </p>
-
-              <button class="read-more-btn" id="readMoreBtn">Read More</button>
-            </div>
-
-            <!-- Right Panel -->
-            <div class="split-panel-right">
-              <p>
-                We partner with public and private sector organizations to provide practical solutions through strategic advisory, market and consumer research, business intelligence, data analytics, and customer experience assessments.
-              </p>
-              <p>
-                Our approach combines industry knowledge, research, and analytical expertise to help organizations make informed decisions, strengthen operations, identify opportunities, and achieve their business objectives.
-              </p>
-              <p>
-                Beyond our core consulting expertise, we work with specialist partners to connect clients with technology, real estate, and other business solutions, providing broader support to meet their evolving needs.
-              </p>
-            </div>
-
+          <div class="psa-hero__actions">
+            <button type="button" class="psa-scroll-cue" aria-label="Scroll to learn more">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 5v14M19 12l-7 7-7-7"/>
+              </svg>
+              <span>Scroll to learn more</span>
+            </button>
+            
+            <a class="psa-ghost-link" href="services.html">
+              Our Services
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- VISION & MISSION + INTERACTIVE SVG MAP -->
-    <section class="psa-panel psa-panel--anchors">
-      <div class="psa-panel__bg" aria-hidden="true"></div>
-      <div class="psa-panel__scrim psa-panel__scrim--light" aria-hidden="true"></div>
-      <div class="psa-container psa-panel__content psa-panel__content--anchors">
-
-        <div class="psa-anchors__split">
-
-          <!-- Left Side: Vision & Mission Text -->
-          <div class="psa-anchors__head">
-            <span class="ps-eyebrow ps-eyebrow--light" data-reveal style="color: var(--ps-orange);">Our Purpose</span>
-
-            <div class="psa-vision-mission" data-reveal style="margin-top: 2rem;">
-              <div class="psa-vision-block">
-                <h2 class="psa-heading" style="font-size: 1.6rem; color: var(--ps-orange);">Our Vision</h2>
-                <p class="psa-anchors__lead">
-                  <strong>To become a trusted strategic consulting partner, helping organizations unlock opportunities, improve performance, and achieve sustainable growth through informed decisions and practical business solutions.</strong>
-                </p>
-              </div>
-
-              <div class="psa-vision-block">
-                <h2 class="psa-heading" style="font-size: 1.6rem; color: var(--ps-orange);">Our Mission</h2>
-                <p class="psa-anchors__lead">
-                  <strong>To provide organizations with strategic guidance, research driven insights, and innovative business solutions that address challenges, strengthen performance, and create lasting value.</strong>
-                </p>
-              </div>
-            </div>
+    <!-- 02. THE PRACTICE -->
+    <section class="psa-practice" aria-labelledby="practice-title">
+      <div class="psa-container">
+        <div class="psa-practice__inner">
+          
+          <!-- Left Side: Sticky Header -->
+          <div class="psa-practice__label">
+            <span class="psa-eyebrow">The Practice</span>
+            <h2 id="practice-title">How we <em>work</em>.</h2>
           </div>
 
-          <!-- Right Side: The SVG Map (Desktop) -->
-          <div class="psa-map psa-map--inline" data-reveal aria-label="Map of Ghana with regional presence">
-            <svg class="psa-map__svg"
-                 viewBox="149.07 -2 661.86 964"
-                 xmlns="http://www.w3.org/2000/svg"
-                 aria-hidden="true">
-
-              <g class="psa-map__lines" aria-hidden="true">
-                <line class="psa-map__line" x1="640" y1="817" x2="470" y2="700"/>
-                <line class="psa-map__line" x1="640" y1="817" x2="470" y2="215"/>
-                <line class="psa-map__line" x1="640" y1="817" x2="270" y2="815"/>
-                <line class="psa-map__line" x1="640" y1="817" x2="480" y2="880"/>
-                <line class="psa-map__line" x1="640" y1="817" x2="640" y2="690"/>
-                <line class="psa-map__line" x1="640" y1="817" x2="450" y2="600"/>
-                <line class="psa-map__line" x1="640" y1="817" x2="215" y2="620"/>
-                <line class="psa-map__line" x1="640" y1="817" x2="530" y2="60"/>
-                <line class="psa-map__line" x1="640" y1="817" x2="250" y2="110"/>
-                <line class="psa-map__line" x1="640" y1="817" x2="610" y2="710"/>
-              </g>
-
-              <g class="psa-map__regions">
-                <path class="psa-map__region" data-region="Upper West"        d="M420.48,24.82L418.29,30.53L416.61,49L410.58,54.13L410.3,59.4L401.49,63.97L399.24,75.79L400.65,86.61L415.49,95.72L417.57,107.45L417.52,107.48L400.71,121L386.37,148.2L395.12,157.09L396.32,163.32L382.17,169.82L378.84,175.67L381.3,195.22L379.9,202.5L337.54,202.15L329.32,209.43L321.45,203.92L281.38,208.31L263.01,213.46L261.26,221.8L237.64,230.86L229.77,228.28L221.67,217.95L230.27,201.15L226.78,195.49L226.72,178.42L222.67,170.36L221.19,147.84L227.09,136.4L216.09,130.43L214.9,124.86L218.83,117.32L207.52,98.18L201.49,81.33L205.52,72.59L202.99,68.32L208.81,56.96L211.53,46.9L218.65,37.18L216.89,25.67L227.59,23.67L275.39,22.89L282.39,25.67L296.53,23.61L329.22,23.61L335.38,25.73L374.43,25.81L374.5,20.53L403.07,20.53L403.12,24.82Z"/>
-                <path class="psa-map__region" data-region="Upper East"        d="M417.57,107.45L415.49,95.72L400.65,86.61L399.24,75.79L401.49,63.97L410.3,59.4L410.58,54.13L416.61,49L418.29,30.53L420.48,24.82L424.76,28.24L461.01,27.88L467.31,26.17L493.21,26.3L503.71,27.52L529.39,27.44L536.81,38.14L540.95,38.57L545.08,29.25L554.52,26.39L562.23,20.34L565.02,10.36L572.73,7.85L586.73,8.57L586.55,0L603.7,4.11L608.07,10.7L616.47,14.27L626.44,10L630.82,17.48L632.04,28.36L625.57,32.1L623.82,51.89L616.29,62.92L614.43,71.21L598.66,75.27L590.26,79.97L564.32,85.74L555.61,83.29L553.61,91.5L543.11,93.85L533.18,93.24L529.5,96.62L522.68,79.53L512.89,78.82L504.49,88.78L496.43,89.68L493.81,96.62L479.99,96.44L463.37,107.64L457.06,114.42L449.54,118.14L451.29,130.96L448.48,133.8L438.51,127.58L426.97,117.62L426.61,106.4L419.96,106.22Z"/>
-                <path class="psa-map__region" data-region="North East"        d="M449.23,170.24L440.2,170.1L429.45,162.37L415.8,158.9L396.32,163.32L395.12,157.09L386.37,148.2L400.71,121L417.52,107.48L419.96,106.22L426.61,106.4L426.97,117.62L438.51,127.58L448.48,133.8L451.29,130.96L449.54,118.14L457.06,114.42L463.37,107.64L479.99,96.44L493.81,96.62L496.43,89.68L504.49,88.78L512.89,78.82L522.68,79.53L529.5,96.62L533.18,93.24L543.11,93.85L553.61,91.5L555.61,83.29L564.32,85.74L590.26,79.97L598.66,75.27L614.43,71.21L619.1,80.36L632.22,84.98L637.99,91.74L646.74,96.74L655.66,113.46L668.45,113.82L675.78,128.28L682.61,129.16L679.28,143.21L678.93,160.27L688.04,165.79L687.68,170.42L679.64,172.9L681.76,184.75L676.21,184.2L671.02,178.45L665.84,181.01L637.71,180.01L644.71,173.2L642.19,155.27L637.02,149.05L639.1,134.26L633.65,124.15L625.12,126.14L623.43,132.69L607.9,131.4L600.47,134.26L579.76,131.97L573.73,134.68L569.39,130.55L554.7,129L555.13,137.67L548.96,141.37L540.42,151.18L531.18,147.2L520.55,149.76L503.47,157.87L496.19,172.88L482.19,181.54L482.88,174.15L478.13,164.07L465.53,150.41L464.97,158.38L451.67,162.92L449.16,168.48Z"/>
-                <path class="psa-map__region" data-region="Northern"          d="M681.76,184.75L675.43,208.61L675.78,215.82L683.67,228.05L681.92,237.64L663.71,239.24L661.96,251.84L663.89,259.28L672.81,258.76L679.28,249.89L691.89,248.99L700.29,252.02L701.51,258.76L710.79,264.96L709.91,276.66L702.39,284.95L705.71,291.51L695.21,316.68L698.54,328.01L703.96,334.03L701.86,353.51L685.59,354.05L685.56,363.29L671.96,364.64L665.67,361.67L655.59,361.88L649.3,375.91L654.12,384.61L643.41,390.34L648.03,399.05L642.58,403.51L645.72,414.44L662.31,411.68L666.3,417.19L657.9,424.83L657.47,436.93L650.13,438.21L622,421.65L614.01,423.57L608.07,433.71L601.03,420.92L587.45,425.87L594.6,412.72L594.45,402.38L600.06,395.6L593.61,389.09L578.77,392.91L574.44,384.06L557.36,367.64L561.14,362.81L572.61,365.09L582,359.27L584.1,352.9L580.32,344.82L592.35,338.6L598.66,332.21L597.95,309.17L589.41,304.78L585.07,297.54L574.72,290.03L563.52,289.75L545.18,280.64L544.76,276.95L525.86,277.23L524.33,281.31L511.59,277.62L489.19,279.46L486.38,274.07L474.91,272.94L466.93,276.9L456.85,275.07L444.95,277.77L447.33,261.01L439.78,245.12L428.72,233.63L436,229.51L436.41,223.04L432.07,217.07L433.48,205.85L456.29,205.7L459.51,199.31L457,185.66L464.69,179.84L449.29,171.88L449.16,168.48L451.67,162.92L464.97,158.38L465.53,150.41L478.13,164.07L482.88,174.15L482.19,181.54L496.19,172.88L503.47,157.87L520.55,149.76L531.18,147.2L540.42,151.18L548.96,141.37L555.13,137.67L554.7,129L569.39,130.55L573.73,134.68L579.76,131.97L600.47,134.26L607.9,131.4L623.43,132.69L625.12,126.14L633.65,124.15L639.1,134.26L637.02,149.05L642.19,155.27L644.71,173.2L637.71,180.01L665.84,181.01L671.02,178.45L676.21,184.2Z"/>
-                <path class="psa-map__region" data-region="Savannah"          d="M449.23,170.24L449.29,171.88L464.69,179.84L457,185.66L459.51,199.31L456.29,205.7L433.48,205.85L432.07,217.07L436.41,223.04L436,229.51L428.72,233.63L439.78,245.12L447.33,261.01L444.95,277.77L456.85,275.07L466.93,276.9L474.91,272.94L486.38,274.07L489.19,279.46L511.59,277.62L524.33,281.31L525.86,277.23L544.76,276.95L545.18,280.64L563.52,289.75L574.72,290.03L585.07,297.54L589.41,304.78L597.95,309.17L598.66,332.21L592.35,338.6L580.32,344.82L584.1,352.9L582,359.27L572.61,365.09L561.14,362.81L557.36,367.64L574.44,384.06L578.77,392.91L593.61,389.09L600.06,395.6L594.45,402.38L594.6,412.72L587.45,425.87L601.03,420.92L608.07,433.71L598.89,441.6L587.14,437.36L574.54,438.62L574.72,451.06L574.41,450.96L562.86,449.64L546.07,442.74L536.09,433.01L521.14,423.18L506.96,422.91L501.44,433.53L477.29,437.78L474.15,456.6L479.93,466.67L467.85,473.57L459.98,473.03L458.92,458.98L441.6,429.29L445.01,419.21L445.81,403.83L460.76,391.35L460.76,372.23L448.16,373.29L428.74,359.21L413.26,360.55L408.54,371.16L404.86,372.77L385.43,370.91L382.55,377.81L375.46,380.19L364.69,375.42L355.78,378.87L352.1,391.08L354.46,403.83L350,410.19L355.25,423.18L363.91,422.13L373.89,430.88L369.69,438.04L353.68,433.53L349.74,440.16L339.77,449.17L329.26,451.57L319.25,451.33L318.56,450.97L313.94,448.43L311.63,440.79L293.78,429.13L292.32,416.23L283.29,399.45L282.86,391.81L270.48,378.21L263.96,366.53L256.2,358.89L249.9,357.47L245.87,336.4L241.15,332.14L240.8,323.47L224.18,318.16L224,303.62L229.61,299.71L233.11,292.28L240.8,287.66L233.28,280.05L237.83,268.33L236.61,250.29L225.58,240.36L229.77,228.28L237.64,230.86L261.26,221.8L263.01,213.46L281.38,208.31L321.45,203.92L329.32,209.43L337.54,202.15L379.9,202.5L381.3,195.22L378.84,175.67L382.17,169.82L396.32,163.32L415.8,158.9L429.45,162.37L440.2,170.1Z"/>
-                <path class="psa-map__region" data-region="Bono East"         d="M656.84,595.65L638.55,597.19L629.31,593.17L619.65,595.93L606.84,592.76L597.01,592.76L590.33,582L574.32,575.63L549.39,569.82L543.36,570.34L535.74,562.67L534.96,550.23L527.08,543.88L514.22,547.59L505.3,544.93L494.8,546.79L479.57,543.61L471.18,551.03L460.67,551.55L448.09,549.43L439.67,541.22L437.05,532.49L432.85,529.58L421.3,537.52L413.96,549.43L407.92,554.99L407.14,563.46L399.79,562.14L389.81,574.05L373.53,575.37L363.03,567.7L360.68,558.17L348.87,556.85L342.04,562.14L331.28,554.2L321.1,556.03L319.19,542.12L327.16,517.11L326.12,506.53L347.32,501.85L351.1,497.62L345.02,484.9L338.09,478.75L330.1,477.49L333.04,470.91L322.34,452.89L319.25,451.33L329.26,451.57L339.77,449.17L349.74,440.16L353.68,433.53L369.69,438.04L373.89,430.88L363.91,422.13L355.25,423.18L350,410.19L354.46,403.83L352.1,391.08L355.78,378.87L364.69,375.42L375.46,380.19L382.55,377.81L385.43,370.91L404.86,372.77L408.54,371.16L413.26,360.55L428.74,359.21L448.16,373.29L460.76,372.23L460.76,391.35L445.81,403.83L445.01,419.21L441.6,429.29L458.92,458.98L459.98,473.03L467.85,473.57L479.93,466.67L474.15,456.6L477.29,437.78L501.44,433.53L506.96,422.91L521.14,423.18L536.09,433.01L546.07,442.74L562.86,449.64L574.41,450.96L578.35,452.28L591.22,458.37L597.78,468.19L608.53,468.98L610.37,479.85L610.1,497.34L615.09,510.05L623.5,508.73L630.84,511.12L627.69,518L628.74,529.38L640.56,547.92L645.28,559.57L652.62,562.48L661.55,571.48L662.61,575.98Z"/>
-                <path class="psa-map__region" data-region="Oti"               d="M685.56,363.29L696.43,380.39L704.32,388L723.55,399.68L724.61,407.99L733.19,416.48L736.16,427.98L715.33,441.06L717.79,450.26L714.98,458.92L720.76,482.03L721.98,507.29L716.04,526.18L709.04,532.19L706.05,543.76L706.93,555.58L712.36,562.82L724.08,563L726.01,575.53L724.72,583.02L714.04,581.83L709.2,578.44L699.54,577.81L690.93,583.52L687.58,594.95L678.33,608.5L663.84,606.17L666.27,599.74L656.84,595.65L662.61,575.98L661.55,571.48L652.62,562.48L645.28,559.57L640.56,547.92L628.74,529.38L627.69,518L630.84,511.12L623.5,508.73L615.09,510.05L610.1,497.34L610.37,479.85L608.53,468.98L597.78,468.19L591.22,458.37L578.35,452.28L574.72,451.06L574.54,438.62L587.14,437.36L598.89,441.6L608.07,433.71L614.01,423.57L622,421.65L650.13,438.21L657.47,436.93L657.9,424.83L666.3,417.19L662.31,411.68L645.72,414.44L642.58,403.51L648.03,399.05L643.41,390.34L654.12,384.61L649.3,375.91L655.59,361.88L665.67,361.67L671.96,364.64Z"/>
-                <path class="psa-map__region" data-region="Bono"              d="M316.85,562.1L312.38,574L301.89,577.71L295.58,587.76L289.02,587.76L284.83,593.57L292.17,599.67L292.17,607.06L283.77,603.62L276.69,604.96L263.83,603.62L263.83,590.67L254.12,588.55L251.76,595.96L225.25,612.35L224.99,618.98L213.18,629.02L210.61,646.37L203.83,634.79L192.9,630.55L179.25,630.55L171.94,621.81L177.81,612.9L184.12,612.37L186.38,600.2L196.71,585.61L193.56,577.33L199.52,546.27L201.27,529.5L210.71,509.79L215.43,502.73L214.74,494.43L218.24,477.65L244.12,463.69L247.11,450.97L254.27,451.31L264.26,442.19L264.08,430.52L249.9,357.47L256.2,358.89L263.96,366.53L270.48,378.21L282.86,391.81L283.29,399.45L292.32,416.23L293.78,429.13L311.63,440.79L313.94,448.43L318.56,450.97L322.34,452.89L333.04,470.91L330.1,477.49L338.09,478.75L345.02,484.9L351.1,497.62L347.32,501.85L326.12,506.53L327.16,517.11L319.19,542.12L321.1,556.03Z"/>
-                <path class="psa-map__region" data-region="Ahafo"             d="M274.02,719.08L264.51,710.17L256.1,708.9L258.83,702.77L247.92,693.48L242.67,692.43L233.21,683.75L222.3,685.45L215.37,678.26L210.53,666.43L213.06,660.07L210.61,646.37L213.18,629.02L224.99,618.98L225.25,612.35L251.76,595.96L254.12,588.55L263.83,590.67L263.83,603.62L276.69,604.96L283.77,603.62L292.17,607.06L292.17,599.67L284.83,593.57L289.02,587.76L295.58,587.76L301.89,577.71L312.38,574L316.85,562.1L328.93,576.11L336.26,575.06L350.18,584.84L357.53,580.88L362.25,584.59L356.49,592.26L347.3,595.16L345.72,608.13L339.94,609.72L332.1,616.73L319.93,622.52L311.39,617.3L300.89,623.36L293.05,630.98L286.75,633.23L279.89,640.54L281.44,646.59L297.67,652.24L294.73,667.18L284.38,669.3L277.1,673.52L280.88,691.98L272.33,703.26Z"/>
-                <path class="psa-map__region" data-region="Ashanti"           d="M597.01,592.76L587.3,594.86L583.95,600.59L571.98,604.6L553.51,602.91L542.37,599.74L540.06,606.72L547.83,622.59L544.27,629.35L531.46,632.95L521.8,629.35L519.28,632.31L519.7,646.7L515.3,653.88L499.96,654.95L489.47,659.39L492.82,663.61L488.62,670.32L494.93,675.81L496.81,682.79L484,697.16L480.01,710.69L468.47,717.23L463.01,728.43L467.2,733.71L465.32,741.96L456.09,743.64L454.39,763.49L449.14,773.16L452.42,781.08L441.72,788.45L431.44,781.49L417.79,786.56L416.1,792.68L405.82,781.28L393.01,781.28L386.71,783.81L366.55,772.41L351.85,769.67L342.82,764.17L340.52,755.31L336.1,753.73L331.28,741.69L335.68,731.33L324.23,726.73L310.91,718.19L304.6,719.47L302.51,703.2L298.31,698.55L284.86,699.4L285.08,712.7L282.14,717.57L274.02,719.08L272.33,703.26L280.88,691.98L277.1,673.52L284.38,669.3L294.73,667.18L297.67,652.24L281.44,646.59L279.89,640.54L286.75,633.23L293.05,630.98L300.89,623.36L311.39,617.3L319.93,622.52L332.1,616.73L339.94,609.72L345.72,608.13L347.3,595.16L356.49,592.26L362.25,584.59L357.53,580.88L350.18,584.84L336.26,575.06L328.93,576.11L316.85,562.1L321.1,556.03L331.28,554.2L342.04,562.14L348.87,556.85L360.68,558.17L363.03,567.7L373.53,575.37L389.81,574.05L399.79,562.14L407.14,563.46L407.92,554.99L413.96,549.43L421.3,537.52L432.85,529.58L437.05,532.49L439.67,541.22L448.09,549.43L460.67,551.55L471.18,551.03L479.57,543.61L494.8,546.79L505.3,544.93L514.22,547.59L527.08,543.88L534.96,550.23L535.74,562.67L543.36,570.34L549.39,569.82L574.32,575.63L590.33,582Z"/>
-                <path class="psa-map__region" data-region="Eastern"           d="M663.84,606.17L659.02,611.88L664.06,624.79L660.28,631.56L649.58,636.64L648.31,646.58L655.03,649.96L661.53,661.08L660.06,668.26L649.78,671.86L647.27,685.81L659.22,687.08L657.55,695.33L657.97,710.32L663.22,713.92L650.83,732.72L645.37,749.12L652.96,756.48L645.81,761.55L635.31,763.88L631.75,776.12L625.03,780.76L613.48,792.8L599.84,809.25L590.17,800.4L584.08,805.45L571.48,805.68L567.7,801.88L557.14,811.84L548.39,809.99L540.4,812.31L530.74,809.99L528.43,814.41L516.47,812.73L510.16,808.51L500.72,810.2L488.34,808.29L481.4,810.2L473,808.51L469.65,814.84L461.88,812.73L460.2,785.92L452.42,781.08L449.14,773.16L454.39,763.49L456.09,743.64L465.32,741.96L467.2,733.71L463.01,728.43L468.47,717.23L480.01,710.69L484,697.16L496.81,682.79L494.93,675.81L488.62,670.32L492.82,663.61L489.47,659.39L499.96,654.95L515.3,653.88L519.7,646.7L519.28,632.31L521.8,629.35L531.46,632.95L544.27,629.35L547.83,622.59L540.06,606.72L542.37,599.74L553.51,602.91L571.98,604.6L583.95,600.59L587.3,594.86L597.01,592.76L606.84,592.76L619.65,595.93L629.31,593.17L638.55,597.19L656.84,595.65L666.27,599.74Z"/>
-                <path class="psa-map__region" data-region="Volta"             d="M724.72,583.02L718.66,605.15L721.29,606.91L718.13,621.73L710.26,624.55L708.51,630.51L713.76,634.57L709.55,645.84L716.38,650.95L716.21,657.47L726.19,664L726.52,681.08L741.41,684.95L735.81,693.4L741.59,705.84L755.06,713.24L765.03,721.17L779.37,721.51L779.9,728.2L789,737.89L791.27,747.21L808.64,747.3L808.93,755.31L796.38,760.84L789.38,766.83L777.84,783.37L776.44,797.78L769.62,804.64L734.69,807.55L723.51,795.33L717.83,783.09L707.76,774.01L700.61,772.11L685.29,778.24L679.83,771.26L681.51,767.25L671,758.6L652.96,756.48L645.37,749.12L650.83,732.72L663.22,713.92L657.97,710.32L657.55,695.33L659.22,687.08L647.27,685.81L649.78,671.86L660.06,668.26L661.53,661.08L655.03,649.96L648.31,646.58L649.58,636.64L660.28,631.56L664.06,624.79L659.02,611.88L663.84,606.17L678.33,608.5L687.58,594.95L690.93,583.52L699.54,577.81L709.2,578.44L714.04,581.83Z"/>
-                <path class="psa-map__region" data-region="Western North"     d="M308.13,751.72L303.78,750.54L293.45,756.87L281.2,759.85L272.63,754.93L265.1,758.63L258.11,773.22L263.88,781.67L264.93,791.71L249.36,809.46L256.01,815.96L253.04,822.13L255.12,834.26L250.76,840.52L246.21,859.86L237.64,868.12L229.83,868.83L229.99,862.33L225.61,848.13L224.39,831.26L212.13,823.69L201.28,828.44L195.16,824.05L196.74,816.48L187.65,814.9L185.9,810.33L186.94,793.1L177.66,770.93L175.4,751.97L165.25,733.49L158.42,704.62L154.92,694.41L155.44,684.21L151.07,675.22L158.07,660.43L155.44,649.68L171.94,621.81L179.25,630.55L192.9,630.55L203.83,634.79L210.61,646.37L213.06,660.07L210.53,666.43L215.37,678.26L222.3,685.45L233.21,683.75L242.67,692.43L247.92,693.48L258.83,702.77L256.1,708.9L264.51,710.17L274.02,719.08L282.14,717.57L285.08,712.7L284.86,699.4L298.31,698.55L302.51,703.2L304.6,719.47L310.91,718.19L324.23,726.73L322.45,735.11L317.2,733.63L305.66,743.55Z"/>
-                <path class="psa-map__region" data-region="Western"           d="M400.08,916.87L392.02,920.84L377.49,933.14L375.05,938.75L350.55,947.71L340.04,957.02L324.65,960L322.03,955.09L302.95,944.02L293.85,934.89L258.15,923.29L253.26,924.35L210.03,915.57L197.44,911.88L175.22,907.83L183.26,902.92L198.66,907.49L205.13,901.87L225.43,905.38L229.11,901.69L226.14,885L223.5,882.18L223.86,867.96L229.83,868.83L237.64,868.12L246.21,859.86L250.76,840.52L255.12,834.26L253.04,822.13L256.01,815.96L249.36,809.46L264.93,791.71L263.88,781.67L258.11,773.22L265.1,758.63L272.63,754.93L281.2,759.85L293.45,756.87L303.78,750.54L308.13,751.72L328.97,764.78L338.94,769.53L349.8,781.49L353.99,788.53L364.49,789.77L359.24,804.89L364.66,808.41L366.94,816.67L362.05,822.08L365.71,831.58L381.64,825.78L391.61,830.52L397.21,839.14L392.49,842.83L393.89,859.18L412.08,862.17L424.69,872.89L418.91,882.73L419.08,890.29L407.71,890.45L406.83,894.85L399.14,898.55Z"/>
-                <path class="psa-map__region" data-region="Central"           d="M557.14,811.84L559.1,821.92L570.44,829.72L575.47,837.95L574.74,850.39L559.11,866.26L551.42,867.15L542.49,872.42L525.87,877.34L521.67,883.66L512.4,890.51L476.71,891.4L471.1,893.33L447.83,907.14L400.08,916.87L399.14,898.55L406.83,894.85L407.71,890.45L419.08,890.29L418.91,882.73L424.69,872.89L412.08,862.17L393.89,859.18L392.49,842.83L397.21,839.14L391.61,830.52L381.64,825.78L365.71,831.58L362.05,822.08L366.94,816.67L364.66,808.41L359.24,804.89L364.49,789.77L353.99,788.53L349.8,781.49L338.94,769.53L328.97,764.78L308.13,751.72L305.66,743.55L317.2,733.63L322.45,735.11L324.23,726.73L335.68,731.33L331.28,741.69L336.1,753.73L340.52,755.31L342.82,764.17L351.85,769.67L366.55,772.41L386.71,783.81L393.01,781.28L405.82,781.28L416.1,792.68L417.79,786.56L431.44,781.49L441.72,788.45L452.42,781.08L460.2,785.92L461.88,812.73L469.65,814.84L473,808.51L481.4,810.2L488.34,808.29L500.72,810.2L510.16,808.51L516.47,812.73L528.43,814.41L530.74,809.99L540.4,812.31L548.39,809.99Z"/>
-                <path class="psa-map__region" data-region="Greater Accra"     d="M734.69,807.55L717.3,804.3L697.01,802.54L671.8,805.35L657.97,810.63L649.4,816.08L641.88,817.31L636.28,824.52L618.26,835.41L597.97,843.51L574.74,850.39L575.47,837.95L570.44,829.72L559.1,821.92L557.14,811.84L567.7,801.88L571.48,805.68L584.08,805.45L590.17,800.4L599.84,809.25L613.48,792.8L625.03,780.76L631.75,776.12L635.31,763.88L645.81,761.55L652.96,756.48L671,758.6L681.51,767.25L679.83,771.26L685.29,778.24L700.61,772.11L707.76,774.01L717.83,783.09L723.51,795.33Z"/>
-              </g>
-
-              <g class="psa-map__dots" aria-hidden="true">
-                <g class="psa-map__dot-group" data-label="Upper West Region"><circle class="psa-map__dot" cx="315" cy="115" r="4.5"/></g>
-                <g class="psa-map__dot-group" data-label="Upper East Region"><circle class="psa-map__dot" cx="520" cy="60" r="4.5"/></g>
-                <g class="psa-map__dot-group" data-label="North East Region"><circle class="psa-map__dot" cx="510" cy="150" r="4.5"/></g>
-                <g class="psa-map__dot-group" data-label="Northern Region"><circle class="psa-map__dot" cx="600" cy="300" r="4.5"/></g>
-                <g class="psa-map__dot-group" data-label="Savannah Region"><circle class="psa-map__dot" cx="380" cy="360" r="4.5"/></g>
-                <g class="psa-map__dot-group" data-label="Bono East Region"><circle class="psa-map__dot" cx="520" cy="500" r="4.5"/></g>
-                <g class="psa-map__dot-group" data-label="Oti Region"><circle class="psa-map__dot" cx="680" cy="480" r="4.5"/></g>
-                <g class="psa-map__dot-group" data-label="Bono Region"><circle class="psa-map__dot" cx="270" cy="550" r="4.5"/></g>
-                <g class="psa-map__dot-group" data-label="Ahafo Region"><circle class="psa-map__dot" cx="260" cy="660" r="4.5"/></g>
-                <g class="psa-map__dot-group" data-label="Ashanti Region"><circle class="psa-map__dot" cx="430" cy="680" r="4.5"/></g>
-                <g class="psa-map__dot-group" data-label="Eastern Region"><circle class="psa-map__dot" cx="570" cy="680" r="4.5"/></g>
-                <g class="psa-map__dot-group" data-label="Volta Region"><circle class="psa-map__dot" cx="710" cy="680" r="4.5"/></g>
-                <g class="psa-map__dot-group" data-label="Western North Region"><circle class="psa-map__dot" cx="240" cy="780" r="4.5"/></g>
-                <g class="psa-map__dot-group" data-label="Western Region"><circle class="psa-map__dot" cx="300" cy="870" r="4.5"/></g>
-                <g class="psa-map__dot-group" data-label="Central Region"><circle class="psa-map__dot" cx="480" cy="830" r="4.5"/></g>
-                <g class="psa-map__dot-group" data-label="Greater Accra, Headquarters">
-                  <circle class="psa-map__pulse" cx="640" cy="817" r="12"/>
-                  <circle class="psa-map__pulse psa-map__pulse--delay" cx="640" cy="817" r="12"/>
-                  <circle class="psa-map__dot psa-map__dot--hq" cx="640" cy="817" r="6"/>
-                </g>
-              </g>
-
-            </svg>
-
-            <div class="psa-map__tooltip" id="mapTooltipDesktop" aria-hidden="true"></div>
+          <!-- Right Side: Text Content -->
+          <div class="psa-practice__body">
+            <p>
+              We partner with public and private sector organizations to provide practical solutions through strategic advisory, market and consumer research, business intelligence, data analytics, and customer experience assessments.
+            </p>
+            <p>
+              Our approach combines industry knowledge, research, and analytical expertise to help organizations make informed decisions, strengthen operations, identify opportunities, and achieve their business objectives.
+            </p>
+            <p>
+              Beyond our core consulting expertise, we work with specialist partners to connect clients with technology, real estate, and other business solutions, providing broader support to meet their evolving needs.
+            </p>
           </div>
 
         </div>
-
       </div>
     </section>
 
-    <!-- WHAT WE OFFER -->
-    <section class="psa-panel psa-panel--offer">
-      <div class="psa-panel__bg" aria-hidden="true"></div>
-      <div class="psa-panel__scrim psa-panel__scrim--light" aria-hidden="true"></div>
-      <div class="psa-container psa-panel__content">
-        <span class="ps-eyebrow" data-reveal style="color: var(--ps-orange);">Our Expertise</span>
-        <h2 class="psa-heading" data-reveal style="color: #FFFFFF;">Core Services</h2>
+    <!-- 03. REST OF THE PAGE (UNDER CONSTRUCTION) -->
+    <div style="min-height: 60vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 4rem 2rem; background-color: var(--ps-navy); border-top: 1px solid rgba(255,255,255,0.05); position: relative; z-index: 10;">
+      
+      <!-- Background Glow -->
+      <div style="position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(230, 126, 34, 0.08) 0%, transparent 60%); pointer-events: none;"></div>
 
-        <p class="psa-pullquote" data-reveal style="color: #F1F5F9;">
-          We partner with organizations to assess business challenges, identify opportunities, and develop practical strategies that strengthen operations and support sustainable growth.
-        </p>
+      <!-- Icon -->
+      <svg style="width: 48px; height: 48px; stroke: var(--ps-orange); margin-bottom: 2rem; animation: psaBounce 3s infinite ease-in-out; position: relative; z-index: 1;" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+      </svg>
 
-        <ul class="psa-tags" data-reveal>
-          <li><a href="services.html" class="psa-tag">Strategic Consulting</a></li>
-          <li><a href="services.html" class="psa-tag">Market Intelligence</a></li>
-          <li><a href="services.html" class="psa-tag">Consumer Research</a></li>
-          <li><a href="services.html" class="psa-tag">Customer Experience</a></li>
-          <li><a href="services.html" class="psa-tag">Data Analytics</a></li>
-          <li><a href="services.html" class="psa-tag">Project Management</a></li>
-        </ul>
-      </div>
-    </section>
+      <!-- Title -->
+      <h2 style="font-family: 'Fraunces', serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; margin-bottom: 1rem; color: #FFFFFF; position: relative; z-index: 1;">
+        More Insights Coming <span style="color: var(--ps-orange); font-style: italic;">Soon</span>.
+      </h2>
 
-    <!-- CLOSING -->
-    <section class="psa-panel psa-panel--closing">
-      <div class="psa-panel__bg" aria-hidden="true"></div>
-      <div class="psa-panel__scrim" aria-hidden="true"></div>
-      <div class="psa-container psa-panel__content psa-closing__content">
-        <p class="psa-closing__line" data-reveal>
-          The Business Transformation Experts.
-          <span class="psa-closing__underline" aria-hidden="true"></span>
-        </p>
-      </div>
-    </section>
+      <!-- Text -->
+      <p style="font-family: 'Inter', sans-serif; font-size: 1.1rem; color: #CBD5E1; max-width: 500px; line-height: 1.6; margin-bottom: 3rem; position: relative; z-index: 1;">
+        Our Vision, Mission, and Core Services are currently being finalized. 
+      </p>
+
+      <!-- Button -->
+      <a href="contact.html" class="psa-ghost-link" style="position: relative; z-index: 1;">
+        Contact Us
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+
+    </div>
+
+    <!-- HIDDEN ORIGINAL CONTENT -->
+    <div style="display: none;">
+      <!-- 03. VISION & MISSION -->
+      <section class="psa-section" aria-labelledby="purpose-title">
+        <div class="psa-section-overlay"></div>
+        <div class="psa-container">
+          <h2 id="purpose-title" class="visually-hidden" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Our Purpose</h2>
+          <div class="psa-grid-2">
+            <div>
+              <span class="psa-eyebrow">Our Purpose</span>
+              <div class="psa-vision-block">
+                <h2>Our Vision</h2>
+                <p>To become a trusted strategic consulting partner, helping organizations unlock opportunities, improve performance, and achieve sustainable growth through informed decisions and practical business solutions.</p>
+              </div>
+              <div class="psa-vision-block">
+                <h2>Our Mission</h2>
+                <p>To provide organizations with strategic guidance, research driven insights, and innovative business solutions that address challenges, strengthen performance, and create lasting value.</p>
+              </div>
+            </div>
+
+            <div class="psa-map-wrapper">
+              <div style="width: 100%; height: 400px; border: 1px dashed rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: #7F8C8D;">
+                 [Insert Ghana SVG Map Here]
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 04. CORE SERVICES -->
+      <section class="psa-section" style="min-height: auto;" aria-labelledby="services-title">
+        <div class="psa-section-overlay"></div>
+        <div class="psa-container">
+          <span class="psa-eyebrow">Our Expertise</span>
+          <h2 id="services-title" class="psa-title" style="font-size: clamp(2rem, 3.4vw, 3rem); margin-bottom: 1.5rem;">Core Services</h2>
+          <p style="font-family: 'Inter', sans-serif; font-size: 1.15rem; line-height: 1.8; color: #CBD5E1; max-width: var(--measure);">
+            We partner with organizations to assess business challenges, identify opportunities, and develop practical strategies that strengthen operations and support sustainable growth.
+          </p>
+
+          <ul class="psa-tags">
+            <li><a href="services.html" class="psa-tag">Strategic Consulting</a></li>
+            <li><a href="services.html" class="psa-tag">Market Intelligence</a></li>
+            <li><a href="services.html" class="psa-tag">Consumer Research</a></li>
+            <li><a href="services.html" class="psa-tag">Customer Experience</a></li>
+            <li><a href="services.html" class="psa-tag">Data Analytics</a></li>
+            <li><a href="services.html" class="psa-tag">Project Management</a></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 05. CLOSING -->
+      <section class="psa-section psa-closing">
+        <div class="psa-section-overlay"></div>
+        <div class="psa-container">
+          <h2 class="psa-closing-line">The Business Transformation Experts.</h2>
+        </div>
+      </section>
+    </div>
 
   </main>
 
@@ -511,33 +575,28 @@
   <script src="js/cursor.js"></script>
   <script src="js/nav.js"></script>
   <script src="js/transitions.js"></script>
-  <script src="js/about.js"></script>
 
-  <!-- Script for the Split Panel Animation -->
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const btn = document.getElementById("readMoreBtn");
-      const container = document.getElementById("whatWeDoContainer");
+    document.addEventListener("DOMContentLoaded", () => {
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce || typeof gsap === 'undefined') return;
 
-      if (btn && container) {
-        btn.addEventListener("click", function() {
-          container.classList.toggle("is-expanded");
+      gsap.registerPlugin(ScrollTrigger);
 
-          if (container.classList.contains("is-expanded")) {
-            btn.textContent = "Read Less";
-          } else {
-            btn.textContent = "Read More";
-          }
+      // Hero intro
+      gsap.from(".psa-hero__text > *", {
+        y: 24, opacity: 0, duration: 0.9, stagger: 0.12, ease: "power3.out", delay: 0.15
+      });
 
-          setTimeout(() => {
-            if (typeof ScrollTrigger !== "undefined") {
-              ScrollTrigger.refresh();
-            }
-          }, 800);
+      // Scroll cue action
+      const cue = document.querySelector('.psa-scroll-cue');
+      if (cue) {
+        cue.addEventListener('click', () => {
+          const next = document.querySelector('.psa-practice');
+          if (next) next.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
       }
     });
   </script>
-
 </body>
 </html>

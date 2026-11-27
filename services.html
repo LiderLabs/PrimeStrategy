@@ -24,9 +24,6 @@
       --ps-navy: 10, 18, 36;
       --svc-nav-h: var(--ps-nav-h, 68px);
 
-      /* The background photo. The filename has a space and brackets, so they are
-         URL-encoded here (%20). If you rename the file to bg-services.jpg,
-         change this one line to: url('images/bg-services.jpg') */
       --svc-photo: url('images/bg-services%20(2).jpg');
     }
 
@@ -59,10 +56,7 @@
     }
 
     /* ═══════════════════════════════════════════════
-       SECTIONS — each carries its OWN copy of the photo
-       Per-section variables set the crop (--svc-pos) and
-       the scrim (--svc-scrim) so every section feels distinct
-       while staying on-brand.
+       SECTIONS
        ═══════════════════════════════════════════════ */
     .svc-section {
       position: relative;
@@ -119,7 +113,6 @@
       margin-bottom: 1.1rem;
       text-shadow: 0 2px 10px rgba(0,0,0,0.45);
     }
-    /* No dash lines beside the small headings (also overrides shared.css / page.css) */
     .svc-eyebrow::before,
     .svc-eyebrow::after {
       content: none !important;
@@ -164,7 +157,7 @@
     }
     .svc-line > span { display: inline-block; will-change: transform; }
 
-    /* Word-by-word reveal for headings (spans are added by the script) */
+    /* Word-by-word reveal for headings */
     .svc-mask {
       display: inline-block;
       overflow: hidden;
@@ -240,7 +233,7 @@
       .svc-grid--two { grid-template-columns: repeat(2, 1fr); }
     }
 
-    /* ── Cards: clean, frosted, no numbering, no accent line ── */
+    /* ── Cards ── */
     .svc-card {
       position: relative;
       background: rgba(255, 255, 255, 0.95);
@@ -371,7 +364,6 @@
     @media (max-width: 767px) {
       .svc-section { padding: 4.5rem 1.25rem; }
 
-      /* Text spans the full width on phones, so use an even scrim */
       .svc-hero,
       .svc-services-section,
       .svc-specialized-banner {
@@ -457,182 +449,217 @@
   <!-- ═══ CONTENT ═══ -->
   <main>
     
-    <!-- 01. HERO -->
-    <section class="svc-section svc-hero">
-      <div class="svc-sbg" aria-hidden="true"><div class="svc-sbg__img"></div></div>
-      <div class="svc-inner">
-        <div class="svc-header">
-          <span class="svc-eyebrow gsap-fade-up">Our Services</span>
-          <h1 class="svc-title" id="svcHeroTitle">
-            <span class="svc-line"><span>Insights.</span></span>
-            <span class="svc-line"><span>Strategy.</span></span>
-            <span class="svc-line"><span><em>Solutions</em>.</span></span>
-          </h1>
-          <p class="svc-lead gsap-fade-up">
-            At PrimeStrategy Ghana Ltd., we serve as a strategic consulting and business solutions partner, helping organizations address challenges, identify opportunities, and achieve their business objectives. Through research, business intelligence, data analytics, and industry expertise, we develop practical solutions that improve performance, strengthen operations, and support sustainable growth.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- 02. CORE SERVICES GRID -->
-    <section class="svc-section svc-services-section">
-      <div class="svc-sbg" aria-hidden="true"><div class="svc-sbg__img"></div></div>
-      <div class="svc-inner">
-        <div class="svc-header">
-          <h2 class="svc-title svc-title--sm gsap-fade-up">Our Core Services</h2>
-        </div>
-        
-        <div class="svc-grid">
-          <div class="svc-card gsap-card">
-            <h3>Strategic Consulting &amp; Advisory</h3>
-            <p>We partner with organizations to assess business challenges, identify opportunities, and develop practical strategies that strengthen operations, improve competitiveness, and support sustainable growth.</p>
-          </div>
-
-          <div class="svc-card gsap-card">
-            <h3>Business &amp; Market Intelligence</h3>
-            <p>We provide organizations with valuable insights into industry trends, competitive landscapes, market potential, and emerging opportunities to support strategic planning, business expansion, and informed decision-making.</p>
-          </div>
-
-          <div class="svc-card gsap-card">
-            <h3>Consumer &amp; Market Research</h3>
-            <p>We help organizations understand consumer behaviour, market dynamics, and customer expectations through structured research that informs business strategies, product development, and market positioning.</p>
-          </div>
-
-          <div class="svc-card gsap-card">
-            <h3>Customer Experience &amp; Service Excellence</h3>
-            <p>We help organizations assess and improve customer experiences through mystery shopping, customer satisfaction studies, service quality evaluations, and customer feedback analysis. Our insights help identify service gaps, strengthen customer relationships, and improve overall service delivery.</p>
-          </div>
-
-          <div class="svc-card gsap-card">
-            <h3>Data Analytics &amp; Performance Improvement</h3>
-            <p>We transform business data into meaningful insights, helping organizations monitor performance, identify operational gaps, improve efficiency, and make informed decisions that support business growth.</p>
-          </div>
-
-          <div class="svc-card gsap-card">
-            <h3>Project Management &amp; Advisory</h3>
-            <p>We support organizations in planning, evaluating, and executing projects through feasibility assessments, project coordination, and strategic guidance that minimize risks, improve resource utilization, and achieve successful project outcomes.</p>
+    <!-- HIDDEN ORIGINAL CODE -->
+    <div style="display: none;">
+      <!-- 01. HERO -->
+      <section class="svc-section svc-hero">
+        <div class="svc-sbg" aria-hidden="true"><div class="svc-sbg__img"></div></div>
+        <div class="svc-inner">
+          <div class="svc-header">
+            <span class="svc-eyebrow gsap-fade-up">Our Services</span>
+            <h1 class="svc-title" id="svcHeroTitle">
+              <span class="svc-line"><span>Insights.</span></span>
+              <span class="svc-line"><span>Strategy.</span></span>
+              <span class="svc-line"><span><em>Solutions</em>.</span></span>
+            </h1>
+            <p class="svc-lead gsap-fade-up">
+              At PrimeStrategy Ghana Ltd., we serve as a strategic consulting and business solutions partner, helping organizations address challenges, identify opportunities, and achieve their business objectives. Through research, business intelligence, data analytics, and industry expertise, we develop practical solutions that improve performance, strengthen operations, and support sustainable growth.
+            </p>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- 03. SPECIALIZED SOLUTIONS BANNER -->
-    <section class="svc-section svc-specialized-banner">
-      <div class="svc-sbg" aria-hidden="true"><div class="svc-sbg__img"></div></div>
-      <div class="svc-inner">
-        <div class="svc-header">
-          <span class="svc-eyebrow gsap-fade-up">Specialized Business Solutions</span>
-          <h2 class="svc-title gsap-fade-up">Strategic partnerships for technology and <em>real estate</em>.</h2>
-          <p class="svc-lead gsap-fade-up" style="margin-bottom: 3rem;">
-            Beyond our core consulting services, we connect organizations and individuals with specialized business solutions through our strategic partnerships, providing access to expertise in technology, real estate, and related sectors.
-          </p>
-        </div>
-
-        <div class="svc-grid svc-grid--two">
-          <div class="svc-card gsap-card">
-            <h3>Technology &amp; Digital Transformation</h3>
-            <p>We support organizations in adopting technology solutions that improve business processes, enhance operational efficiency, and support digital transformation. Through our technical partnerships, we facilitate access to software development, IT infrastructure, systems integration, business automation, and other tailored digital solutions.</p>
+      <!-- 02. CORE SERVICES GRID -->
+      <section class="svc-section svc-services-section">
+        <div class="svc-sbg" aria-hidden="true"><div class="svc-sbg__img"></div></div>
+        <div class="svc-inner">
+          <div class="svc-header">
+            <h2 class="svc-title svc-title--sm gsap-fade-up">Our Core Services</h2>
           </div>
-
-          <div class="svc-card gsap-card">
-            <h3>Real Estate &amp; Property Advisory</h3>
-            <p>We support individuals, businesses, and investors in identifying and evaluating real estate opportunities through market research, feasibility assessments, and strategic advisory. Through our development partnerships, we also facilitate access to property development, construction, and related real estate solutions.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 04. WHY PARTNER WITH PRIMESTRATEGY -->
-    <section class="svc-section svc-why-section">
-      <div class="svc-sbg" aria-hidden="true"><div class="svc-sbg__img"></div></div>
-      <div class="svc-inner">
-        <div class="svc-header">
-          <span class="svc-eyebrow gsap-fade-up">Why Partner With PrimeStrategy?</span>
-          <h2 class="svc-title gsap-fade-up">Your Business. Our <em>Commitment</em>.</h2>
-          <p class="svc-lead gsap-fade-up">
-            We believe every organization faces unique challenges and opportunities. Our approach focuses on understanding our clients' needs and providing practical solutions that create meaningful business value.
-          </p>
-        </div>
-
-        <div class="svc-why-grid">
           
-          <!-- Item 1 -->
-          <div class="svc-why-item">
-            <svg class="svc-why-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="42" cy="42" r="24" />
-              <path d="M58 58 L82 82" />
-              <path d="M32 42 L52 42" />
-              <path d="M42 32 L42 52" />
-              <path d="M28 28 L20 20" />
-              <path d="M56 28 L64 20" />
-            </svg>
-            <div class="svc-why-content">
-              <h4>Research Driven Approach</h4>
-              <p>Our recommendations are informed by credible research, data, and practical industry insights to support confident business decisions.</p>
+          <div class="svc-grid">
+            <div class="svc-card gsap-card">
+              <h3>Strategic Consulting &amp; Advisory</h3>
+              <p>We partner with organizations to assess business challenges, identify opportunities, and develop practical strategies that strengthen operations, improve competitiveness, and support sustainable growth.</p>
+            </div>
+
+            <div class="svc-card gsap-card">
+              <h3>Business &amp; Market Intelligence</h3>
+              <p>We provide organizations with valuable insights into industry trends, competitive landscapes, market potential, and emerging opportunities to support strategic planning, business expansion, and informed decision-making.</p>
+            </div>
+
+            <div class="svc-card gsap-card">
+              <h3>Consumer &amp; Market Research</h3>
+              <p>We help organizations understand consumer behaviour, market dynamics, and customer expectations through structured research that informs business strategies, product development, and market positioning.</p>
+            </div>
+
+            <div class="svc-card gsap-card">
+              <h3>Customer Experience &amp; Service Excellence</h3>
+              <p>We help organizations assess and improve customer experiences through mystery shopping, customer satisfaction studies, service quality evaluations, and customer feedback analysis. Our insights help identify service gaps, strengthen customer relationships, and improve overall service delivery.</p>
+            </div>
+
+            <div class="svc-card gsap-card">
+              <h3>Data Analytics &amp; Performance Improvement</h3>
+              <p>We transform business data into meaningful insights, helping organizations monitor performance, identify operational gaps, improve efficiency, and make informed decisions that support business growth.</p>
+            </div>
+
+            <div class="svc-card gsap-card">
+              <h3>Project Management &amp; Advisory</h3>
+              <p>We support organizations in planning, evaluating, and executing projects through feasibility assessments, project coordination, and strategic guidance that minimize risks, improve resource utilization, and achieve successful project outcomes.</p>
             </div>
           </div>
-
-          <!-- Item 2 -->
-          <div class="svc-why-item">
-            <svg class="svc-why-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M20 30 L40 30 C40 20 60 20 60 30 L80 30 L80 60 L60 60 C60 70 40 70 40 60 L20 60 Z" />
-              <path d="M20 65 L20 85 L50 85 L50 65 Z" />
-              <path d="M55 65 L80 65 L80 85 L55 85" />
-            </svg>
-            <div class="svc-why-content">
-              <h4>Practical Business Solutions</h4>
-              <p>We go beyond identifying challenges to developing strategies and solutions that organizations can implement to improve performance.</p>
-            </div>
-          </div>
-
-          <!-- Item 3 -->
-          <div class="svc-why-item">
-            <svg class="svc-why-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="50" cy="50" r="32" />
-              <ellipse cx="50" cy="50" rx="16" ry="32" />
-              <path d="M18 50 L82 50" />
-              <path d="M25 30 Q50 40 75 30" />
-              <path d="M25 70 Q50 60 75 70" />
-              <path d="M40 20 Q50 50 40 80" />
-            </svg>
-            <div class="svc-why-content">
-              <h4>Industry Experience</h4>
-              <p>Our experience working across different industries enables us to understand diverse business environments and provide solutions suited to each client's needs.</p>
-            </div>
-          </div>
-
-          <!-- Item 4 -->
-          <div class="svc-why-item">
-            <svg class="svc-why-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="50" cy="50" r="30" />
-              <circle cx="50" cy="50" r="18" />
-              <circle cx="50" cy="50" r="6" fill="currentColor" />
-              <path d="M50 10 L50 20" />
-              <path d="M50 80 L50 90" />
-              <path d="M10 50 L20 50" />
-              <path d="M80 50 L90 50" />
-              <path d="M72 28 L65 35" />
-              <path d="M35 65 L28 72" />
-            </svg>
-            <div class="svc-why-content">
-              <h4>Commitment to Results</h4>
-              <p>We work closely with clients to understand their objectives, address their challenges, and deliver solutions that support measurable business outcomes.</p>
-            </div>
-          </div>
-
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- 05. CLOSING CTA -->
-    <section class="svc-close">
-      <div class="svc-sbg" aria-hidden="true"><div class="svc-sbg__img"></div></div>
-      <div class="svc-inner">
-        <h2 class="svc-close-title gsap-fade-up">Let's discuss <em>your</em> business challenges.</h2>
-        <a href="contact.html" class="svc-btn gsap-fade-up">Partner With Us</a>
-      </div>
-    </section>
+      <!-- 03. SPECIALIZED SOLUTIONS BANNER -->
+      <section class="svc-section svc-specialized-banner">
+        <div class="svc-sbg" aria-hidden="true"><div class="svc-sbg__img"></div></div>
+        <div class="svc-inner">
+          <div class="svc-header">
+            <span class="svc-eyebrow gsap-fade-up">Specialized Business Solutions</span>
+            <h2 class="svc-title gsap-fade-up">Strategic partnerships for technology and <em>real estate</em>.</h2>
+            <p class="svc-lead gsap-fade-up" style="margin-bottom: 3rem;">
+              Beyond our core consulting services, we connect organizations and individuals with specialized business solutions through our strategic partnerships, providing access to expertise in technology, real estate, and related sectors.
+            </p>
+          </div>
+
+          <div class="svc-grid svc-grid--two">
+            <div class="svc-card gsap-card">
+              <h3>Technology &amp; Digital Transformation</h3>
+              <p>We support organizations in adopting technology solutions that improve business processes, enhance operational efficiency, and support digital transformation. Through our technical partnerships, we facilitate access to software development, IT infrastructure, systems integration, business automation, and other tailored digital solutions.</p>
+            </div>
+
+            <div class="svc-card gsap-card">
+              <h3>Real Estate &amp; Property Advisory</h3>
+              <p>We support individuals, businesses, and investors in identifying and evaluating real estate opportunities through market research, feasibility assessments, and strategic advisory. Through our development partnerships, we also facilitate access to property development, construction, and related real estate solutions.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 04. WHY PARTNER WITH PRIMESTRATEGY -->
+      <section class="svc-section svc-why-section">
+        <div class="svc-sbg" aria-hidden="true"><div class="svc-sbg__img"></div></div>
+        <div class="svc-inner">
+          <div class="svc-header">
+            <span class="svc-eyebrow gsap-fade-up">Why Partner With PrimeStrategy?</span>
+            <h2 class="svc-title gsap-fade-up">Your Business. Our <em>Commitment</em>.</h2>
+            <p class="svc-lead gsap-fade-up">
+              We believe every organization faces unique challenges and opportunities. Our approach focuses on understanding our clients' needs and providing practical solutions that create meaningful business value.
+            </p>
+          </div>
+
+          <div class="svc-why-grid">
+            <div class="svc-why-item">
+              <svg class="svc-why-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="42" cy="42" r="24" />
+                <path d="M58 58 L82 82" />
+                <path d="M32 42 L52 42" />
+                <path d="M42 32 L42 52" />
+                <path d="M28 28 L20 20" />
+                <path d="M56 28 L64 20" />
+              </svg>
+              <div class="svc-why-content">
+                <h4>Research Driven Approach</h4>
+                <p>Our recommendations are informed by credible research, data, and practical industry insights to support confident business decisions.</p>
+              </div>
+            </div>
+
+            <div class="svc-why-item">
+              <svg class="svc-why-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M20 30 L40 30 C40 20 60 20 60 30 L80 30 L80 60 L60 60 C60 70 40 70 40 60 L20 60 Z" />
+                <path d="M20 65 L20 85 L50 85 L50 65 Z" />
+                <path d="M55 65 L80 65 L80 85 L55 85" />
+              </svg>
+              <div class="svc-why-content">
+                <h4>Practical Business Solutions</h4>
+                <p>We go beyond identifying challenges to developing strategies and solutions that organizations can implement to improve performance.</p>
+              </div>
+            </div>
+
+            <div class="svc-why-item">
+              <svg class="svc-why-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="50" cy="50" r="32" />
+                <ellipse cx="50" cy="50" rx="16" ry="32" />
+                <path d="M18 50 L82 50" />
+                <path d="M25 30 Q50 40 75 30" />
+                <path d="M25 70 Q50 60 75 70" />
+                <path d="M40 20 Q50 50 40 80" />
+              </svg>
+              <div class="svc-why-content">
+                <h4>Industry Experience</h4>
+                <p>Our experience working across different industries enables us to understand diverse business environments and provide solutions suited to each client's needs.</p>
+              </div>
+            </div>
+
+            <div class="svc-why-item">
+              <svg class="svc-why-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="50" cy="50" r="30" />
+                <circle cx="50" cy="50" r="18" />
+                <circle cx="50" cy="50" r="6" fill="currentColor" />
+                <path d="M50 10 L50 20" />
+                <path d="M50 80 L50 90" />
+                <path d="M10 50 L20 50" />
+                <path d="M80 50 L90 50" />
+                <path d="M72 28 L65 35" />
+                <path d="M35 65 L28 72" />
+              </svg>
+              <div class="svc-why-content">
+                <h4>Commitment to Results</h4>
+                <p>We work closely with clients to understand their objectives, address their challenges, and deliver solutions that support measurable business outcomes.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 05. CLOSING CTA -->
+      <section class="svc-close">
+        <div class="svc-sbg" aria-hidden="true"><div class="svc-sbg__img"></div></div>
+        <div class="svc-inner">
+          <h2 class="svc-close-title gsap-fade-up">Let's discuss <em>your</em> business challenges.</h2>
+          <a href="contact.html" class="svc-btn gsap-fade-up">Partner With Us</a>
+        </div>
+      </section>
+    </div>
+
+    <!-- VISIBLE UNDER CONSTRUCTION PAGE -->
+    <div style="min-height: 80vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 4rem 2rem; background-color: #0c1428; color: #FFFFFF; position: relative; z-index: 10;">
+      
+      <!-- Background Glow -->
+      <div style="position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(230, 126, 34, 0.08) 0%, transparent 60%); pointer-events: none;"></div>
+
+      <!-- Icon -->
+      <svg style="width: 48px; height: 48px; stroke: var(--ps-orange, #E67E22); margin-bottom: 2rem; animation: psaBounce 3s infinite ease-in-out; position: relative; z-index: 1;" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+      </svg>
+
+      <!-- Title -->
+      <h1 style="font-family: 'Fraunces', serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; margin-bottom: 1rem; color: #FFFFFF; position: relative; z-index: 1;">
+        Our Services Are <span style="color: #E86A34; font-style: italic;">Coming Soon</span>.
+      </h1>
+
+      <!-- Text -->
+      <p style="font-family: 'Inter', sans-serif; font-size: 1.1rem; color: #CBD5E1; max-width: 500px; line-height: 1.6; margin-bottom: 3rem; position: relative; z-index: 1;">
+        We are currently refining our service offerings to bring you the best possible experience. Please check back soon.
+      </p>
+
+      <!-- Button -->
+      <a href="about.html" class="svc-btn" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 1rem 2rem; border-radius: 6px; font-size: 0.95rem; text-decoration: none; position: relative; z-index: 1; background-color: #E86A34; color: white; font-family: 'Inter', sans-serif; font-weight: 600; transition: all 0.3s ease;">
+        Explore Our About Page
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+
+      <!-- Inline Keyframes for the bouncing icon -->
+      <style>
+        @keyframes psaBounce {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(8px); }
+        }
+      </style>
+    </div>
 
   </main>
 
@@ -643,268 +670,9 @@
   <script src="js/nav.js"></script>
   <script src="js/transitions.js"></script>
   
-  <!-- GSAP Scroll Animations -->
+  <!-- GSAP Scroll Animations are disabled because the main content is hidden -->
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
-      gsap.registerPlugin(ScrollTrigger);
-
-      /* Wraps every word in spans so it can be animated. Keeps <em> styling. */
-      function splitWords(el) {
-        if (el.dataset.split) return el.querySelectorAll(".svc-word");
-        el.dataset.split = "true";
-
-        (function walk(node) {
-          Array.prototype.slice.call(node.childNodes).forEach(function (child) {
-            if (child.nodeType === 1) { walk(child); return; }
-            if (child.nodeType !== 3) return;
-            var frag = document.createDocumentFragment();
-            child.textContent.split(/(\s+)/).forEach(function (part) {
-              if (!part) return;
-              if (/^\s+$/.test(part)) {
-                frag.appendChild(document.createTextNode(" "));
-                return;
-              }
-              var mask = document.createElement("span");
-              var word = document.createElement("span");
-              mask.className = "svc-mask";
-              word.className = "svc-word";
-              word.textContent = part;
-              mask.appendChild(word);
-              frag.appendChild(mask);
-            });
-            node.replaceChild(frag, child);
-          });
-        })(el);
-
-        /* Stop punctuation after an <em> from wrapping onto its own line */
-        el.querySelectorAll("em").forEach(function (em) {
-          var next = em.nextSibling;
-          if (!next || next.nodeType !== 1) return;
-          var keep = document.createElement("span");
-          keep.className = "svc-nowrap";
-          em.parentNode.insertBefore(keep, em);
-          keep.appendChild(em);
-          keep.appendChild(next);
-        });
-
-        return el.querySelectorAll(".svc-word");
-      }
-
-      var mm = gsap.matchMedia();
-
-      mm.add({
-        isDesktop: "(min-width: 768px)",
-        isMobile: "(max-width: 767px)",
-        reduce: "(prefers-reduced-motion: reduce)"
-      }, function (context) {
-        var isDesktop = context.conditions.isDesktop;
-
-        // Respect reduced-motion: leave everything visible and static
-        if (context.conditions.reduce) return;
-
-        var REPLAY = "play none none reverse"; // replays when you scroll back up and down
-
-        /* 1. Scroll progress bar */
-        gsap.to("#svcProgress", {
-          scaleX: 1,
-          ease: "none",
-          scrollTrigger: {
-            trigger: document.body,
-            start: "top top",
-            end: "bottom bottom",
-            scrub: 0.3
-          }
-        });
-
-        /* 2. Background parallax + slow zoom */
-        gsap.utils.toArray(".svc-section, .svc-close").forEach(function (section) {
-          var img = section.querySelector(".svc-sbg__img");
-          if (!img) return;
-          gsap.fromTo(img,
-            { yPercent: isDesktop ? -8 : -5, scale: 1.25 },
-            {
-              yPercent: isDesktop ? 8 : 5,
-              scale: 1,
-              ease: "none",
-              scrollTrigger: {
-                trigger: section,
-                start: "top bottom",
-                end: "bottom top",
-                scrub: 0.6
-              }
-            }
-          );
-        });
-
-        /* 3. Section reveal: each section opens from a framed panel to full width */
-        gsap.utils.toArray(".svc-section:not(.svc-hero), .svc-close").forEach(function (section) {
-          var scroll = {
-            trigger: section,
-            start: "top bottom",
-            end: "clamp(top 25%)",
-            scrub: 0.6
-          };
-          gsap.fromTo(section.querySelector(".svc-sbg"),
-            { clipPath: isDesktop ? "inset(18% 10% 0% 10% round 40px)" : "inset(10% 6% 0% 6% round 24px)" },
-            { clipPath: "inset(0% 0% 0% 0% round 0px)", ease: "none", scrollTrigger: scroll }
-          );
-          gsap.fromTo(section.querySelector(".svc-inner"),
-            { y: isDesktop ? 140 : 80, scale: 0.92 },
-            { y: 0, scale: 1, ease: "none", scrollTrigger: Object.assign({}, scroll) }
-          );
-        });
-
-        /* 4. Hero entrance: eyebrow, title lines, lead words */
-        var heroWords = splitWords(document.querySelector(".svc-hero .svc-lead"));
-        gsap.timeline({ delay: 0.25, defaults: { ease: "power4.out" } })
-          .from(".svc-hero .svc-eyebrow", { x: -80, opacity: 0, letterSpacing: "0.6em", duration: 1.1 })
-          .from("#svcHeroTitle .svc-line > span", {
-            yPercent: 120,
-            rotation: 8,
-            transformOrigin: "left top",
-            duration: 1.3,
-            stagger: 0.22
-          }, "-=0.7")
-          .from(heroWords, { yPercent: 110, opacity: 0, duration: 0.7, stagger: 0.018 }, "-=0.8");
-
-        /* Hero content drifts away as you scroll */
-        gsap.to(".svc-hero .svc-header", {
-          yPercent: -22,
-          scale: 0.92,
-          opacity: 0.1,
-          transformOrigin: "left center",
-          ease: "none",
-          scrollTrigger: {
-            trigger: ".svc-hero",
-            start: "top top",
-            end: "bottom top",
-            scrub: true
-          }
-        });
-
-        /* 5. Small headings slide in from the left */
-        gsap.utils.toArray(".svc-eyebrow").forEach(function (el) {
-          if (el.closest(".svc-hero")) return;
-          gsap.from(el, {
-            x: -100,
-            opacity: 0,
-            letterSpacing: "0.6em",
-            duration: 1.1,
-            ease: "power3.out",
-            scrollTrigger: { trigger: el, start: "clamp(top 85%)", toggleActions: REPLAY }
-          });
-        });
-
-        /* 6. Headings rise word by word */
-        gsap.utils.toArray(".svc-title:not(#svcHeroTitle), .svc-close-title").forEach(function (title) {
-          var words = splitWords(title);
-          var masks = title.querySelectorAll(".svc-mask");
-          gsap.from(words, {
-            yPercent: 120,
-            rotation: 10,
-            transformOrigin: "left top",
-            duration: 1,
-            stagger: 0.09,
-            ease: "power4.out",
-            scrollTrigger: { trigger: title, start: "clamp(top 82%)", toggleActions: REPLAY },
-            onUpdate: function () {
-              var done = this.progress() === 1;
-              masks.forEach(function (m) { m.classList.toggle("is-done", done); });
-            }
-          });
-        });
-
-        /* 7. Intro paragraphs light up word by word as you scroll */
-        gsap.utils.toArray(".svc-lead").forEach(function (lead) {
-          if (lead.closest(".svc-hero")) return;
-          gsap.fromTo(splitWords(lead),
-            { opacity: 0.08, y: 18 },
-            {
-              opacity: 1,
-              y: 0,
-              ease: "none",
-              stagger: 0.1,
-              scrollTrigger: {
-                trigger: lead,
-                start: "clamp(top 90%)",
-                end: "clamp(top 45%)",
-                scrub: 0.4
-              }
-            }
-          );
-        });
-
-        /* 8. Cards flip up one after another */
-        var hidden = { opacity: 0, y: 130, scale: 0.85, rotationX: isDesktop ? 35 : 18 };
-        gsap.set(".gsap-card", Object.assign({ transition: "none", transformOrigin: "center bottom" }, hidden));
-        ScrollTrigger.batch(".gsap-card", {
-          start: "clamp(top 88%)",
-          onEnter: function (batch) {
-            gsap.to(batch, {
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              rotationX: 0,
-              duration: 1.2,
-              stagger: 0.2,
-              ease: "back.out(1.3)",
-              overwrite: true,
-              // hand transform back to CSS so the hover effect works
-              onComplete: function () { gsap.set(batch, { clearProps: "transform,transition" }); }
-            });
-          },
-          onLeaveBack: function (batch) {
-            gsap.set(batch, { transition: "none", transformOrigin: "center bottom" });
-            gsap.to(batch, Object.assign({ duration: 0.5, stagger: 0.08, overwrite: true }, hidden));
-          }
-        });
-
-        /* 9. "Why partner" items: slide in, text follows, icons draw themselves */
-        gsap.utils.toArray(".svc-why-item").forEach(function (item, i) {
-          var fromX = isDesktop ? (i % 2 === 0 ? -180 : 180) : (i % 2 === 0 ? -90 : 90);
-          var shapes = item.querySelectorAll(".svc-why-icon circle, .svc-why-icon ellipse, .svc-why-icon path");
-          var lengths = Array.prototype.map.call(shapes, function (s) {
-            try { return s.getTotalLength(); } catch (e) { return 200; }
-          });
-
-          gsap.timeline({
-            scrollTrigger: { trigger: item, start: "clamp(top 85%)", toggleActions: REPLAY }
-          })
-            .from(item, { x: fromX, opacity: 0, duration: 1.1, ease: "power3.out" })
-            .from(item.querySelectorAll("h4, p"), {
-              y: 40, opacity: 0, duration: 0.7, stagger: 0.18, ease: "power3.out"
-            }, "-=0.7")
-            .from(item.querySelector(".svc-why-icon"), {
-              scale: 0, rotation: -180, duration: 1, ease: "back.out(1.7)"
-            }, 0.2)
-            .fromTo(shapes,
-              {
-                strokeDasharray: function (idx) { return lengths[idx]; },
-                strokeDashoffset: function (idx) { return lengths[idx]; }
-              },
-              { strokeDashoffset: 0, duration: 1.5, stagger: 0.1, ease: "power2.inOut" },
-              0.3
-            );
-        });
-
-        /* 10. Closing button pops in */
-        gsap.set(".svc-btn", { transition: "none" });
-        gsap.from(".svc-btn", {
-          y: 60,
-          scale: 0.6,
-          opacity: 0,
-          duration: 1.1,
-          delay: 0.3,
-          ease: "back.out(2)",
-          scrollTrigger: { trigger: ".svc-btn", start: "clamp(top 95%)", toggleActions: REPLAY },
-          onComplete: function () { gsap.set(".svc-btn", { clearProps: "transform,transition" }); }
-        });
-      });
-
-      // Recalculate trigger positions after fonts / images settle
-      window.addEventListener("load", function () { ScrollTrigger.refresh(); });
-    });
+    // Scripts disabled for Under Construction phase
   </script>
 </body>
 </html>
